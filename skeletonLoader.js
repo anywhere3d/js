@@ -23,7 +23,7 @@
 
         //  Local Forage.
             AW3Dstore.setItem(key, json).then(function (value) {
-                debugMode && console.log("value:", value);
+                debugMode && console.log(key, value);
                 return value;
 
             }).catch( function(err){
