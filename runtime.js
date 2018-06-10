@@ -46,6 +46,6 @@
 	function onMouseMove( event ) {
 
         mouse.x = ( event.clientX - rendererHalfWidth );
-		mouse.y = ( event.clientY - rendererHalfHeight );
+        mouse.y = ( event.clientY - rendererHalfHeight );
 
 	}
