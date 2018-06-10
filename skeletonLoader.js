@@ -8,22 +8,6 @@
 //    var assetName = "skeleton";
 //    var assetUrl = skinnedFolder + "HF_MannySkeleton_ABK04_v01.js";
 
-            AW3Dstore (key, json);
-
-//  Local Forage.
-    AW3Dstore.setItem('somekey', 'some value').then(function (value) {
-
-
-
-
-
-
-
-
-
-
-//  More simple solution. Using service-worker for caching all data.
-
     function $getSkeleton( options, loadTextures, sceneAddBody){
 
         debugMode && console.log("$getSkeleton()");
@@ -34,7 +18,8 @@
 
         $.getJSON( url ).then(function(json){
 
-            if (!json) throw Error("$.getJSON Error: json didn't defined");
+            if (!json) 
+                throw Error("Error: json not defined.");
 
         //  Local Forage.
             AW3Dstore.setItem(key, json)
