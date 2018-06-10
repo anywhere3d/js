@@ -2,8 +2,13 @@
 
 
     var scriptsFolder  = "/scripts/";
-    var assetsFolder = "/skinned/";
+    var skinnedFolder = "/skinned/";
     var texturesFolder = "/textures/";
+    var assetsFolder = function(){
+        console.warn("'assetFolder' is deprecated. "
+        + "Please use 'skinnedFolder' instead.");
+        return; "/skinned/";
+    };
 
     Avatars = {};
 
@@ -159,7 +164,7 @@
         geometry.name = json.name;
 
         var mesh = new THREE.Mesh( geometry, material );
-        mesh.frustumCulled = false;        // VERY IMPORTANT // 
+        mesh.frustumCulled = false;      // IMPORTANT // 
         mesh.position.set( 0, 0, 0 );
         mesh.rotation.set( 0, 0, 0 ); 
         mesh.scale.set( 1, 1, 1 );
