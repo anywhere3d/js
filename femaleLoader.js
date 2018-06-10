@@ -2,9 +2,9 @@
 
     var debugMode;
 
-    var scriptsFolder  = "/scripts/";
-    var assetsFolder = "/models/assets/";
-    var texturesFolder = "/models/textures/";
+//    var scriptsFolder  = "/scripts/";
+//    var assetsFolder   = "/models/assets/";
+//    var texturesFolder = "/models/textures/";
 
 //  Female Body.
 
@@ -146,7 +146,7 @@
 
     $.getJSON( fmHairsAsset ).then(function(json){
 
-        var name = "fmHairsMedium";
+        var name = "fmHairs";
         Avatars[ name ] = initOutfitAsset( json );
         return Avatars[ name ];
 

@@ -2,14 +2,14 @@
 
     var debugMode;
 
-    var scriptsFolder  = "/scripts/";
-    var assetsFolder = "/models/assets/";
-    var texturesFolder = "/models/textures/";
+//    var scriptsFolder  = "/scripts/";
+//    var assetsFolder   = "/models/assets/";
+//    var texturesFolder = "/models/textures/";
 
     var hmBodyAsset     = assetsFolder + "HM_BodyLayer_ABK04_v02.js";
     var hmHairsAsset    = assetsFolder + "HM_HairsMedium_MBK04_v01.js";
     var hmBoxersAsset   = assetsFolder + "HM_BoxersLayer_MBK04_v01.js";
-    var hmTshirtAsset   = assetsFolder + "HM_Tshirt_MBK05_v01.js";    
+    var hmTshirtAsset   = assetsFolder + "HM_Tshirt_MBK05_v01.js";
     var hmTrousersAsset = assetsFolder + "HM_Trousers_MBK04_v01.js";
     var hmSneakersAsset = assetsFolder + "HM_SneakersShoes_ABK04_v01.js";
 
@@ -125,7 +125,7 @@
 
     $.getJSON( hmHairsAsset ).then(function(json){
 
-        var name = "hmHairsMedium";
+        var name = "hmHairs";
         Avatars[ name ] = initOutfitAsset( json );
         return Avatars[ name ];
 
@@ -346,8 +346,6 @@
         }
     }
 */
-
-
 
 
 

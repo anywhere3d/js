@@ -9,6 +9,7 @@
 
 //  Reset THREE.AnimationHandler.animations array.
     THREE.AnimationHandler.animations.length = 0;
+    AnimationManager = THREE.AnimationHandler;
 
     AW3D.AnimationHandler = function ( mesh, gender ) {
 

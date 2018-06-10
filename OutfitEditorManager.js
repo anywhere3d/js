@@ -1,5 +1,30 @@
 //  OutfitEditorManager.js
 
+    var maleAssetSelector   = ".male-asset";
+    var femaleAssetSelector = ".female-asset";
+    var unisexAssetSelector = ".unisex-asset";
+    var helpersSelector     = ".helpers";
+    var menuHelperSelector  = ".menu-helper";
+    var modeHelperSelector  = ".mode-helper";
+
+    var outfitLingerieButtonSelector = "#outfit-lingerie-button";
+    var outfitNightwearButtonSelector = "#outfit-nightwear-button";
+    var outfitShirtButtonSelector = "#outfit-shirt-button";
+    var outfitJacketButtonSelector = "#outfit-jacket-button";
+    var outfitSuitButtonSelector = "#outfit-suit-button";
+    var outfitCoatButtonSelector = "#outfit-coat-button";
+
+    var avatarHairsButtonSelector = "#avatar-hairs-button";
+    var outfitBraButtonSelector = "#outfit-bra-button";
+    var outfitPantiesButtonSelector = "#outfit-panties-button";
+    var outfitBoxersButtonSelector = "#outfit-boxers-button";
+    var outfitTshirtButtonSelector = "#outfit-tshirt-button";
+    var outfitTshirtStampButtonSelector = "#outfit-tshirt-stamp-button";
+    var outfitSkirtButtonSelector = "#outfit-skirt-button";
+    var outfitTrousersButtonSelector = "#outfit-trousers-button";
+    var outfitDressButtonSelector = "#outfit-dress-button";
+    var outfitShoesButtonSelector = "#outfit-shoes-button";
+
 
 //  1.Show avaliable outfit options.
 
@@ -42,7 +67,10 @@
 //  5.Close outfit editor panel.
 
     $(helpersSelector).on("click", function(){
-        if ( !this.active ) $OutfitEditorPanel.dialog("close");
+        if ( !this.active ) 
+            $OutfitEditorPanel.dialog("close");
+        else 
+            $OutfitEditorPanel.contents().remove();
     });
 
 
@@ -52,6 +80,12 @@
         if (this.active) $(this).find("a").css("color", "limegreen");
     });
 
+
+//  7.Show avaliable outfit options.
+
+//    $(helpersSelector).on("click", function(){
+//        showAvaliableOutfitOptions();
+//    });
 
     function showAvaliableOutfitOptions(){
     //  version: webspaces-0.1.5-v0.1
@@ -121,4 +155,3 @@
         else $(outfitShoesButtonSelector).hide();
 
     }
-

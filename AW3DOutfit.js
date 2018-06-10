@@ -185,6 +185,8 @@
             //  Object style argument: "{name: asset}".
             //  debugMode && console.log("outfit.add(arguments):", arguments);
 
+            //  TODO: outfit.add([]) to exept also an array of arguments???.
+
                 for (var i in arguments) {
                     
                     var name = Object.keys(arguments[i])[0];

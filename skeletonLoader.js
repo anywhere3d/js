@@ -2,96 +2,489 @@
 
     var debugMode;
 
-    var scriptsFolder  = "/scripts/";
-    var assetsFolder = "/models/assets/";
-    var texturesFolder = "/models/textures/";
+//    var skeletonAsset = assetsFolder + "HF_MannySkeleton_ABK04_v01.js";
 
-    var assetName = "skeleton";
-    var assetKey = "aw3d.avatar.skeleton";
+//    var assetKey = "aw3d.avatar.skeleton";
+//    var assetName = "skeleton";
+//    var assetUrl = assetsFolder + "HF_MannySkeleton_ABK04_v01.js";
 
-    var assetUrl = assetsFolder + "HF_MannySkeleton_ABK04_v01.js";
-//  var mapUrl = texturesFolder + "wooden_roses.jpg";
+//  More simple solution. Using service-worker for caching all data.
 
-/*  imgur Urls and ids are IMPORTANT now on */
+    function $getSkeleton( options, loadTextures, sceneAddBody){
 
-    $.getJSON( assetUrl ).then(function(json){
+        var url  = options.url;
+        var key  = options.key;
+        var name = options.name;
 
-    //  console.log("json:", json);
-        var name = assetName;
-        Avatars[ name ] = initOutfitAsset( json );
-        return Avatars[ name ];
-        
-    }).then(function(asset){
+        $.getJSON( url ).then(function(json){
 
-        var ext = "jpg";
-        var map_id = "tjNZqbq";
-        var quality = "original";
-        mapUrl = imgurQualityUrl(map_id, ext, quality);
-    //  var mapUrl = "https://i.imgur.com/tjNZqbq.jpg";
-        debugMode && console.log("mapUrl:", mapUrl);
-        var mapImg = new Image();
-        mapImg.crossOrigin = "anonymous";
-        $(mapImg).one("load", function (){
-            var texture = new THREE.Texture( mapImg ); // or canvas //
-            texture.name = "skeleton_map";
-            texture.sourceFile = mapUrl;
-            apply( texture );
-            $(mapImg).remove();
+        //  Local Storage.
+        //  addToLocalStorageAvatars(name, json);
+
+            if (!json) throw Error("json did not defined");
+            Avatars[ name ] = initOutfitAsset( json );
+            return Avatars[ name ];
+
+        }).then(function(asset){
+            loadTextures( asset );
+
+        }).then(function(){
+            sceneAddBody( name )
+
+        }).fail(function(err){
+            console.error(err);
         });
 
-        mapImg.src = mapUrl;
-
-        function apply( texture, i ){
-
-            if (!asset) {
-                onError( "body" ); 
-                return;
-            }
-
-            if ( !!asset.material.materials && ( i != null && !isNaN(i) ) ) {
-                asset.material.materials[i].map = texture;
-                asset.material.materials[i].map.needsUpdate = true;
-                asset.material.materials[i].needsUpdate = true;
-
-            } else {
-                asset.material.map = texture;
-                asset.material.map.needsUpdate = true;
-                asset.material.needsUpdate = true;
-            }
-
-            function onError( name ){
-                var msg = "Outfit <b>" + name + "</b> have not been defined!";
-                debugMode && console.error(msg);
-                bootboxErrorAlert( msg ); 
-            }
-
+        function addToLocalStorageAvatars(key, data){
+            var object = {};
+            object[key] = data;
+            console.log(object);
+            store.add("Avatars", object);
         }
 
-    }).then(function(){
+    }
 
-    //  Add avatar akeleton.
-        localPlayer.outfit.add( {"body": Avatars[ "skeleton" ]} );
+
+    $getSkeleton({
+
+        name: "skeleton",
+        key : "aw3d.avatar.skeleton",        
+        url : assetsFolder + "HF_MannySkeleton_ABK04_v01.js", 
+
+    }, function loadTextures( asset ){
+
+        if (!asset) {
+            var error = [
+                "asset", name, "did not defined."
+            ].join(" ");
+            throw Error( error );
+        }
+
+    //  Skeleton body map options.
+        var mapOptions = {
+            id   : "tjNZqbq",
+            ext  : "jpg",
+            name : "skeleton_map",
+            asset: asset,
+            index: null,
+            quality: "original",
+        };
+
+    //  Set imgur url.
+        mapOptions.url = imgurQualityUrl( mapOptions );
+    //  debugMode && console.log("skeleton mapOptions.url:", mapOptions.url);
+    //  mapOptions.url = "https://i.imgur.com/tjNZqbq.jpg";
+
+    //  Load texture.
+        mapOptions.map = "map";
+        textureMapLoader( mapOptions );
+
+        function textureMapLoader( options ){
+
+            var url   = options.url;
+            var map   = options.map;
+            var name  = options.name;
+            var index = options.index;
+            var asset = options.asset;
+    
+            var img = new Image();
+            img.crossOrigin = "anonymous";
+            $(img).one("load", function (){
+                var texture = new THREE.Texture( img ); // or canvas //
+                texture.name = name;
+                texture.sourceFile = url;
+                applyTexture( asset, texture, map, index );
+                $(img).remove();
+            });
+    
+            img.src = url;
+        }
+
+    }, function sceneAddBody( name ){
+
+        var outfit = {"body": Avatars[ name ]};
+        localPlayer.outfit.add( outfit );
         var frontAngle = Math.PI - cameraControls.getFrontAngle(); // face front.
         localPlayer.controller.direction = frontAngle;
         localPlayer.outfit.update();
         scene.add(localPlayer.outfit.direction);
 
-    }).fail(function(err){
-    //  BE CAREFULL: "$.getJSON()" promise,
-    //  uses ".fail(function(err){});" 
-    //  instead of ".catch(function(err){})";
-        console.error(err);
     });
 
 
-    function sceneAddOutfitSkeleton(){
-        localPlayer.outfit.add( {"body": Avatars[ "skeleton" ]} );
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*!
+*  How to use:
+*  --------------
+*
+*      $getAsset(
+*          options, 
+*          loadTextures( asset ){
+*              ...........
+*          },
+*          optionalfunc1(){
+*              ........... 
+*          },
+*          optionalfunc2(){
+*              ........... 
+*          }
+*      );
+*  
+*  argument "options":
+*    options.key : the key of json data in localStorage,
+*    options.url : the url of asset json file.
+*    options.name: the key name of asset in Avatars object.
+*    You can add additional properties in options if you need.
+*
+*  argument "loadTexture":
+*    a chain callback function of type function( asset ),
+*    used in promise chain to setup the textures of asset maps.
+*    It takes "asset" as argument and you can use it to load 
+*    and apply textures or/and set parameters to asset materials.
+*
+*  You can add additional functions as arguments if you need 
+*  more tasks in the promise chain.
+*
+*  The function looks if window support localeStorage and if so,
+*  try to upload the json data from localStorage using the 
+*  "options.key" argument. If key does not exist in localStorage 
+*  then fetch the data from the json file using the $.getJSON(url) 
+*  method with "options.url" as "url" argument, and store the 
+*  json data to the localStorage under the key "options.key".
+*  
+*  Use the "loadTextures()" chain callback to load textures and 
+*  set asset material properties. You can use an additional callback 
+*  like "sceneAddAsset()" if you want to add the asset in the scene.
+*  You also can use as manny additional chain callbacks as you need.
+*  (by modifing the promise chain of the $getAsset function).
+*
+*  Useful to know: "$getAsset()" use the "store2.js" library
+*  ["https://github.com/nbubna/store"] to manage localStorage.
+*/
+/*
+    function $getSkeleton( options, loadTextures, sceneAddBody){
+
+        var url  = options.url;
+        var key  = options.key;
+        var name = options.name;
+
+        if ( !!window.localStorage ){
+    
+            if ( store.has(key) ){
+
+                console.log("loading from store key:", key);
+
+                $.Deferred().resolve( store(key) ).then(function(json){
+
+                    if (!json) throw Error("json did not defined");
+                    
+                    Avatars[ name ] = initOutfitAsset( json );
+                    return Avatars[ name ];
+
+                }).then(function(asset){
+                    loadTextures( asset );
+    
+                }).then(function(){
+                    sceneAddBody( name )
+    
+                }).fail(function(err){
+                    console.error(err);
+                });
+    
+            } else {
+    
+                $.getJSON( url ).then(function(json){
+
+                    if (!json) throw Error("json did not defined");
+    
+                    Avatars[ name ] = initOutfitAsset( json );
+    
+                    store(key, json);
+                    return Avatars[ name ];
+                
+                }).then(function(asset){
+                    loadTextures( asset );
+    
+                }).then(function(){
+                    sceneAddBody( name )
+    
+                }).fail(function(err){
+                    console.error(err);
+                });
+    
+            }
+    
+        } else {
+    
+            $.getJSON( url ).then(function(json){
+
+                if (!json) throw Error("json did not defined");
+    
+                Avatars[ name ] = initOutfitAsset( json );
+    
+                return Avatars[ name ];
+
+            }).then(function(asset){
+                loadTextures( asset );
+    
+            }).then(function(){
+                sceneAddBody( name )
+    
+            }).fail(function(err){
+                console.error(err);
+            });
+    
+        }
+
+    }
+
+//  imgur Urls and ids are IMPORTANT now on.  /
+
+/*
+    function sceneAddLocalPlayerBody( name ){
+        var outfit = {"body": Avatars[ name ]};
+        localPlayer.outfit.add( outfit );
         var frontAngle = Math.PI - cameraControls.getFrontAngle(); // face front.
         localPlayer.controller.direction = frontAngle;
         localPlayer.outfit.update();
         scene.add(localPlayer.outfit.direction);
     }
+*/
+//  toLocalStore( ["aw3d", "avatar", assetName].join("."), json);
 
+/*
+    if ( !!window.localStorage ){
+
+        var key = ["aw3d", "avatar", assetName].join(".");
+
+        if ( !!localStorage[key] ){
+
+            $.Deferred().resolve( fromLocalStore(key) )
+            .then(function(json){
+
+                if (!json) throw Error("json did not defined");
+
+                var name = assetName;
+                Avatars[ name ] = initOutfitAsset( json );
+                return Avatars[ name ];
+
+            }).then(function(asset){
+
+                if (!asset) {
+                    var error = [
+                        "asset",
+                        assetName, 
+                        "did not defined."
+                    ].join(" ");
+                    throw Error( error );
+                }
+
+            //  var mapUrl = "https://i.imgur.com/tjNZqbq.jpg";
+            //  imgur Urls and ids are IMPORTANT now on      //
+
+                var imgurOptions = {
+                    ext    : "jpg",
+                    id     : "tjNZqbq",
+                    quality: "original",
+                };
+
+                var mapUrl = imgurQualityUrl( imgurOptions );
+                debugMode && console.log("mapUrl:", mapUrl);
+
+                var textureOptions = {
+                    url  : mapUrl,
+                    asset: asset,
+                    map  : "map",
+                    name : "skeleton_map",
+                }
+                
+                textureMapLoader( textureOptions );
+
+            }).then(function(){
+
+            //  Add avatar akeleton.
+                var name = assetName;
+                var outfit = { "body": Avatars[ name ] };
+                localPlayer.outfit.add( outfit );
+
+            //  Add outfit to scene.
+                var frontAngle = Math.PI - cameraControls.getFrontAngle(); // face front.
+                localPlayer.controller.direction = frontAngle;
+                localPlayer.outfit.update();
+                scene.add(localPlayer.outfit.direction);
+
+            }).fail(function(err){
+
+            //  BE CAREFULL: "$.Deferred()" promise,
+            //  uses ".fail(function(err){});" 
+            //  instead of ".catch(function(err){})";
+                console.error(err);
+
+            });
+
+        } else {
+        
+            $.getJSON( assetUrl ).then(function(json){
+
+                if (!json) throw Error("json did not defined");
+
+                var name = assetName;
+                Avatars[ name ] = initOutfitAsset( json );
+
+                toLocalStore(key, json);
+                return Avatars[ name ];
+            
+            }).then(function(asset){
+
+                if (!asset) {
+                    var error = [
+                        "asset",
+                        assetName, 
+                        "did not defined."
+                    ].join(" ");
+                    throw Error( error );
+                }
+
+            //  var mapUrl = "https://i.imgur.com/tjNZqbq.jpg";
+            //  imgur Urls and ids are IMPORTANT now on      //
+
+                var imgurOptions = {
+                    ext    : "jpg",
+                    id     : "tjNZqbq",
+                    quality: "original",
+                };
+
+                var mapUrl = imgurQualityUrl( imgurOptions );
+                debugMode && console.log("mapUrl:", mapUrl);
+
+                var textureOptions = {
+                    url  : mapUrl,
+                    asset: asset,
+                    map  : "map",
+                    name : "skeleton_map",
+                }
+                
+                textureMapLoader( textureOptions );
+
+            }).then(function(){
+
+            //  Add avatar akeleton.
+                var name = assetName;
+                var outfit = { "body": Avatars[ name ] };
+                localPlayer.outfit.add( outfit );
+
+            //  Add outfit to scene.
+                var frontAngle = Math.PI - cameraControls.getFrontAngle(); // face front.
+                localPlayer.controller.direction = frontAngle;
+                localPlayer.outfit.update();
+                scene.add(localPlayer.outfit.direction);
+
+            }).fail(function(err){
+
+            //  BE CAREFULL: "$.getJSON()" promise,
+            //  uses ".fail(function(err){});" 
+            //  instead of ".catch(function(err){})";
+                console.error(err);
+
+            });
+        
+        }
+
+    } else {
+
+//  if ( !window.localStorage) {
+    
+        $.getJSON( assetUrl ).then(function(json){
+
+            if (!json) throw Error("json did not defined");
+
+        //  console.log("json:", json);
+            var name = assetName;
+            Avatars[ name ] = initOutfitAsset( json );
+            return Avatars[ name ];
+            
+        }).then(function(asset){
+
+            if (!asset) throw Error("asset did not defined");
+
+        //  var mapUrl = "https://i.imgur.com/tjNZqbq.jpg";
+        //  imgur Urls and ids are IMPORTANT now on      //
+
+            var imgurOptions = {
+                ext    : "jpg",
+                id     : "tjNZqbq",
+                quality: "original",
+            };
+
+            var mapUrl = imgurQualityUrl( imgurOptions );
+            debugMode && console.log("mapUrl:", mapUrl);
+
+        //  Load texture.
+            var url = mapUrl;
+            var map = "map";
+            var name = "skeleton_map";
+
+            var img = new Image();
+            img.crossOrigin = "anonymous";
+            $(img).one("load", function (){
+                var texture = new THREE.Texture( img ); // or canvas //
+                texture.name = name;
+                texture.sourceFile = url;
+                applyTexture( asset, texture, map );
+                $(img).remove();
+            });
+
+            img.src = url;
+
+        }).then(function(){
+    
+        //  Add avatar akeleton.
+            var name = assetName;
+            var outfit = { "body": Avatars[ name ] };
+            localPlayer.outfit.add( outfit );
+
+        //  Add outfit to scene.
+            var frontAngle = Math.PI - cameraControls.getFrontAngle(); // face front.
+            localPlayer.controller.direction = frontAngle;
+            localPlayer.outfit.update();
+            scene.add(localPlayer.outfit.direction);
+
+        }).fail(function(err){
+
+        //  BE CAREFULL: "$.getJSON()" promise,
+        //  uses ".fail(function(err){});" 
+        //  instead of ".catch(function(err){})";
+            console.error(err);
+
+        });
+
+    }
+*/
+
+/*
+    function toLocalStore( key, data ){
+        if (!window.localStorage) return;
+        return localStorage[key] = JSON.stringify(data);
+    }
+
+    function fromLocalStore( key ){
+        if (!window.localStorage) return;
+        if ( !localStorage[key] ) return;
+        return JSON.parse( localStorage[key] );
+    }
+*/
 
 /*
 function imgurQualityUrl(id, ext, quality){
@@ -289,3 +682,4 @@ function imgurQualityUrl(id, ext, quality){
         localPlayer.outfit.update();
     }
 */
+

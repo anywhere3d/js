@@ -32,5 +32,5 @@
         $OutfitEditorPanel.active = false;
         debugMode && console.log( "dialog closed:", !$OutfitEditorPanel.active );
         showAvaliableOutfitOptions();
+        $OutfitEditorPanel.contents().remove();
     });
-
