@@ -114,7 +114,9 @@
 //  The "updated" event is fired by "cameraControls.update()"
 //  Used in "keyInputControls.js" and "joystickControls.js" event listeners.
 
-
+//  If we want camera to have collision with any objects (e.g. ground), 
+//  we add (push) the objects (e.g. ground) in cameraControls rigidObjects.
+//  cameraControls.rigidObjects.push( ground );
 
 
 
