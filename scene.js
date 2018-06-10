@@ -63,7 +63,7 @@
         "https://i.imgur.com/N0oZlJR.jpg", // "negy.jpg", 
         "https://i.imgur.com/x9q8z0K.jpg", // "posz.jpg", 
         "https://i.imgur.com/HYcK7Ii.jpg", // "negz.jpg"
-    ];);
+    ]);
 
     function sceneBackground( urls ){
         if (!scene || Number(THREE.REVISION) < 78) return;
