@@ -2,13 +2,9 @@
 
 
     var scriptsFolder  = "/scripts/";
+    var assetsFolder = "/skinned/";  // deprecated //
     var skinnedFolder = "/skinned/";
     var texturesFolder = "/textures/";
-    var assetsFolder = function(){
-        console.warn("'assetFolder' is deprecated. "
-        + "Please use 'skinnedFolder' instead.");
-        return "/skinned/";
-    };
 
     Avatars = {};
 
