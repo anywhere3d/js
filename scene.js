@@ -115,10 +115,6 @@
 //  MESHWALK use octree system to detect collision objects.
     octree.importThreeMesh( ground ); // IMPORTANT //
 
-//  We do not want camera to have collision with any objects,
-//  so we do not add ground in cameraControls rigidObjects.
-//  cameraControls.rigidObjects.push( ground );
-
 //  -----------------------------------------------------------------------------------------------------------------------  //
 
 // SceneHelpers.js
