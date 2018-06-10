@@ -1,11 +1,5 @@
 //  Player.js
 
-    /*!
-    * @author anywhere3d
-    * http://anywhere3d.org
-    * MIT License
-    */
-
     var world;
     var debugMode;
     var AnimationPanelControls;
@@ -135,23 +129,10 @@
 
 //  AW3D PlayerController.js
 
-    /*!
-    * @author anywhere3d
-    * http://anywhere3d.org
-    * MIT License
-    */
-
     localPlayer.controller = new MW.CharacterController( localPlayer.holder, localPlayer.radius );
-
-//  localPlayer.controller.center.y = 1;  // VERY IMPORTANT //
-//  var x = Math.random() - 0.5; x = Math.ceil(x * 500); localPlayer.controller.center.x = x;
-//  var z = Math.random() - 0.5; z = Math.ceil(z * 500); localPlayer.controller.center.z = z;
-//  Player Controller random initial position.
-
     localPlayer.controller.radius   = 1;  // VERY IMPORTANT //
     localPlayer.controller.center.set(-100, 1, 200);
     debugMode && console.log( "initial position:", localPlayer.controller.center );
-
 
     localPlayer.controller.getdata = function(action){
 
@@ -179,46 +160,6 @@
         "world.characterPool length:", world.characterPool.length, 
         "index:", world.characterPool.indexOf( localPlayer.controller )
     );
-
-
-/*
- *  PlayerController - How it works.
- *  --------------------------------
-
- *     MW.CharacterController.events(): (internal)
- *     this.dispatchEvent( { type: 'startIdling' } );
- *     this.dispatchEvent( { type: 'startRunning' } );
- *     this.dispatchEvent( { type: 'startJumping' } );
- *     this.dispatchEvent( { type: 'startSliding' } );
- *     this.dispatchEvent( { type: 'startFalling' } );
- *     this.dispatchEvent( { type: 'endJumping' } );
-
- * When "playerController" has been added in "world", every CharacterController
- * in "world.characterPool" is updating via "CharacterController.update(dt)" at
- * every "world.step(dt)". Depending on status of "playerController" at every (dt)
- * step, it dispatch events. Catching this events with events listeners we can
- * handle things. We handle "playerController" from its proterties, not from its
- * events. PlayerController dispatch (sent) events, does not receive.
- * You can add/remove your custom events listeners or dispatch custom event 
- * from "playerController" using the "addEventListener( type, function)"
- * "removeEventListener( type, function)" or "dispatchEvent({type:name})".
- * It is not recomented to use jquery "$(playerController).on(type, function)",
- * style to add/remove events listeners on PlayerController.
-
- * On the other side, when the socket event received, we send the controller data
- * to the "remotePlayerController" which is updating via "world.step(dt)" and updates
- * the remote outfit. The "remotePlayerController" also dispatch an event but as we
- * dont have add event listeners to "remotePlayerController" the events should be not
- * received and will be lost (hopefully).
- */
-//  ----------------------------------------------------------------------------  //
-
-/* Remote players MUST NOT been added in world. 
- * From now on playerController.js sent the socket messages, 
- * not the keyInputControls.js*.
- * keyInputControls.js sent socket messages ONLY at direction change.
- * DO NOT USE jquery event listeners style here.
-*/
 
     localPlayer.controller.addEventListener("startIdling",  onStartIdling);
     localPlayer.controller.addEventListener("startRunning", onStartRunning);
@@ -319,80 +260,3 @@
     }
 
 
-
-
-/*
-//  -------------------- DEPRECATED --------------------  //
-
-    localPlayer.getdata = function(){
-
-    //  Collect position and gender to websocket server.
-
-        var data = {}; // localPlayer.controller.getdata();
-        data.playerid  = socket.id;
-        data.nickname  = this.nickname;
-        data.gender    = this.outfit.getGender();
-        data.direction = this.outfit.direction.rotation.y;
-        data.position  = this.outfit.direction.position.toArray();
-
-        var outfit = this.outfit;
-        var outfits = this.outfit.outfits;
-        outfits.forEach( function( name ){
-
-            if (!!outfit[name]) data[name] = outfit.getdata(name);
-        
-        });
-
-        debugMode && console.log("local player data:", data);
-
-        return data;
-
-    };
-
-    localPlayer.getdata = function(){
-
-    //  Collect position and gender to websocket server.
-
-        var data = {}; // localPlayer.controller.getdata();
-        data.playerid  = socket.id;
-        data.nickname  = this.nickname;
-        data.gender    = this.outfit.getGender();
-        data.direction = this.outfit.direction.rotation.y;
-        data.position  = this.outfit.position.toArray();
-
-    //  Collect outfit materials data.
-
-        switch ( localPlayer.outfit.getGender() ){
-
-            case "male": {
-                data.body     = this.outfit.getdata("body");
-                data.hairs    = this.outfit.getdata("hairs");
-                data.tshirt   = this.outfit.getdata("tshirt");
-                data.trousers = this.outfit.getdata("trousers");
-                data.shoes    = this.outfit.getdata("shoes");
-                break;
-            }
-
-            case "female": {
-                data.body  = this.outfit.getdata("body");
-                data.hairs = this.outfit.getdata("hairs");
-                data.dress = this.outfit.getdata("dress");
-                break;
-            }
-
-            case false: {
-                data.body  = this.outfit.getdata("body");
-                break;
-            }
-                
-            default:
-                data.body  = this.outfit.getdata("body");
-        }
-        
-        debugMode && console.log("local player data:", data);
-        
-        return data;
-        
-    }
-//  ----------------------------------------------------  //
-*/
