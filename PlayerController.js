@@ -81,15 +81,9 @@
 
 //  MW cameraControls.js
 
-    /*!
-    * @author anywhere3d
-    * http://anywhere3d.org
-    * MIT License
-    */
+    var cameraControls;
 
 //  Camera offsets.
-
-    var cameraControls;
 
     var hatOffset    = 30;
     var headOffset   = 25;
