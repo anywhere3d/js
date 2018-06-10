@@ -1,5 +1,7 @@
 //  jquery-update-engine.js
 
+    var debugMode;
+
 //  jQuery updating.
 //  Every object that needs update has a coresponding "update dom element".
 //  When the "update dom element" has class "update", it trigger the object 
@@ -45,93 +47,16 @@
 //  $actionsPanelUpdater.update = function(delta){ AnimationPanelControls.update(); };
     $animationHandlerUpdater.update = function(delta){ THREE.AnimationHandler.update( delta ); };
 
+    $(localPlayerOutfitSelector).toggleClass("update");
+    $(worldSelector).toggleClass("update");
+    $(cameraControlsSelector).toggleClass("update");
+    $(keyInputControlsSelector).toggleClass("update");
+    $(joystick1ContolsSelector).toggleClass("update");
+    $(joystick2ContolsSelector).toggleClass("update");
+//  $(AnimationPanelControlsSelector).toggleClass("update");
+    $(ThreeAnimationHandlerSelector).toggleClass("update");
 
-    if (debugMode){
-
-        var a = '<li class="updater updater-helpers" data-selector="'
-        var b = '"><a>';
-        var c = '</a></li>';
-        var updaterSelector = ".updater";
-        var updaterHelpersSelector = ".updater-helpers";
-        var updatersHolderSelector = "#updaters-holder";
-
-        $(updatersHolderSelector).append('<h4>Updaters:</h4>');
-        $(updatersHolderSelector).append(a + localPlayerOutfitSelector + b + "Outfit update paused" + c);
-        $(updatersHolderSelector).append(a + worldSelector + b + "World update paused" + c);
-        $(updatersHolderSelector).append(a + cameraControlsSelector + b + "Camera controls paused" + c);
-        $(updatersHolderSelector).append(a + keyInputControlsSelector +  b + "Key controls paused" + c);
-        $(updatersHolderSelector).append(a + joystick1ContolsSelector + b + "Joystick1 update paused" + c);
-        $(updatersHolderSelector).append(a + joystick2ContolsSelector + b + "Joystick2 update paused" + c);
-        $(updatersHolderSelector).append(a + AnimationPanelControlsSelector + b + "Actions update paused" + c); // Animation panel remote player updater. //
-        $(updatersHolderSelector).append(a + ThreeAnimationHandlerSelector + b + "Animations update paused" + c);
-
-    
-        $(updaterSelector).on("click", function(){
-            var selector = $(this).attr("data-selector");
-            $(selector).toggleClass("update");
-    
-            if ( $(selector).hasClass("update") ){
-
-                var text = $(this).find("a").text()
-                           .replace(/paused/,  "playing");
-                $(this).find("a").text( text );
-                $(this).find("a").css("color", "limegreen");
-
-            } else {
-
-                var text = $(this).find("a").text()
-                           .replace(/playing/, "paused");
-                $(this).find("a").text( text );
-                $(this).find("a").css("color", "");
-            }
-
-            if ( selector == keyInputControlsSelector 
-            && $(keyInputControlsSelector).hasClass("update") ){
-                keyInputControls.On();
-            }
-
-            if ( selector == keyInputControlsSelector 
-            && !$(keyInputControlsSelector).hasClass("update") ){
-                keyInputControls.Off();
-            }
-            
-            if ( selector == cameraControlsSelector ){
-                $(cameraSelector).toggleClass("render");
-                camera.position.set(0,25,0);
-            }
-
-        });
-
-        $(worldSelector).toggleClass("update");
-        $(cameraControlsSelector).toggleClass("update");
-        $(ThreeAnimationHandlerSelector).toggleClass("update");
-
-        var $worldUpdaterHelper = $(".updater[data-selector=" + worldSelector + "]").find("a");
-        var $cameraControlsUpdaterHelper = $(".updater[data-selector=" + cameraControlsSelector + "]").find("a");
-        var $animationHandlerUpdaterHelper = $(".updater[data-selector=" + ThreeAnimationHandlerSelector + "]").find("a");
-        
-        $worldUpdaterHelper.text( $worldUpdaterHelper.text().replace(/paused/,  "playing") );
-        $cameraControlsUpdaterHelper.text( $cameraControlsUpdaterHelper.text().replace(/paused/,  "playing") );
-        $animationHandlerUpdaterHelper.text( $animationHandlerUpdaterHelper.text().replace(/paused/,  "playing") );
-
-        $(".updater[data-selector=" + worldSelector + "]").find("a").css("color", "limegreen");
-        $(".updater[data-selector=" + cameraControlsSelector + "]").find("a").css("color", "limegreen");
-        $(".updater[data-selector=" + ThreeAnimationHandlerSelector + "]").find("a").css("color", "limegreen");
-
-    } else {
-
-        $(localPlayerOutfitSelector).toggleClass("update");
-        $(worldSelector).toggleClass("update");
-        $(cameraControlsSelector).toggleClass("update");
-        $(keyInputControlsSelector).toggleClass("update");
-        $(joystick1ContolsSelector).toggleClass("update");
-        $(joystick2ContolsSelector).toggleClass("update");
-    //  $(AnimationPanelControlsSelector).toggleClass("update");
-        $(ThreeAnimationHandlerSelector).toggleClass("update");
-        
-        keyInputControls.On(); // IMPORTANT //
-
-    }
+    keyInputControls.On(); // IMPORTANT //
 
 //  jQuery updating.
 //  Every object that needs update has a coresponding "update dom element".
