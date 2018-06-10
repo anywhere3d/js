@@ -31,9 +31,9 @@
     var cameraSelector = "#camera";
     $(rendersSelector).append('<input type="hidden" id="camera">');
     $(cameraSelector)[0].render = function(){ 
-        camera.position.z += ( - mouse.x - camera.position.z ) * .001;
+        camera.position.x += ( - mouse.x - camera.position.x ) * .001;
         camera.position.y += ( - mouse.y - camera.position.y ) * .001;
-        camera.position.x += ( localPlayer.controller.center.x - camera.position.x ) * .01;
+        camera.position.z += ( localPlayer.controller.center.z - camera.position.z ) * .01;
         camera.lookAt(  
             new THREE.Vector3(
                 localPlayer.controller.center.x, 
