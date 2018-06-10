@@ -2,49 +2,12 @@
 
 
     var scriptsFolder  = "/scripts/";
-    var assetsFolder = "/models/skinned/";
-    var texturesFolder = "/models/textures/";
+    var assetsFolder = "/skinned/";
+    var texturesFolder = "/textures/";
 
     Avatars = {};
 
     var initOutfitAsset = initSkinnedAsset;
-
-//  Convert a SkinnedMesh toJSON:
-//  THREE.SkinnedMesh.toJSON = function(){
-    //  0.  var bones = this.geometry.bones;        // get the bones.
-    //  1.  var json = this.toJSON();               // simple mesh json.
-    //  2.  json.object.children.length = 0;        // delete children bones.
-    //  3.  json.geometries[0].data.bones = bones;  // add bones to geometry.
-    //      json.geometries[0].data.skinIndices ??? // get from json file.
-    //      json.geometries[0].data.skinWeights ??? // get from json file.
-    //      json.geometries[0].data.morphNormals ?  // get from json file.
-    //      json.geometries[0].data.morphTargets ?  // get from json file.
-    //  4.  json.object.type = "Mesh"               // change type to "Mesh".
-    //  return json;
-//  }
-
-//  SkinnedMeshLoader = function(){
-
-//      this.parse = function(json){
-//          var loader = new THREE.ObjectLoader();
-//          var mesh = loader.parse(json);
-//          var geometry = mesh.geometry;
-//          var material = mesh.material;
-//          mesh.materials.forEach( function ( material ) {
-//              material.skinning = true;   // IMPORTANT //
-//          });
-//          var skinned = new THREE.SkinnedMesh(geometry, material)
-//          skinned.frustumCulled = false;        // VERY IMPORTANT // 
-//          skinned.position.set( 0, 0, 0 );
-//          skinned.rotation.set( 0, 0, 0 ); 
-//          skinned.scale.set( 1, 1, 1 );
-//          skinned.renderDepth = 1;
-//      
-//          return skinned;
-//      };
-//
-//      return this.loader;
-//  }
 
     function toLocalStore( key, data ){
         if (!window.localStorage) return;
@@ -126,18 +89,7 @@
             try { bootboxErrorAlert( msg ); } catch(err){ alert(msg); }
         }
     }
-/*
-    function sceneAddLocalPlayerBody( name ){
 
-        localPlayer.outfit.add( {"body": Avatars[ name ]} );
-        var frontAngle = Math.PI - cameraControls.getFrontAngle(); // face front.
-        localPlayer.controller.direction = frontAngle;
-        localPlayer.outfit.update();
-        scene.add(localPlayer.outfit.direction);
-        debugMode && console.log("Local player outfit body has added.");
-
-    }
-*/
     function initSkinnedAsset( json ){
 
         var loader = new THREE.JSONLoader();
