@@ -2,11 +2,11 @@
 
     var debugMode;
 
-//    var skeletonAsset = assetsFolder + "HF_MannySkeleton_ABK04_v01.js";
+//    var skeletonAsset = skinnedFolder + "HF_MannySkeleton_ABK04_v01.js";
 
-//    var assetKey = "aw3d.avatar.skeleton";
+//    var assetKey = "skeleton";
 //    var assetName = "skeleton";
-//    var assetUrl = assetsFolder + "HF_MannySkeleton_ABK04_v01.js";
+//    var assetUrl = skinnedFolder + "HF_MannySkeleton_ABK04_v01.js";
 
 //  More simple solution. Using service-worker for caching all data.
 
@@ -48,8 +48,8 @@
     $getSkeleton({
 
         name: "skeleton",
-        key : "aw3d.avatar.skeleton",        
-        url : assetsFolder + "HF_MannySkeleton_ABK04_v01.js", 
+        key : "skeleton",        
+        url : skinnedFolder + "HF_MannySkeleton_ABK04_v01.js", 
 
     }, function loadTextures( asset ){
 
