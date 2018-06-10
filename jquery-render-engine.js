@@ -42,7 +42,10 @@
             )
         );
     };
-  
+
+    camera.position.set(0,25,0);
+    $(cameraSelector).toggleClass("render");
+
 //  jQuery rendering.
 //  Every object that needs render has a coresponding "render dom element".
 //  When the "render dom element" has class "render", it trigger the object 
