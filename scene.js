@@ -95,7 +95,7 @@
     octree = new MW.Octree( min, max, partition );
     world.add( octree );
 
-//  Ground. (its going after cameraControls created)
+//  Ground.
     var ground = new THREE.Mesh(
         new THREE.PlaneGeometry( 6000, 6000, 1, 1 ),
         new THREE.MeshBasicMaterial({ 
