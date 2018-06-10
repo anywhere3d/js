@@ -198,11 +198,11 @@
         //  console.log("AnimationPanelControls not active:", !AnimationPanelControls.isActive );
         }
 
-        if ( !joystick1.isActive 
-          && !keyInputControls.isMoveKeyHolded
-          && !AnimationPanelControls.isActive ){
+        if ( !!AnimationPanelControls ) {
 
-            try {
+            if ( !joystick1.isActive 
+              && !keyInputControls.isMoveKeyHolded
+              && !AnimationPanelControls.isActive ){
 
                 localPlayer.outfit.AnimationsHandler.stop();        
                 localPlayer.controller.isRunning = false;
@@ -212,17 +212,40 @@
                 localPlayer.outfit.AnimationsHandler.play("idle");
                 localPlayer.controller.dispatchEvent({type:"startIdling"});
 
-            } catch(err){;}
+            } else {
+
+                localPlayer.outfit.AnimationsHandler.stop();
+                localPlayer.controller.isRunning = true;
+                localPlayer.controller.isWalking = true;
+                localPlayer.controller.isIdling  = false;
+                localPlayer.controller.movementSpeed = 28;
+                localPlayer.outfit.AnimationsHandler.play("walk");
+                localPlayer.controller.dispatchEvent({type:"startRunning"});
+            }
 
         } else {
 
-            localPlayer.outfit.AnimationsHandler.stop();
-            localPlayer.controller.isRunning = true;
-            localPlayer.controller.isWalking = true;
-            localPlayer.controller.isIdling  = false;
-            localPlayer.controller.movementSpeed = 28;
-            localPlayer.outfit.AnimationsHandler.play("walk");
-            localPlayer.controller.dispatchEvent({type:"startRunning"});
+            if ( !joystick1.isActive && !keyInputControls.isMoveKeyHolded ){
+
+                localPlayer.outfit.AnimationsHandler.stop();        
+                localPlayer.controller.isRunning = false;
+                localPlayer.controller.isWalking = false;
+                localPlayer.controller.isIdling  = true;
+                localPlayer.controller.movementSpeed = 0;
+                localPlayer.outfit.AnimationsHandler.play("idle");
+                localPlayer.controller.dispatchEvent({type:"startIdling"});
+
+            } else {
+
+                localPlayer.outfit.AnimationsHandler.stop();
+                localPlayer.controller.isRunning = true;
+                localPlayer.controller.isWalking = true;
+                localPlayer.controller.isIdling  = false;
+                localPlayer.controller.movementSpeed = 28;
+                localPlayer.outfit.AnimationsHandler.play("walk");
+                localPlayer.controller.dispatchEvent({type:"startRunning"});
+            }
+
         }
 
     //  debugMode && console.log( "localPlayer.controller:", "endJumping:" );
