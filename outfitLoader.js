@@ -7,7 +7,7 @@
     var assetsFolder = function(){
         console.warn("'assetFolder' is deprecated. "
         + "Please use 'skinnedFolder' instead.");
-        return; "/skinned/";
+        return "/skinned/";
     };
 
     Avatars = {};
