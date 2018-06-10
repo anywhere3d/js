@@ -49,7 +49,7 @@
 
     $(localPlayerOutfitSelector).toggleClass("update");
     $(worldSelector).toggleClass("update");
-    $(cameraControlsSelector).toggleClass("update");
+//  $(cameraControlsSelector).toggleClass("update");
     $(keyInputControlsSelector).toggleClass("update");
     $(joystick1ContolsSelector).toggleClass("update");
     $(joystick2ContolsSelector).toggleClass("update");
