@@ -56,27 +56,23 @@
     renderer.setSize( container.clientWidth, container.clientHeight );
     container.appendChild( renderer.domElement );
 
-    sceneBackground( "/skyboxes/space4/" );
+    sceneBackground([
+        "https://i.imgur.com/v6bjQLb.jpg", // "posx.jpg",
+        "https://i.imgur.com/lwrlr6P.jpg", // "negx.jpg", 
+        "https://i.imgur.com/kKUKBJg.jpg", // "posy.jpg", 
+        "https://i.imgur.com/N0oZlJR.jpg", // "negy.jpg", 
+        "https://i.imgur.com/x9q8z0K.jpg", // "posz.jpg", 
+        "https://i.imgur.com/HYcK7Ii.jpg", // "negz.jpg"
+    ];);
 
-    function sceneBackground( path ){
-        if (!!scene && Number(THREE.REVISION) >= 78) {
-    
-            skyboxfolder = path;
-            var loader = new THREE.CubeTextureLoader();
-            var urls = [
-                "https://i.imgur.com/v6bjQLb.jpg", // "posx.jpg",
-                "https://i.imgur.com/lwrlr6P.jpg", // "negx.jpg", 
-                "https://i.imgur.com/kKUKBJg.jpg", // "posy.jpg", 
-                "https://i.imgur.com/N0oZlJR.jpg", // "negy.jpg", 
-                "https://i.imgur.com/x9q8z0K.jpg", // "posz.jpg", 
-                "https://i.imgur.com/HYcK7Ii.jpg", // "negz.jpg"
-            ];
-            loader.load( urls, function(texture){
-            //  debugMode && console.log("cube texture loaded:", url);
-                scene.background = texture;
-                scene.background.needsUpdate = true;
-            });
-        }
+    function sceneBackground( urls ){
+        if (!scene || Number(THREE.REVISION) < 78) return;
+        var loader = new THREE.CubeTextureLoader();
+        loader.load( urls, function(texture){
+            scene.background = texture;
+            scene.background.needsUpdate = true;
+        });
+
     }
 
 //  -----------------------------------------------------------------------------------------------------------------------  //
