@@ -16,33 +16,47 @@
         var key  = options.key;
         var name = options.name;
 
-        $.getJSON( url ).then(function(json){
+        AW3Dstore.getItem(key).then(function( result ){ 
 
-            if (!json) 
-                throw Error("Error: json not defined.");
+            if ( !result ){
 
-        //  Local Forage.
-            AW3Dstore.setItem(key, json).then(function (value) {
-                debugMode && console.log(key, value);
-                return value;
+                $.getJSON( url ).then(function(json){
 
-            }).catch( function(err){
-                throw Error(err);
-                
-            }).then(function(json){
-                Avatars[ name ] = initSkinnedAsset( json );
-                return Avatars[ name ];
+                    if (!json) 
+                        throw Error("Error: json not defined.");
 
-            }).then(function(asset){
-                loadTextures( asset );
+                //  Local Forage.
+                    AW3Dstore.setItem(key, json).then(function (value) {
+                        debugMode && console.log(key, value);
+                        return value;
 
-            }).then(function(){
+                    }).catch( function(err){
+                        throw Error(err);
+
+                    }).then(function(json){
+                        Avatars[ name ] = initSkinnedAsset( json );
+                        return Avatars[ name ];
+
+                    }).then(function(asset){
+                        loadTextures( asset );
+
+                    }).then(function(){
+                        sceneAddBody( name );
+                    });
+
+                }).fail(function(err){
+                    console.error(err);
+                });
+
+            } else {
+
+                Avatars[ name ] = initSkinnedAsset( result );
+                loadTextures( Avatars[ name ] );
                 sceneAddBody( name );
-            });
 
-        }).fail(function(err){
-            console.error(err);
-        });
+            }
+
+        }) 
 
     }
 
