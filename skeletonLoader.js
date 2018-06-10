@@ -88,12 +88,12 @@
             var index = options.index;
             var asset = options.asset;
 
-            var texture = new THREE.Texture();
-            texture.name = name;
-            texture.sourceFile = url;
             var loader = new THREE.ImageLoader();
             loader.setCrossOrigin( "anonymous" );
             loader.load( url, function ( image ) {
+                var texture = new THREE.Texture();
+                texture.name = name;
+                texture.sourceFile = url;
                 texture.image = image;
                 texture.needsUpdate = true;
                 applyTexture( asset, texture, map, index );
