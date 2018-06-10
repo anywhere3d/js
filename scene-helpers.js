@@ -1,4 +1,4 @@
-// SceneHelpers.js
+// sceneHelpers.js
 
     function toggleHelperVisible(theHelper){
         theHelper.visible = !theHelper.visible;
