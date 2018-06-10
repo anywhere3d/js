@@ -93,8 +93,8 @@
             loader.load( url, function ( image ) {
                 var texture = new THREE.Texture();
                 texture.name = name;
-                texture.sourceFile = url;
                 texture.image = image;
+                texture.sourceFile = url;
                 texture.needsUpdate = true;
                 applyTexture( asset, texture, map, index );
             })
