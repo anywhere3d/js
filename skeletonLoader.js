@@ -12,14 +12,16 @@
 
     function $getSkeleton( options, loadTextures, sceneAddBody){
 
+        debugMode && console.log("$getSkeleton()");
+
         var url  = options.url;
         var key  = options.key;
         var name = options.name;
 
         $.getJSON( url ).then(function(json){
 
-        //  Local Storage.
-        //  addToLocalStorageAvatars(name, json);
+        //  Local Forage.
+        //  AW3Dstore (key, json);
 
             if (!json) throw Error("json did not defined");
             Avatars[ name ] = initOutfitAsset( json );
@@ -48,7 +50,7 @@
     $getSkeleton({
 
         name: "skeleton",
-        key : "skeleton",        
+        key : "skeleton.json",        
         url : skinnedFolder + "HF_MannySkeleton_ABK04_v01.js", 
 
     }, function loadTextures( asset ){
