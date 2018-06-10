@@ -202,13 +202,17 @@
           && !keyInputControls.isMoveKeyHolded
           && !AnimationPanelControls.isActive ){
 
-            localPlayer.outfit.AnimationsHandler.stop();        
-            localPlayer.controller.isRunning = false;
-            localPlayer.controller.isWalking = false;
-            localPlayer.controller.isIdling  = true;
-            localPlayer.controller.movementSpeed = 0;
-            localPlayer.outfit.AnimationsHandler.play("idle");
-            localPlayer.controller.dispatchEvent({type:"startIdling"});
+            try {
+
+                localPlayer.outfit.AnimationsHandler.stop();        
+                localPlayer.controller.isRunning = false;
+                localPlayer.controller.isWalking = false;
+                localPlayer.controller.isIdling  = true;
+                localPlayer.controller.movementSpeed = 0;
+                localPlayer.outfit.AnimationsHandler.play("idle");
+                localPlayer.controller.dispatchEvent({type:"startIdling"});
+
+            } catch(err){;}
 
         } else {
 
