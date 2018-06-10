@@ -31,21 +31,16 @@
     $(window).on( "resize", onWindowResize );
 
     function onWindowResize() {
-
         camera.aspect = container.clientWidth / container.clientHeight;
         camera.updateProjectionMatrix();
         renderer.setSize( container.clientWidth, container.clientHeight );
-        
         rendererHalfWidth = renderer.domElement.width * 0.5;
         rendererHalfHeight = renderer.domElement.height * 0.5;
-
     }
 
     $(window).on( "mousemove", onMouseMove );
 
-	function onMouseMove( event ) {
-
+    function onMouseMove( event ) {
         mouse.x = ( event.clientX - rendererHalfWidth );
         mouse.y = ( event.clientY - rendererHalfHeight );
-
-	}
+    }
