@@ -255,27 +255,54 @@
     //  (move/jump/idle) send from input/joystick/action controllers.
 
     //  Send startJumping message to server.
-        if ( joystick1.isActive 
-          || keyInputControls.isMoveKeyHolded 
-          || AnimationPanelControls.isActive ){
 
-            if (!!controlsChannel) controlsChannel.publish({ 
-                playerid : socket.id,
-                direction: localPlayer.outfit.direction.rotation.y,
-                position : localPlayer.outfit.direction.position.toArray(),
-                action   : "walk",
-            });
+        if ( !!AnimationPanelControls ) {
+
+            if ( joystick1.isActive 
+              || keyInputControls.isMoveKeyHolded 
+              || AnimationPanelControls.isActive ){
+
+                if (!!controlsChannel) controlsChannel.publish({ 
+                    playerid : socket.id,
+                    direction: localPlayer.outfit.direction.rotation.y,
+                    position : localPlayer.outfit.direction.position.toArray(),
+                    action   : "walk",
+                });
+
+            } else {
+
+                if (!!controlsChannel) controlsChannel.publish({ 
+                    playerid : socket.id,
+                    direction: localPlayer.outfit.direction.rotation.y,
+                    position : localPlayer.outfit.direction.position.toArray(),
+                    action   : "idle",
+                });
+            }
 
         } else {
 
-            if (!!controlsChannel) controlsChannel.publish({ 
-                playerid : socket.id,
-                direction: localPlayer.outfit.direction.rotation.y,
-                position : localPlayer.outfit.direction.position.toArray(),
-                action   : "idle",
-            });
+            if ( joystick1.isActive 
+              || keyInputControls.isMoveKeyHolded ){
+
+                if (!!controlsChannel) controlsChannel.publish({ 
+                    playerid : socket.id,
+                    direction: localPlayer.outfit.direction.rotation.y,
+                    position : localPlayer.outfit.direction.position.toArray(),
+                    action   : "walk",
+                });
+
+            } else {
+
+                if (!!controlsChannel) controlsChannel.publish({ 
+                    playerid : socket.id,
+                    direction: localPlayer.outfit.direction.rotation.y,
+                    position : localPlayer.outfit.direction.position.toArray(),
+                    action   : "idle",
+                });
+            }
+
         }
-        
+
     }
     
     function onStartSliding(){
