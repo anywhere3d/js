@@ -9,7 +9,6 @@
 //    var assetUrl  = assetsFolder + "HF_BraLayer_FBK05_v01.js";
 
     $getOutfit({
-
         name: "fmBra",
         key : "fmBra",
         url : assetsFolder + "HF_BraLayer_FBK05_v01.js", 
