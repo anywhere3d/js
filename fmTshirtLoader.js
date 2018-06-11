@@ -25,7 +25,7 @@
 
                 Avatars[ name ] = initSkinnedAsset( result );
                 loadTextures( Avatars[ name ] );
-                loadFrontTexture(asset);
+                loadFrontTexture( Avatars[ name ] );
 
             }
 
@@ -57,7 +57,7 @@
                         console.log("success:", result);
                         Avatars[ name ] = initSkinnedAsset( result );
                         loadTextures( Avatars[ name ] );
-                        loadFrontTexture(asset);
+                        loadFrontTexture( Avatars[ name ] );
                     }
 
                 }).catch(function(err) {
