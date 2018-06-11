@@ -122,8 +122,8 @@
         localPlayer.outfit.add( outfit );
         var frontAngle = Math.PI - cameraControls.getFrontAngle(); // face front.
         localPlayer.controller.direction = frontAngle;
-        localPlayer.outfit.update();
         scene.add(localPlayer.outfit.direction);
+        localPlayer.outfit.update();
 
     });
 
