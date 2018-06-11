@@ -15,7 +15,28 @@
         var name = options.name;
         var object = options.obj;
 
-        return $getJSON(options);
+        AW3Dstore.getItem(url).then(function(result){
+
+            debugMode && console.log("result:", result);
+
+            if ( !result || JSON.stringify(result) == "{}" ) {
+
+                debugMode && console.log("$getAnimation:", "Getting from web");
+
+                return $getJSON( options );
+
+            } else {
+
+                debugMode && console.log("Animations:", "Getting from AW3D Store");
+
+                object[name] = result;
+                if ( !!localPlayer && !!localPlayer.outfit )
+                    localPlayer.outfit.AnimationsHandler.refresh();
+                }
+
+        }).catch(function(err) {
+            console.error(err);
+        });
 
         function $getJSON(options){
 
@@ -25,11 +46,6 @@
             var object = options.obj;
 
             return $.getJSON( url, function(data){
-                object[ name ] = data;
-
-                if ( !!localPlayer && !!localPlayer.outfit ) {
-                    localPlayer.outfit.AnimationsHandler.refresh();
-                }
 
                 AW3Dstore.setItem(url, data).then(function(result){
 
@@ -47,6 +63,14 @@
                         console.log("success:", result);
                     }
 
+                }).then(function(data) {
+
+                    object[ name ] = data;
+
+                    if ( !!localPlayer && !!localPlayer.outfit ) {
+                        localPlayer.outfit.AnimationsHandler.refresh();
+                    }
+                    
                 }).catch(function(err) {
                     console.log(err);
                     throw Error(err);
@@ -54,7 +78,6 @@
 
             });
         }
-
     }
 
 //  Skeleton.
@@ -63,34 +86,11 @@
     var sk_runURL  = animationsFolder + "basic_walkcycle_animation_1sec.js";
     var sk_jumpURL = animationsFolder + "basic_jumping_animation_1.5sec.js";
 
-    AW3Dstore.getItem(sk_idleURL).then(function(result){
-
-        debugMode && console.log("result:", result);
-
-        var options = {
-            url:sk_idleURL, 
-            key:"idle", 
-            name:"idle", 
-            obj:Animations
-        };
-
-        if ( !result || JSON.stringify(result) == "{}" ) {
-
-            debugMode && console.log("Animations:", "Getting from web", sk_idleURL);
-
-            $getAnimation(options);
-
-        } else {
-
-            debugMode && console.log("Animations:", "Getting from AW3D Store");
-
-            Animations[options.name] = result;
-            if ( !!localPlayer && !!localPlayer.outfit )
-                localPlayer.outfit.AnimationsHandler.refresh();
-        }
-
-    }).catch(function(err) {
-        console.error(err);
+    $getAnimation({
+        url:sk_idleURL, 
+        key:"idle", 
+        name:"idle", 
+        obj:Animations
     });
 
     $getAnimation({
