@@ -8,40 +8,9 @@
 //    var assetKey  = "aw3d.outfit.female.trousers";
 //    var assetUrl  = assetsFolder + "HF_Trousers_FBK05_v02.js";
 
-    function $getFemaleTrousers(options, loadTextures){
-    
-        var url  = options.url;
-        var key  = options.key;
-        var name = options.name;
-
-        $.getJSON( url ).then(function(json){
-
-        //  Local Storage.
-        //  addToLocalStorageAvatars(name, json);
-
-            if (!json) throw Error("json did not defined");
-            Avatars[ name ] = initOutfitAsset( json );
-            return Avatars[ name ];
-
-        }).then(function(asset){
-            loadTextures( asset );
-        }).fail(function(err){
-            console.error(err);
-        });
-
-        function addToLocalStorageAvatars(key, data){
-            var object = {};
-            object[key] = data;
-            console.log(object);
-            store.add("Avatars", object);
-        }
-
-    }
-
-    $getFemaleTrousers({
-
+    $getOutfit({
         name: "fmTrousers",
-        key : "aw3d.avatar.female.trousers",
+        key : "fmTrousers",
         url : assetsFolder + "HF_Trousers_FBK05_v02.js", 
 
     }, function loadTextures(asset){
