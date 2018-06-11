@@ -8,42 +8,9 @@
 //    var assetKey  = "aw3d.avatar.female.hairs";
 //    var assetUrl  = assetsFolder + "HF_HairsMedium_FBK04_v02.js";
 
-//  More simple solution. Using service-worker for caching all data.
-
-    function $getFemaleHairs(options, loadTextures){
-    
-        var url  = options.url;
-        var key  = options.key;
-        var name = options.name;
-
-        $.getJSON( url ).then(function(json){
-
-        //  Local Storage.
-        //  addToLocalStorageAvatars(name, json);
-
-            if (!json) throw Error("json did not defined");
-            Avatars[ name ] = initOutfitAsset( json );
-            return Avatars[ name ];
-
-        }).then(function(asset){
-            loadTextures( asset )
-        }).fail(function(err){
-            console.error(err);
-        });
-
-        function addToLocalStorageAvatars(key, data){
-            var object = {};
-            object[key] = data;
-            console.log(object);
-            store.add("Avatars", object);
-        }
-
-    }
-
-
-    $getFemaleHairs({
+    $getOutfit({
         name: "fmHairs",
-        key : "aw3d.avatar.female.hairs",
+        key : "fmHairs",
         url : assetsFolder + "HF_HairsMedium_FBK04_v02.js", 
 
     }, function loadTextures( asset ){
