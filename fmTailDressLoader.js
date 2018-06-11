@@ -10,7 +10,7 @@
 
     $getOutfit({
         name: "fmTailDress",
-        key : "aw3d.avatar.female.taildress",
+        key : "fmTailDress",
         url : assetsFolder + "HF_LongTailDress_FBK05_v03.js", 
 
     }, function loadTextures( asset ){
