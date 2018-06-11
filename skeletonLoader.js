@@ -18,7 +18,7 @@
 
         AW3Dstore.getItem(key).then(function( result ){ 
 
-            if ( !result ){
+            if ( !result || JSON.stringify(result) == "{}" ) {
 
                 debugMode && console.log("$getSkeleton:", "Getting from web");
 
