@@ -45,35 +45,36 @@
 
             debugMode && console.log("Animations:", "Getting from web");
 
-            $getAnimation({
-                url:sk_idleURL, 
-                key:"idle", 
-                name:"idle", 
-                obj:Animations
-            });
+            Promise.all([
+                $getAnimation({
+                    url:sk_idleURL, 
+                    key:"idle", 
+                    name:"idle", 
+                    obj:Animations
+                }),
 
-            $getAnimation({
-                url:sk_walkURL, 
-                key:"walk", 
-                name:"walk", 
-                obj:Animations
-            });
+                $getAnimation({
+                    url:sk_walkURL, 
+                    key:"walk", 
+                    name:"walk", 
+                    obj:Animations
+                }),
 
-            $getAnimation({
-                url:sk_runURL, 
-                key:"run", 
-                name:"run", 
-                obj:Animations
-            });
+                $getAnimation({
+                    url:sk_runURL, 
+                    key:"run", 
+                    name:"run", 
+                    obj:Animations
+                }),
 
-            $getAnimation({
-                url:sk_jumpURL, 
-                key:"jump", 
-                name:"jump", 
-                obj:Animations
-            });
+                $getAnimation({
+                    url:sk_jumpURL, 
+                    key:"jump", 
+                    name:"jump", 
+                    obj:Animations
+                })
 
-            AW3Dstore.setItem("Animations", result)
+            ]).then(AW3Dstore.setItem("Animations", Animations)
             .then(function(result){
                 if (!!result) console.log("success");
             }).catch(function(err) {
