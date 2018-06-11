@@ -10,6 +10,77 @@
 //    var assetName = "skeleton";
 //    var assetUrl = skinnedFolder + "HF_MannySkeleton_ABK04_v01.js";
 
+    $getBones({
+        name: "bones",
+        key : "bones",
+        obj : Avatars,
+        url : skinnedFolder + "Bones_ABK04_v02.js", 
+    });
+
+    function $getBones( options ){
+
+        var url  = options.url;
+        var key  = options.key;
+        var name = options.name;
+        var object = options.obj;
+
+        AW3Dstore.getItem(url).then(function(result){
+
+        //  debugMode && console.log("result:", result);
+
+            if ( !result || JSON.stringify(result) == "{}" ) {
+
+                debugMode && console.log("Bones:", "Getting from web");
+
+                return $getJSON( options );
+
+            } else {
+
+                debugMode && console.log("Bones:", "Getting from AW3D Store");
+
+                object[ name ] = result;
+
+            }
+
+        }).catch(function(err) {
+            console.error(err);
+        });
+
+        function $getJSON(options){
+
+            var url  = options.url;
+            var key  = options.key;
+            var name = options.name;
+            var object = options.obj;
+
+            return $.getJSON( url, function(data){
+
+                AW3Dstore.setItem(url, data).then(function(result){
+
+                    if (!result) {
+                        var err = "Error: No result returned:" + result;
+                        console.log(err);
+                        throw Error(err);
+
+                    } else if ( JSON.stringify(result) == "{}" ) {
+                        var err = "Error: empty object:" + JSON.stringify(result);
+                        console.log(err);
+                        throw Error(err);
+
+                    } else {
+                        console.log("success:", result);
+                        object[ name ] = result;
+                    }
+
+                }).catch(function(err) {
+                    console.log(err);
+                    throw Error(err);
+                });
+
+            });
+        }
+    }
+
     function $getSkeleton( options, loadTextures, sceneAddPlayer){
 
         var url  = options.url;
@@ -80,7 +151,7 @@
     $getSkeleton({
 
         name: "skeleton",
-        key : "skeleton.json",        
+        key : "skeleton",        
         url : skinnedFolder + "HF_MannySkeleton_ABK04_v01.js", 
 
     }, function loadTextures( asset ){
@@ -141,6 +212,12 @@
         localPlayer.outfit.update();
 
     });
+
+
+
+
+
+
 
 
 /*
