@@ -73,7 +73,7 @@
                 obj:Animations
             });
 
-            AW3Dstore.setItem("Animations", Animations)
+            AW3Dstore.setItem("Animations", result)
             .then(function(result){
                 if (!!result) console.log("success");
             }).catch(function(err) {
@@ -87,8 +87,8 @@
 
             Animations = result;
 
-            //if ( !!localPlayer && !!localPlayer.outfit )
-            //  localPlayer.outfit.AnimationsHandler.refresh();
+            if ( !!localPlayer && !!localPlayer.outfit )
+                localPlayer.outfit.AnimationsHandler.refresh();
         }
 
     }).catch(function(err) {
