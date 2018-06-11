@@ -132,6 +132,7 @@
                     } else {
                         console.log("success:", result);
                         Avatars[ name ] = initSkinnedAsset( result );
+                        Avatars[ name ].geometry.sourceFile = url;
                         loadTextures( Avatars[ name ] );
                         sceneAddPlayer( name );
                     }
