@@ -16,7 +16,7 @@
         var key  = options.key;
         var name = options.name;
 
-        AW3Dstore.getItem(url).then(function( result ){ 
+        AW3D_Cache.getItem(url).then(function( result ){ 
 
             if ( !result || JSON.stringify(result) == "{}" ) {
 
@@ -26,7 +26,7 @@
 
             } else {
 
-                debugMode && console.log("Outfit:", "Getting from AW3D Store");
+                debugMode && console.log("Outfit:", "Getting from cache");
 
                 Avatars[ name ] = initSkinnedAsset( result );
                 Avatars[ name ].geometry.sourceFile = url;
@@ -46,7 +46,7 @@
 
             $.getJSON( url ).then(function(json){
 
-                AW3Dstore.setItem(url, json).then(function(result){
+                AW3D_Cache.setItem(url, json).then(function(result){
 
                     if (!result) {
                         var err = "Error: No result returned:" + result;
