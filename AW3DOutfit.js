@@ -386,19 +386,48 @@
                     var json = {};
                     
                     json.type = material.type;
-                    if (!!material.map)     json.map     = material.map.sourceFile;
+                    if (!!material.map) json.map = material.map.sourceFile;
+                    if (!!material.aoMap) json.aoMap = material.aoMap.sourceFile;
+                    if (!!material.envMap) json.envMap = material.envMap.sourceFile;
                     if (!!material.bumpMap) json.bumpMap = material.bumpMap.sourceFile;
-                    
+                    if (!!material.alphaMap) json.alphaMap = material.alphaMap.sourceFile;
+                    if (!!material.lightMap) json.lightMap = material.lightMap.sourceFile;
+                    if (!!material.normalMap) json.normalMap = material.normalMap.sourceFile;
+                    if (!!material.emissiveMap) json.emissiveMap = material.emissiveMap.sourceFile;
+                    if (!!material.specularMap) json.specularMap = material.specularMap.sourceFile;
+                    if (!!material.roughnessMap) json.roughnessMap = material.roughnessMap.sourceFile;
+                    if (!!material.metalnessMap) json.metalnessMap = material.metalnessMap.sourceFile;
+                    if (!!material.displacementMap) json.displacementMap = material.displacementMap.sourceFile;
+
                     var options = {}
-                    options.name = material.name;
+
                     options.uuid = material.uuid;
-                    options.shininess = material.shininess;
+                    options.name = material.name;
                     options.color = material.color.getHex();
-                    options.emissive = material.emissive.getHex();
-                    options.transparent = material.transparent;
+                    options.side = material.side;
                     options.opacity = material.opacity;
+                    options.shading = material.shading;
+                    options.emissive = material.emissive.getHex();
                     options.skinning = material.skinning;
-    
+                    options.shininess = material.shininess;
+                    options.transparent = material.transparent;
+
+                    if (!!material.roughnessMap) options.roughness = material.roughness;
+                    if (!!material.metalnessMap) options.metalness = material.metalness;
+                    if (!!material.specularMap) options.specular = material.specular.getHex();
+                    if (!!material.uniforms) options.uniforms = material.uniforms;
+                    if (!!material.vertexShader) options.vertexShader = material.vertexShader;
+                    if (!!material.fragmentShader) options.fragmentShader = material.fragmentShader;
+                    if (!!material.vertexColors) options.vertexColors = material.vertexColors;
+                    if (!!material.bumpMap) options.bumpScale = material.bumpScale;
+                    if (!!material.normalMap) options.normalScale = material.normalScale.toArray();
+                    if (!!material.displacementMap) options.displacementScale = material.displacementScale;
+                    if (!!material.displacementMap) options.displacementBias = material.displacementBias;
+                    if (!!material.emissiveMap) options.emissiveIntensity = material.emissiveIntensity;
+                    if (!!material.lightMap) options.lightMapIntensity = material.lightMapIntensity;
+                    if (!!material.envMap) options.reflectivity = material.reflectivity;
+                    if (!!material.aoMap) options.aoMapIntensity = material.aoMapIntensity;
+
                     json.options = options;
                     return json;
                 }
