@@ -74,12 +74,25 @@
                     obj:Animations
                 })
 
-            ]).then(AW3Dstore.setItem("Animations", Animations)
-            .then(function(result){
-                if (!!result) console.log("success");
+            ]).then(function(){
+
+                AW3Dstore.setItem("Animations", Animations)
+                .then(function(result){
+
+                    if (!result) 
+                        var err = "Error: No results."
+                        console.log(err);
+                        throw Error(err);
+                    else 
+                        console.log("success");
+
+                }).catch(function(err) {
+                    console.log(err);
+                    throw Error(err);
+                });
+
             }).catch(function(err) {
                 console.log(err);
-                throw Error(err);
             });
                 
         } else {
@@ -93,7 +106,7 @@
         }
 
     }).catch(function(err) {
-        console.log(err);
+        console.error(err);
     });
 
 //  Male.
