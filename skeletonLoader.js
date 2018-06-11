@@ -204,70 +204,14 @@
 
     }, function sceneAddPlayer( name ){
 
-        scene.add(localPlayer.outfit.direction);
         var outfit = {"body": Avatars[ name ]};
         localPlayer.outfit.add( outfit );
         var frontAngle = Math.PI - cameraControls.getFrontAngle(); // face front.
         localPlayer.controller.direction = frontAngle;
+        localPlayer.outfit.AnimationsHandler.refresh();
         localPlayer.outfit.update();
+        scene.add(localPlayer.outfit.direction);
+
 
     });
-
-
-
-
-
-
-
-
-/*
-    $.getJSON( url ).then(function(json){
-
-        if (!json) throw Error("json not defined.");
-
-    //  Local Forage.
-        AW3Dstore.setItem(key, json).then(function (value) {
-            debugMode && console.log(key, value);
-            return value;
-
-        }).catch( function(err){
-            throw Error(err);
-
-        }).then(function(json){
-            Avatars[ name ] = initSkinnedAsset( json );
-            return Avatars[ name ];
-
-        }).then(function(asset){
-            loadTextures( asset );
-
-        }).then(function(){
-            sceneAddBody( name );
-        });
-
-    }).fail(function(err){
-        console.error(err);
-    });
-*/
-
-/*
-    function textureMapLoader( options ){
-
-        var url   = options.url;
-        var map   = options.map;
-        var name  = options.name;
-        var index = options.index;
-        var asset = options.asset;
-
-        var loader = new THREE.ImageLoader();
-        loader.setCrossOrigin( "anonymous" );
-        loader.load( url, function ( image ) {
-            var texture = new THREE.Texture();
-            texture.name = name;
-            texture.image = image;
-            texture.sourceFile = url;
-            texture.needsUpdate = true;
-            applyTexture( asset, texture, map, index );
-        })
-    }
-*/
 
