@@ -41,7 +41,9 @@
 
     AW3Dstore.getItem("Animations").then(function(result){
 
-        if ( !result || result === {} ) {
+        debugMode && console.log("result:", result);
+
+        if ( !result || JSON.stringify(result) == "{}" ) {
 
             debugMode && console.log("Animations:", "Getting from web");
 
@@ -80,11 +82,17 @@
                 .then(function(result){
 
                     if (!result) {
-                        var err = "Error: No results."
+                        var err = "Error: No result:" + result;
                         console.log(err);
                         throw Error(err);
+
+                    } else if ( JSON.stringify(result) == "{}" ) {
+                        var err = "Error: empty object:" + JSON.stringify(result);
+                        console.log(err);
+                        throw Error(err);
+
                     } else {
-                        console.log("success");
+                        console.log("success:", result);
                     }
 
                 }).catch(function(err) {
