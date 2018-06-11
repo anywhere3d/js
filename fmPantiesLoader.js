@@ -8,40 +8,9 @@
 //    var assetKey  = "aw3d.outfit.female.panties";
 //    var assetUrl  = assetsFolder + "HF_PantiesLayer_FBK05_v01.js";
 
-    function $getFemalePanties(options, loadTextures){
-    
-        var url  = options.url;
-        var key  = options.key;
-        var name = options.name;
-
-        $.getJSON( url ).then(function(json){
-
-        //  Local Storage.
-        //  addToLocalStorageAvatars(name, json);
-
-            if (!json) throw Error("json did not defined");
-            Avatars[ name ] = initOutfitAsset( json );
-            return Avatars[ name ];
-
-        }).then(function(asset){
-            loadTextures( asset );
-        }).fail(function(err){
-            console.error(err);
-        });
-
-        function addToLocalStorageAvatars(key, data){
-            var object = {};
-            object[key] = data;
-            console.log(object);
-            store.add("Avatars", object);
-        }
-
-    }
-
     $getFemalePanties({
-
         name: "fmPanties",
-        key : "aw3d.avatar.female.panties",
+        key : "fmPanties",
         url : assetsFolder + "HF_PantiesLayer_FBK05_v01.js", 
 
     }, function loadTextures(asset){
