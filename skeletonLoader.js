@@ -22,8 +22,7 @@
 
                 $.getJSON( url ).then(function(json){
 
-                    if (!json) 
-                        throw Error("Error: json not defined.");
+                    if (!json) throw Error("json not defined.");
 
                 //  Local Forage.
                     AW3Dstore.setItem(key, json).then(function (value) {
