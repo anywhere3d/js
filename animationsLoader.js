@@ -17,7 +17,7 @@
 
         AW3Dstore.getItem(url).then(function(result){
 
-            debugMode && console.log("result:", result);
+        //  debugMode && console.log("result:", result);
 
             if ( !result || JSON.stringify(result) == "{}" ) {
 
@@ -29,10 +29,11 @@
 
                 debugMode && console.log("Animations:", "Getting from AW3D Store");
 
-                object[name] = result;
-                if ( !!localPlayer && !!localPlayer.outfit )
+                object[ name ] = result;
+                if ( !!localPlayer && !!localPlayer.outfit ) {
                     localPlayer.outfit.AnimationsHandler.refresh();
                 }
+            }
 
         }).catch(function(err) {
             console.error(err);
@@ -62,19 +63,19 @@
                     } else {
                         console.log("success:", result);
                     }
-
-                }).then(function(data) {
-
-                    object[ name ] = data;
-
-                    if ( !!localPlayer && !!localPlayer.outfit ) {
-                        localPlayer.outfit.AnimationsHandler.refresh();
-                    }
                     
                 }).catch(function(err) {
                     console.log(err);
                     throw Error(err);
                 });
+
+            }).then(function(data) {
+
+                object[ name ] = data;
+
+                if ( !!localPlayer && !!localPlayer.outfit ) {
+                    localPlayer.outfit.AnimationsHandler.refresh();
+                }
 
             });
         }
