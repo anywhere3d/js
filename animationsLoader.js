@@ -87,8 +87,8 @@
 
             Animations = result;
 
-            if ( !!localPlayer && !!localPlayer.outfit )
-                localPlayer.outfit.AnimationsHandler.refresh();
+            //if ( !!localPlayer && !!localPlayer.outfit )
+            //  localPlayer.outfit.AnimationsHandler.refresh();
         }
 
     }).catch(function(err) {
