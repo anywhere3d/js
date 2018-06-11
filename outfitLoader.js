@@ -61,7 +61,7 @@
                 loadTextures( Avatars[ name ] );
 
             }
-        }
+        });
     }
 
     function textureMapLoader( options ){
