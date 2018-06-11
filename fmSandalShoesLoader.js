@@ -8,39 +8,9 @@
 //    var assetKey  = "aw3d.outfit.female.shoes.sandal";
 //    var assetUrl  = assetsFolder + "HF_SandalShoes_ABK06_v02.js";
 
-    function $getFemaleSandal(options, loadTextures){
-    
-        var url  = options.url;
-        var key  = options.key;
-        var name = options.name;
-
-        $.getJSON( url ).then(function(json){
-
-        //  Local Storage.
-        //  addToLocalStorageAvatars(name, json);
-
-            if (!json) throw Error("json did not defined");
-            Avatars[ name ] = initOutfitAsset( json );
-            return Avatars[ name ];
-
-        }).then(function(asset){
-            loadTextures( asset )
-        }).fail(function(err){
-            console.error(err);
-        });
-
-        function addToLocalStorageAvatars(key, data){
-            var object = {};
-            object[key] = data;
-            console.log(object);
-            store.add("Avatars", object);
-        }
-
-    }
-
-    $getFemaleSandal({
+    $getOutfit({
         name: "fmSandal",
-        key : "aw3d.avatar.female.shoes.sandal",
+        key : "fmSandal",
         url : assetsFolder + "HF_SandalShoes_ABK06_v02.js", 
 
     }, function loadTextures( asset ){
