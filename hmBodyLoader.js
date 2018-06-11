@@ -9,7 +9,6 @@
 //    var assetUrl = assetsFolder + "HM_BodyLayer_ABK04_v02.js";
 
     $getOutfit({
-
         name: "hmBody",
         key : "aw3d.avatar.male.body",
         url : assetsFolder + "HM_BodyLayer_ABK04_v02.js",
