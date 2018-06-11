@@ -20,6 +20,8 @@
 
             if ( !result ){
 
+                debugMode && console.log("Getting from web");
+
                 $.getJSON( url ).then(function(json){
 
                     if (!json) 
@@ -49,6 +51,8 @@
                 });
 
             } else {
+
+                debugMode && console.log("Getting from AW3Dstore");
 
                 Avatars[ name ] = initSkinnedAsset( result );
                 loadTextures( Avatars[ name ] );
