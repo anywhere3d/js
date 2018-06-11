@@ -10,44 +10,19 @@
 //    var assetName = "skeleton";
 //    var assetUrl = skinnedFolder + "HF_MannySkeleton_ABK04_v01.js";
 
-    function $getSkeleton( options, loadTextures, sceneAddBody){
+    function $getSkeleton( options, loadTextures, sceneAddPlayer){
 
         var url  = options.url;
         var key  = options.key;
         var name = options.name;
 
-        AW3Dstore.getItem(key).then(function( result ){ 
+        AW3Dstore.getItem(url).then(function( result ){ 
 
             if ( !result || JSON.stringify(result) == "{}" ) {
 
                 debugMode && console.log("$getSkeleton:", "Getting from web");
-
-                $.getJSON( url ).then(function(json){
-
-                    if (!json) throw Error("json not defined.");
-
-                //  Local Forage.
-                    AW3Dstore.setItem(key, json).then(function (value) {
-                        debugMode && console.log(key, value);
-                        return value;
-
-                    }).catch( function(err){
-                        throw Error(err);
-
-                    }).then(function(json){
-                        Avatars[ name ] = initSkinnedAsset( json );
-                        return Avatars[ name ];
-
-                    }).then(function(asset){
-                        loadTextures( asset );
-
-                    }).then(function(){
-                        sceneAddBody( name );
-                    });
-
-                }).fail(function(err){
-                    console.error(err);
-                });
+                
+                return $getJSON(options);
 
             } else {
 
@@ -55,12 +30,51 @@
 
                 Avatars[ name ] = initSkinnedAsset( result );
                 loadTextures( Avatars[ name ] );
-                sceneAddBody( name );
-
+                sceneAddPlayer( name );
             }
 
-        }) 
+        }).catch(function(err) {
+            console.error(err);
+        });
 
+        function $getJSON(options){
+
+            var url  = options.url;
+            var key  = options.key;
+            var name = options.name;
+
+            $.getJSON( url ).then(function(json){
+
+                AW3Dstore.setItem(url, json).then(function(result){
+
+                    if (!result) {
+                        var err = "Error: No result returned:" + result;
+                        console.log(err);
+                        throw Error(err);
+
+                    } else if ( JSON.stringify(result) == "{}" ) {
+                        var err = "Error: empty object:" + JSON.stringify(result);
+                        console.log(err);
+                        throw Error(err);
+
+                    } else {
+                        console.log("success:", result);
+                        Avatars[ name ] = initSkinnedAsset( result );
+                        loadTextures( Avatars[ name ] );
+                        sceneAddBody( name );
+                    }
+
+                }).catch(function(err) {
+                    console.log(err);
+                    throw Error(err);
+                });
+
+            }).fail(function(err){
+                console.error(err);
+                throw Error(err);
+            });
+
+        }
     }
 
 
@@ -105,38 +119,6 @@
             var index = options.index;
             var asset = options.asset;
 
-            var loader = new THREE.ImageLoader();
-            loader.setCrossOrigin( "anonymous" );
-            loader.load( url, function ( image ) {
-                var texture = new THREE.Texture();
-                texture.name = name;
-                texture.image = image;
-                texture.sourceFile = url;
-                texture.needsUpdate = true;
-                applyTexture( asset, texture, map, index );
-            })
-        }
-
-    }, function sceneAddBody( name ){
-
-        var outfit = {"body": Avatars[ name ]};
-        localPlayer.outfit.add( outfit );
-        var frontAngle = Math.PI - cameraControls.getFrontAngle(); // face front.
-        localPlayer.controller.direction = frontAngle;
-        scene.add(localPlayer.outfit.direction);
-        localPlayer.outfit.update();
-    });
-
-
-    /*
-        function textureMapLoader( options ){
-
-            var url   = options.url;
-            var map   = options.map;
-            var name  = options.name;
-            var index = options.index;
-            var asset = options.asset;
-
             var img = new Image();
             img.crossOrigin = "anonymous";
             $(img).one("load", function (){
@@ -146,8 +128,70 @@
                 applyTexture( asset, texture, map, index );
                 $(img).remove();
             });
-    
+
             img.src = url;
         }
-    */
+
+    }, function sceneAddPlayer( name ){
+
+        var outfit = {"body": Avatars[ name ]};
+        localPlayer.outfit.add( outfit );
+        var frontAngle = Math.PI - cameraControls.getFrontAngle(); // face front.
+        localPlayer.controller.direction = frontAngle;
+        scene.add(localPlayer.outfit.direction);
+        localPlayer.outfit.update();
+
+    });
+
+
+/*
+    $.getJSON( url ).then(function(json){
+
+        if (!json) throw Error("json not defined.");
+
+    //  Local Forage.
+        AW3Dstore.setItem(key, json).then(function (value) {
+            debugMode && console.log(key, value);
+            return value;
+
+        }).catch( function(err){
+            throw Error(err);
+
+        }).then(function(json){
+            Avatars[ name ] = initSkinnedAsset( json );
+            return Avatars[ name ];
+
+        }).then(function(asset){
+            loadTextures( asset );
+
+        }).then(function(){
+            sceneAddBody( name );
+        });
+
+    }).fail(function(err){
+        console.error(err);
+    });
+*/
+
+/*
+    function textureMapLoader( options ){
+
+        var url   = options.url;
+        var map   = options.map;
+        var name  = options.name;
+        var index = options.index;
+        var asset = options.asset;
+
+        var loader = new THREE.ImageLoader();
+        loader.setCrossOrigin( "anonymous" );
+        loader.load( url, function ( image ) {
+            var texture = new THREE.Texture();
+            texture.name = name;
+            texture.image = image;
+            texture.sourceFile = url;
+            texture.needsUpdate = true;
+            applyTexture( asset, texture, map, index );
+        })
+    }
+*/
 
