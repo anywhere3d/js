@@ -10,7 +10,7 @@
 
     $getOutfit({
         name: "hmBody",
-        key : "aw3d.avatar.male.body",
+        key : "hmBody",
         url : assetsFolder + "HM_BodyLayer_ABK04_v02.js",
 
     }, function loadTextures( asset ){
