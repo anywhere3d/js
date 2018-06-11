@@ -8,37 +8,7 @@
 //    var assetKey  = "aw3d.outfit.female.dress";
 //    var assetUrl  = assetsFolder + "HF_Dress_FBK05_v03.js";
 
-    function $getFemaleDress(options, loadTextures){
-    
-        var url  = options.url;
-        var key  = options.key;
-        var name = options.name;
-
-        $.getJSON( url ).then(function(json){
-
-        //  Local Storage.
-        //  addToLocalStorageAvatars(name, json);
-
-            if (!json) throw Error("json did not defined");
-            Avatars[ name ] = initOutfitAsset( json );
-            return Avatars[ name ];
-
-        }).then(function(asset){
-            loadTextures( asset )
-        }).fail(function(err){
-            console.error(err);
-        });
-
-        function addToLocalStorageAvatars(key, data){
-            var object = {};
-            object[key] = data;
-            console.log(object);
-            store.add("Avatars", object);
-        }
-
-    }
-
-    $getFemaleHairs({
+    $getOutfit({
         name: "fmDress",
         key : "fmDress",
         url : assetsFolder + "HF_Dress_FBK05_v03.js", 
