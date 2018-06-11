@@ -77,6 +77,7 @@
         }
     }
 
+
 //  Skeleton.
     var sk_idleURL = animationsFolder + "basic_idle_animation_3sec.js";
     var sk_walkURL = animationsFolder + "basic_walkcycle_animation_1sec_v1.js";
