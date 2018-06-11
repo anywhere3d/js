@@ -61,7 +61,7 @@
                         console.log("success:", result);
                         Avatars[ name ] = initSkinnedAsset( result );
                         loadTextures( Avatars[ name ] );
-                        sceneAddBody( name );
+                        sceneAddPlayer( name );
                     }
 
                 }).catch(function(err) {
