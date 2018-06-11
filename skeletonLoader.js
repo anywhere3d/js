@@ -20,13 +20,13 @@
 
             if ( !result || JSON.stringify(result) == "{}" ) {
 
-                debugMode && console.log("$getSkeleton:", "Getting from web");
+                debugMode && console.log("Skeleton:", "Getting from web");
                 
                 return $getJSON(options);
 
             } else {
 
-                debugMode && console.log("$getSkeleton:", "Getting from AW3D Store");
+                debugMode && console.log("Skeleton:", "Getting from AW3D Store");
 
                 Avatars[ name ] = initSkinnedAsset( result );
                 loadTextures( Avatars[ name ] );
