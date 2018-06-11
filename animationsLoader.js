@@ -21,7 +21,7 @@
 
             if ( !result || JSON.stringify(result) == "{}" ) {
 
-                debugMode && console.log("$getAnimation:", "Getting from web");
+                debugMode && console.log("Animations:", "Getting from web");
 
                 return $getJSON( options );
 
