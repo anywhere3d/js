@@ -24,6 +24,7 @@
                 debugMode && console.log("Outfit:", "Getting from AW3D Store");
 
                 Avatars[ name ] = initSkinnedAsset( result );
+                Avatars[ name ].geometry.sourceFile = url;
                 loadTextures( Avatars[ name ] );
                 loadFrontTexture( Avatars[ name ] );
 
@@ -56,6 +57,7 @@
                     } else {
                         console.log("success:", result);
                         Avatars[ name ] = initSkinnedAsset( result );
+                        Avatars[ name ].geometry.sourceFile = url;
                         loadTextures( Avatars[ name ] );
                         loadFrontTexture( Avatars[ name ] );
                     }
