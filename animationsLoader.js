@@ -79,12 +79,13 @@
                 AW3Dstore.setItem("Animations", Animations)
                 .then(function(result){
 
-                    if (!result) 
+                    if (!result) {
                         var err = "Error: No results."
                         console.log(err);
                         throw Error(err);
-                    else 
+                    } else {
                         console.log("success");
+                    }
 
                 }).catch(function(err) {
                     console.log(err);
