@@ -8,7 +8,7 @@
 //    var assetKey  = "aw3d.outfit.female.panties";
 //    var assetUrl  = assetsFolder + "HF_PantiesLayer_FBK05_v01.js";
 
-    $getFemalePanties({
+    $getOutfit({
         name: "fmPanties",
         key : "fmPanties",
         url : assetsFolder + "HF_PantiesLayer_FBK05_v01.js", 
