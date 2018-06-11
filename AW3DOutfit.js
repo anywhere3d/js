@@ -336,7 +336,7 @@
             aparts: (function(){
                 console.warn("DEPRECATED:", 
                 "'aparts' has renamed to 'outfits'.");
-                return this.outfits;
+                this.aparts = this.outfits;
             })(),
     
             setGender: function( gender ){
