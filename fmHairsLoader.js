@@ -22,7 +22,6 @@
             throw Error( error );
         }
 
-
     //  Female hairs map options.
         var mapOptions = {
             id   : "DwdWLrb",
@@ -35,9 +34,7 @@
 
     //  Set imgur url.
         mapOptions.url = imgurQualityUrl( mapOptions );
-    //  debugMode && console.log("female mapOptions.url:", mapOptions.url);
     //  mapOptions.url = "https://i.imgur.com/DwdWLrb.png";
-
 
     //  Load texture.
         var url   = mapOptions.url;
@@ -59,7 +56,6 @@
 
         img.src = url;
 
-
     //  Material settings.
         asset.material.bumpScale = 0.05;
         asset.material.displacementBias = 0;
@@ -67,12 +63,6 @@
         asset.material.color.setHex(0xffffff);
 
     });
-
-
-
-
-
-
 
 
 
@@ -98,18 +88,6 @@
         img.src = url;
         }
 */
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
