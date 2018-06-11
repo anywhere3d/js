@@ -10,58 +10,70 @@
 
     var initOutfitAsset = initSkinnedAsset;
 
-    function toLocalStore( key, data ){
-        if (!window.localStorage) return;
-        return localStorage[key] = JSON.stringify(data);
-    }
-
-    function fromLocalStore( key ){
-        if (!window.localStorage) return;
-        if ( !localStorage[key] ) return;
-        return JSON.parse( localStorage[key] );
-    }
-
     function $getOutfit(options, loadTextures){
     
         var url  = options.url;
         var key  = options.key;
         var name = options.name;
 
-        AW3Dstore.getItem(key).then(function( result ){ 
+        AW3Dstore.getItem(url).then(function( result ){ 
 
-            if ( !result ){
+            if ( !result || JSON.stringify(result) == "{}" ) {
 
-                $.getJSON( url ).then(function(json){
+                debugMode && console.log("Outfit:", "Getting from web");
 
-                    if (!json) throw Error("json did not defined");
-
-                //  Local Forage.
-                    AW3Dstore.setItem(key, json).then(function (value) {
-                        return value;
-
-                    }).catch( function(err){
-                        throw Error(err);
-
-                    }).then(function(json){
-                        Avatars[ name ] = initSkinnedAsset( json );
-                        return Avatars[ name ];
-
-                    }).then(function(asset){
-                        loadTextures( asset );
-
-                    });
-
-                }).fail(function(err){
-                    console.error(err);
-                });
+                return $getJSON(options);
 
             } else {
+
+                debugMode && console.log("Outfit:", "Getting from AW3D Store");
 
                 Avatars[ name ] = initSkinnedAsset( result );
                 loadTextures( Avatars[ name ] );
 
             }
+
+        }).catch(function(err) {
+            console.error(err);
         });
+
+        function $getJSON(options){
+
+            var url  = options.url;
+            var key  = options.key;
+            var name = options.name;
+
+            $.getJSON( url ).then(function(json){
+
+                AW3Dstore.setItem(url, json).then(function(result){
+
+                    if (!result) {
+                        var err = "Error: No result returned:" + result;
+                        console.log(err);
+                        throw Error(err);
+
+                    } else if ( JSON.stringify(result) == "{}" ) {
+                        var err = "Error: empty object:" + JSON.stringify(result);
+                        console.log(err);
+                        throw Error(err);
+
+                    } else {
+                        console.log("success:", result);
+                        Avatars[ name ] = initSkinnedAsset( result );
+                        loadTextures( Avatars[ name ] );
+                    }
+
+                }).catch(function(err) {
+                    console.log(err);
+                    throw Error(err);
+                });
+
+            }).fail(function(err){
+                console.error(err);
+                throw Error(err);
+            });
+
+        }
     }
 
     function textureMapLoader( options ){
@@ -281,6 +293,17 @@
         });
     }
 
+
+    function toLocalStore( key, data ){
+        if (!window.localStorage) return;
+        return localStorage[key] = JSON.stringify(data);
+    }
+
+    function fromLocalStore( key ){
+        if (!window.localStorage) return;
+        if ( !localStorage[key] ) return;
+        return JSON.parse( localStorage[key] );
+    }
 
 
 
