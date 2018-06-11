@@ -313,6 +313,8 @@
                 attached : false,
             },
 
+        // "aparts" has renamed to "outfits".
+
             outfits: [
                 "skeleton",
                 "body", 
@@ -332,13 +334,6 @@
                 "vagina" 
             ],
 
-        // "aparts" has renamed to "outfits".
-            aparts: (function(){
-                console.warn("DEPRECATED:", 
-                "'aparts' has renamed to 'outfits'.");
-                this.aparts = this.outfits;
-            })(),
-    
             setGender: function( gender ){
                 var self = this;
                 Object.keys(this.gender).forEach( function( name ){
