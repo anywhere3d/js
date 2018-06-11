@@ -2,6 +2,8 @@
 
     var debugMode;
 
+    var skinnedFolder = "/skinned/";
+
 //    var skeletonAsset = skinnedFolder + "HF_MannySkeleton_ABK04_v01.js";
 
 //    var assetKey = "skeleton";
