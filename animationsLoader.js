@@ -94,7 +94,7 @@
             }).catch(function(err) {
                 console.log(err);
             });
-                
+
         } else {
 
             debugMode && console.log("Animations:", "Getting from AW3D Store");
