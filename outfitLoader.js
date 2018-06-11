@@ -27,19 +27,42 @@
         var key  = options.key;
         var name = options.name;
 
-        $.getJSON( url ).then(function(json){
+        AW3Dstore.getItem(key).then(function( result ){ 
 
-            if (!json) throw Error("json did not defined");
-            Avatars[ name ] = initOutfitAsset( json );
-        //  Avatars[ name ].geometry.sourceFile = url; // IMPORTANT //
-            return Avatars[ name ];
+            if ( !result ){
 
-        }).then(function(asset){
-            loadTextures( asset )
-        }).fail(function(err){
-            console.error(err);
-        });
+                $.getJSON( url ).then(function(json){
 
+                    if (!json) throw Error("json did not defined");
+
+                //  Local Forage.
+                    AW3Dstore.setItem(key, json).then(function (value) {
+                        debugMode && console.log(key, value);
+                        return value;
+
+                    }).catch( function(err){
+                        throw Error(err);
+
+                    }).then(function(json){
+                        Avatars[ name ] = initSkinnedAsset( json );
+                        return Avatars[ name ];
+
+                    }).then(function(asset){
+                        loadTextures( asset );
+
+                    });
+
+                }).fail(function(err){
+                    console.error(err);
+                });
+
+            } else {
+
+                Avatars[ name ] = initSkinnedAsset( result );
+                loadTextures( Avatars[ name ] );
+
+            }
+        }
     }
 
     function textureMapLoader( options ){
@@ -180,7 +203,6 @@
         var imgur  = "https://i.imgur.com/";
 
         return imgur + imgurId( id, q ) + dot + ext;
-
     }
 
     function imgurId(id, quality){
@@ -247,17 +269,17 @@
     function getAvatarAssetPromise( url, name ){
         debugMode && console.log("DEPRECTED:", 
             "getAvatarAssetPromise(url, name) is deprecated.",
-            "Use instead $.getJSON( url ).then(function( asset ){});" 
+            "Use instead $.getJSON( url ).then(function(json){});" 
         );
+
         return new Promise( function( resolve, reject ){
             $.getJSON( url, function(json){
             //  debugMode && console.log("json:", json);
-                Avatars[ name ] = initOutfitAsset( json );
+                Avatars[ name ] = initSkinnedAsset( json );
             //  debugMode && console.log( name, Avatars[ name ] );
                 resolve( Avatars[ name ] );
             });
         });
-
     }
 
 
