@@ -8,7 +8,7 @@
 //    var assetName = "skeleton";
 //    var assetUrl = skinnedFolder + "HF_MannySkeleton_ABK04_v01.js";
 
-    function $getSkeleton( options, loadTextures){
+    function $getSkeleton( options, loadTextures, sceneAddBody){
 
         var url  = options.url;
         var key  = options.key;
@@ -39,8 +39,8 @@
                     }).then(function(asset){
                         loadTextures( asset );
 
-                //  }).then(function(){
-                //      sceneAddBody( name );
+                    }).then(function(){
+                        sceneAddBody( name );
                     });
 
                 }).fail(function(err){
@@ -53,7 +53,7 @@
 
                 Avatars[ name ] = initSkinnedAsset( result );
                 loadTextures( Avatars[ name ] );
-                //sceneAddBody( name );
+                sceneAddBody( name );
 
             }
 
@@ -114,10 +114,9 @@
                 applyTexture( asset, texture, map, index );
             })
         }
-    });
 
-/*
     }, function sceneAddBody( name ){
+
         var outfit = {"body": Avatars[ name ]};
         localPlayer.outfit.add( outfit );
         var frontAngle = Math.PI - cameraControls.getFrontAngle(); // face front.
@@ -125,7 +124,7 @@
         scene.add(localPlayer.outfit.direction);
         localPlayer.outfit.update();
     });
-*/
+
 
     /*
         function textureMapLoader( options ){
