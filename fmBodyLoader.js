@@ -8,8 +8,6 @@
 //    var assetKey = "aw3d.avatar.female.body";
 //    var assetUrl = assetsFolder + "HF_BodyLayer_ABK04_v02.js";
 
-//  More simple solution. Using service-worker for caching all data.
-
     $getOutfit({
         name: "fmBody",
         key : "fmBody",
