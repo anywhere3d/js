@@ -26,7 +26,7 @@
 
             $.getJSON( url, function(data){
                 animations[ name ] = data;
-                if ( !!localPlayer.outfit )
+                if ( !!localPlayer && !!localPlayer.outfit )
                     localPlayer.outfit.AnimationsHandler.refresh();
             });
         }
@@ -39,34 +39,61 @@
     var sk_runURL  = animationsFolder + "basic_walkcycle_animation_1sec.js";
     var sk_jumpURL = animationsFolder + "basic_jumping_animation_1.5sec.js";
 
-    $getAnimation({
-        url:sk_idleURL, 
-        key:"idle", 
-        name:"idle", 
-        obj:Animations
-    });
+    AW3Dstore.getItem("Animations").then(function(result){
 
-    $getAnimation({
-        url:sk_walkURL, 
-        key:"walk", 
-        name:"walk", 
-        obj:Animations
-    });
+        if (!result) {
 
-    $getAnimation({
-        url:sk_runURL, 
-        key:"run", 
-        name:"run", 
-        obj:Animations
-    });
+            debugMode && console.log("Animations:", "Getting from web");
 
-    $getAnimation({
-        url:sk_jumpURL, 
-        key:"jump", 
-        name:"jump", 
-        obj:Animations
-    });
+            $getAnimation({
+                url:sk_idleURL, 
+                key:"idle", 
+                name:"idle", 
+                obj:Animations
+            });
 
+            $getAnimation({
+                url:sk_walkURL, 
+                key:"walk", 
+                name:"walk", 
+                obj:Animations
+            });
+
+            $getAnimation({
+                url:sk_runURL, 
+                key:"run", 
+                name:"run", 
+                obj:Animations
+            });
+
+            $getAnimation({
+                url:sk_jumpURL, 
+                key:"jump", 
+                name:"jump", 
+                obj:Animations
+            });
+
+            AW3Dstore.setItem("Animations", Animations)
+            .then(function(result){
+                if (!!result) console.log("success");
+            }).catch(function(err) {
+                console.log(err);
+                throw Error(err);
+            });
+                
+        } else {
+
+            debugMode && console.log("Animations:", "Getting from AW3D Store");
+
+            Animations = result;
+
+            if ( !!localPlayer && !!localPlayer.outfit )
+                localPlayer.outfit.AnimationsHandler.refresh();
+        }
+
+    }).catch(function(err) {
+        console.log(err);
+    });
 
 //  Male.
     var hm_idleURL = animationsFolder + "male_idle_animation_3sec.js";
