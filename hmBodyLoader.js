@@ -34,13 +34,11 @@
 
     //  Set imgur url.
         mapOptions.url = imgurQualityUrl( mapOptions );
-    //  debugMode && console.log("male mapOptions.url:", mapOptions.url);
     //  mapOptions.url = "https://i.imgur.com/mAZgsw8.jpg";
 
     //  Load texture.
         mapOptions.map = "map";
         textureMapLoader( mapOptions );
-
 
     //  Male body emissive map options.
         var emissOptions = {
@@ -54,14 +52,11 @@
 
     //  Set imgur url.
         emissOptions.url = imgurQualityUrl( emissOptions );
-    //  debugMode && console.log("male emissOptions.url:", emissOptions.url);
     //  emissOptions.url = "https://i.imgur.com/4h9rLSg.jpg";
-
 
     //  Load texture.
         emissOptions.map = "emissiveMap";
         textureMapLoader( emissOptions );
-
 
     //  Male body normal map options.
         var normOptions = {
@@ -75,9 +70,7 @@
 
     //  Set imgur url.
         normOptions.url = imgurQualityUrl( normOptions );
-    //  debugMode && console.log("male normOptions.url:", normOptions.url);
     //  normOptions.url = "https://i.imgur.com/V6MSKOT.jpg";
-
 
     //  Load texture.
         normOptions.map = "normalMap";
@@ -106,9 +99,7 @@
 
     //  Set imgur url.
         eyesOptions.url = imgurQualityUrl( eyesOptions );
-    //  debugMode && console.log("male eyesOptions.url:", eyesOptions.url);
     //  eyesOptions.url = "https://i.imgur.com/VybEXWo.png";
-
 
     //  Load texture.
         var url   = eyesOptions.url;
