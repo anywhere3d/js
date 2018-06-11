@@ -13,76 +13,27 @@
         var url = options.url;
         var key = options.key;
         var name = options.name;
-        var animations = options.obj;
+        var object = options.obj;
 
-        return $getJSON(options);
-
-        function $getJSON(options){
+    //  return $getJSON(options);
+        return function $getJSON(options){
 
             var url = options.url;
             var key = options.key;
             var name = options.name;
-            var animations = options.obj;
+            var object = options.obj;
 
             return $.getJSON( url, function(data){
-                animations[ name ] = data;
-                if ( !!localPlayer && !!localPlayer.outfit )
+                object[ name ] = data;
+
+                if ( !!localPlayer && !!localPlayer.outfit ) {
                     localPlayer.outfit.AnimationsHandler.refresh();
-            });
-        }
+                }
 
-    }
-
-//  Skeleton.
-    var sk_idleURL = animationsFolder + "basic_idle_animation_3sec.js";
-    var sk_walkURL = animationsFolder + "basic_walkcycle_animation_1sec_v1.js";
-    var sk_runURL  = animationsFolder + "basic_walkcycle_animation_1sec.js";
-    var sk_jumpURL = animationsFolder + "basic_jumping_animation_1.5sec.js";
-
-    AW3Dstore.getItem("Animations").then(function(result){
-
-        debugMode && console.log("result:", result);
-
-        if ( !result || JSON.stringify(result) == "{}" ) {
-
-            debugMode && console.log("Animations:", "Getting from web");
-
-            Promise.all([
-                $getAnimation({
-                    url:sk_idleURL, 
-                    key:"idle", 
-                    name:"idle", 
-                    obj:Animations
-                }),
-
-                $getAnimation({
-                    url:sk_walkURL, 
-                    key:"walk", 
-                    name:"walk", 
-                    obj:Animations
-                }),
-
-                $getAnimation({
-                    url:sk_runURL, 
-                    key:"run", 
-                    name:"run", 
-                    obj:Animations
-                }),
-
-                $getAnimation({
-                    url:sk_jumpURL, 
-                    key:"jump", 
-                    name:"jump", 
-                    obj:Animations
-                })
-
-            ]).then(function(){
-
-                AW3Dstore.setItem("Animations", Animations)
-                .then(function(result){
+                AW3Dstore.setItem(url, data).then(function(result){
 
                     if (!result) {
-                        var err = "Error: No result:" + result;
+                        var err = "Error: No result returned:" + result;
                         console.log(err);
                         throw Error(err);
 
@@ -100,6 +51,34 @@
                     throw Error(err);
                 });
 
+            });
+        }
+
+    }
+
+//  Skeleton.
+    var sk_idleURL = animationsFolder + "basic_idle_animation_3sec.js";
+    var sk_walkURL = animationsFolder + "basic_walkcycle_animation_1sec_v1.js";
+    var sk_runURL  = animationsFolder + "basic_walkcycle_animation_1sec.js";
+    var sk_jumpURL = animationsFolder + "basic_jumping_animation_1.5sec.js";
+
+    AW3Dstore.getItem(sk_idleURL).then(function(result){
+
+        debugMode && console.log("result:", result);
+
+        var options = {
+            url:sk_idleURL, 
+            key:"idle", 
+            name:"idle", 
+            obj:Animations
+        };
+
+        if ( !result || JSON.stringify(result) == "{}" ) {
+
+            debugMode && console.log("Animations:", "Getting from web", sk_idleURL);
+
+            $getAnimation(options).then(function(){
+                // do something //
             }).catch(function(err) {
                 console.log(err);
             });
@@ -108,14 +87,34 @@
 
             debugMode && console.log("Animations:", "Getting from AW3D Store");
 
-            Animations = result;
-
-            //if ( !!localPlayer && !!localPlayer.outfit )
-            //  localPlayer.outfit.AnimationsHandler.refresh();
+            Animations[options.name] = result;
+            if ( !!localPlayer && !!localPlayer.outfit )
+                localPlayer.outfit.AnimationsHandler.refresh();
         }
 
     }).catch(function(err) {
         console.error(err);
+    });
+
+    $getAnimation({
+        url:sk_walkURL, 
+        key:"walk", 
+        name:"walk", 
+        obj:Animations
+    });
+
+    $getAnimation({
+        url:sk_runURL, 
+        key:"run", 
+        name:"run", 
+        obj:Animations
+    });
+
+    $getAnimation({
+        url:sk_jumpURL, 
+        key:"jump", 
+        name:"jump", 
+        obj:Animations
     });
 
 //  Male.
