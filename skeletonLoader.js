@@ -77,7 +77,6 @@
         }
     }
 
-
     $getSkeleton({
 
         name: "skeleton",
