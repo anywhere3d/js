@@ -15,13 +15,13 @@
 
             if ( !result || JSON.stringify(result) == "{}" ) {
 
-                debugMode && console.log("Outfit:", "Getting from web");
+                debugMode && console.log("FemaleTshirt:", "Getting from web");
 
                 return $getJSON(options);
 
             } else {
 
-                debugMode && console.log("Outfit:", "Getting from AW3D Store");
+                debugMode && console.log("FemaleTshirt:", "Getting from AW3D Store");
 
                 Avatars[ name ] = initSkinnedAsset( result );
                 Avatars[ name ].geometry.sourceFile = url;
