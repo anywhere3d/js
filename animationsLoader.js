@@ -62,20 +62,16 @@
 
                     } else {
                         console.log("success:", result);
+                        object[ name ] = result;
+                        if ( !!localPlayer && !!localPlayer.outfit ) {
+                            localPlayer.outfit.AnimationsHandler.refresh();
+                        }
                     }
                     
                 }).catch(function(err) {
                     console.log(err);
                     throw Error(err);
                 });
-
-            }).then(function(data) {
-
-                object[ name ] = data;
-
-                if ( !!localPlayer && !!localPlayer.outfit ) {
-                    localPlayer.outfit.AnimationsHandler.refresh();
-                }
 
             });
         }
