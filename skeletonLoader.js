@@ -204,14 +204,12 @@
 
     }, function sceneAddPlayer( name ){
 
-        var outfit = {"body": Avatars[ name ]};
-        localPlayer.outfit.add( outfit );
         var frontAngle = Math.PI - cameraControls.getFrontAngle(); // face front.
         localPlayer.controller.direction = frontAngle;
+        localPlayer.outfit.add( {"body": Avatars[ name ]} );
         localPlayer.outfit.AnimationsHandler.refresh();
         localPlayer.outfit.update();
         scene.add(localPlayer.outfit.direction);
-
 
     });
 
