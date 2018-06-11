@@ -312,15 +312,7 @@
                 penis    : false,
                 attached : false,
             },
-    
-        // "aparts" has renamed to "outfits".
 
-            aparts: (function(){
-                console.warn("DEPRECATED:", 
-                "'aparts' has renamed to 'outfits'");
-                return this.outfits;
-            })(),
-    
             outfits: [
                 "skeleton",
                 "body", 
@@ -339,6 +331,13 @@
                 "penis", 
                 "vagina" 
             ],
+
+        // "aparts" has renamed to "outfits".
+            aparts: (function(){
+                console.warn("DEPRECATED:", 
+                "'aparts' has renamed to 'outfits'.");
+                return this.outfits;
+            })(),
     
             setGender: function( gender ){
                 var self = this;
