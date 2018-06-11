@@ -6,7 +6,7 @@
 * MIT License
 */
 
-    var AW3D = { VERSION: '0.1.0' };
+    var AW3D = { VERSION: '0.2.0' };
 
 //  Player Holder.
     AW3D.PlayerHolder = function (){
@@ -112,6 +112,8 @@
                 console.warn("DEPRECATED:", 
                     "outfit.updatePosition() is deprecated.", 
                     "Use outfit.update() instead." );
+
+                this.update();
             },
 
 
@@ -122,6 +124,8 @@
                 console.warn("DEPRECATED:", 
                     "outfit.updateRotation(y) is deprecated.", 
                     "Use outfit.update() instead." );
+
+                this.update();
             },
 
 
@@ -215,6 +219,7 @@
                 for (var i in arguments){
                     var name = arguments[i];
                     self.direction.remove( self[ name ] );
+
                 //  Dispose geometry.
                 //      self[ name ].geometry.dispose();
                 //  Dispose materials.
@@ -226,6 +231,7 @@
                 //  } else {
                 //      self[ name ].material.dispose();
                 //  }
+
                     self[ name ] = null;
                     delete self[ name ];
                 }
@@ -308,6 +314,12 @@
             },
     
         // "aparts" has renamed to "outfits".
+
+            aparts: (function(){
+                console.warn("DEPRECATED:", 
+                "'aparts' has renamed to 'outfits'");
+                return this.outfits;
+            })(),
     
             outfits: [
                 "skeleton",
