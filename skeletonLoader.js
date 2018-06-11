@@ -50,7 +50,7 @@
 
             } else {
 
-                debugMode && console.log("$getSkeleton:", "Getting from AW3Dstore");
+                debugMode && console.log("$getSkeleton:", "Getting from AW3D Store");
 
                 Avatars[ name ] = initSkinnedAsset( result );
                 loadTextures( Avatars[ name ] );
