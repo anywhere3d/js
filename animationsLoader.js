@@ -15,7 +15,7 @@
         var name = options.name;
         var animations = options.obj;
 
-        $getJSON(options);
+        return $getJSON(options);
 
         function $getJSON(options){
 
@@ -24,7 +24,7 @@
             var name = options.name;
             var animations = options.obj;
 
-            $.getJSON( url, function(data){
+            return $.getJSON( url, function(data){
                 animations[ name ] = data;
                 if ( !!localPlayer && !!localPlayer.outfit )
                     localPlayer.outfit.AnimationsHandler.refresh();
@@ -41,7 +41,7 @@
 
     AW3Dstore.getItem("Animations").then(function(result){
 
-        if (!result) {
+        if ( !result || result === {} ) {
 
             debugMode && console.log("Animations:", "Getting from web");
 
