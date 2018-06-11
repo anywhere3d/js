@@ -8,37 +8,7 @@
 //    var assetKey  = "aw3d.outfit.female.bra";
 //    var assetUrl  = assetsFolder + "HF_BraLayer_FBK05_v01.js";
 
-    function $getFemaleBra(options, loadTextures){
-    
-        var url  = options.url;
-        var key  = options.key;
-        var name = options.name;
-
-        $.getJSON( url ).then(function(json){
-
-        //  Local Storage.
-        //  addToLocalStorageAvatars(name, json);
-
-            if (!json) throw Error("json did not defined");
-            Avatars[ name ] = initOutfitAsset( json );
-            return Avatars[ name ];
-
-        }).then(function(asset){
-            loadTextures( asset );
-        }).fail(function(err){
-            console.error(err);
-        });
-
-        function addToLocalStorageAvatars(key, data){
-            var object = {};
-            object[key] = data;
-            console.log(object);
-            store.add("Avatars", object);
-        }
-
-    }
-
-    $getFemaleBra({
+    $getOutfit({
 
         name: "fmBra",
         key : "fmBra",
