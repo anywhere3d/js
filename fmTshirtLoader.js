@@ -11,35 +11,71 @@
         var key  = options.key;
         var name = options.name;
 
-        $.getJSON( url ).then(function(json){
+        AW3Dstore.getItem(url).then(function( result ){ 
 
-        //  Local Storage.
-        //  addToLocalStorageAvatars(name, json);
+            if ( !result || JSON.stringify(result) == "{}" ) {
 
-            if (!json) throw Error("json did not defined");
-            Avatars[ name ] = initOutfitAsset( json );
-            return Avatars[ name ];
+                debugMode && console.log("Outfit:", "Getting from web");
 
-        }).then(function(asset){
-            loadTextures( asset );
-            loadFrontTexture(asset);
-        }).fail(function(err){
+                return $getJSON(options);
+
+            } else {
+
+                debugMode && console.log("Outfit:", "Getting from AW3D Store");
+
+                Avatars[ name ] = initSkinnedAsset( result );
+                loadTextures( Avatars[ name ] );
+                loadFrontTexture(asset);
+
+            }
+
+        }).catch(function(err) {
             console.error(err);
         });
 
-        function addToLocalStorageAvatars(key, data){
-            var object = {};
-            object[key] = data;
-            console.log(object);
-            store.add("Avatars", object);
-        }
+        function $getJSON(options){
 
+            var url  = options.url;
+            var key  = options.key;
+            var name = options.name;
+
+            $.getJSON( url ).then(function(json){
+
+                AW3Dstore.setItem(url, json).then(function(result){
+
+                    if (!result) {
+                        var err = "Error: No result returned:" + result;
+                        console.log(err);
+                        throw Error(err);
+
+                    } else if ( JSON.stringify(result) == "{}" ) {
+                        var err = "Error: empty object:" + JSON.stringify(result);
+                        console.log(err);
+                        throw Error(err);
+
+                    } else {
+                        console.log("success:", result);
+                        Avatars[ name ] = initSkinnedAsset( result );
+                        loadTextures( Avatars[ name ] );
+                        loadFrontTexture(asset);
+                    }
+
+                }).catch(function(err) {
+                    console.log(err);
+                    throw Error(err);
+                });
+
+            }).fail(function(err){
+                console.error(err);
+                throw Error(err);
+            });
+
+        }
     }
 
     $getFemaleTshirt({
-
         name: "fmTshirtFront",
-        key : "aw3d.avatar.female.tshirt.front",
+        key : "fmTshirtFront",
         url : assetsFolder + "HF_Tshirt_FBK05_v03.js", 
 
     }, function loadTextures(asset){
@@ -50,7 +86,6 @@
             ].join(" ");
             throw Error( error );
         }
-
 
     //  Female tshirt map options.
         var mapOptions = {
@@ -135,23 +170,5 @@
         asset.material.materials[1].color.setHex(0xffffff);
 
     });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
