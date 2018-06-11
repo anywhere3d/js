@@ -10,8 +10,6 @@
 
     function $getSkeleton( options, loadTextures, sceneAddBody){
 
-        debugMode && console.log("$getSkeleton()");
-
         var url  = options.url;
         var key  = options.key;
         var name = options.name;
@@ -20,7 +18,7 @@
 
             if ( !result ){
 
-                debugMode && console.log("Getting from web");
+                debugMode && console.log("$getSkeleton:", "Getting from web");
 
                 $.getJSON( url ).then(function(json){
 
@@ -52,7 +50,7 @@
 
             } else {
 
-                debugMode && console.log("Getting from AW3Dstore");
+                debugMode && console.log("$getSkeleton:", "Getting from AW3Dstore");
 
                 Avatars[ name ] = initSkinnedAsset( result );
                 loadTextures( Avatars[ name ] );
