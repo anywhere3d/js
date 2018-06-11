@@ -107,28 +107,31 @@
         asset.material.materials[1].color.setHex(0xffffff);
         asset.material.materials[1].emissive.setHex(0x8d8d8d);
 
-        function textureMapLoader( options ){
-
-            var url   = options.url;
-            var map   = options.map;
-            var name  = options.name;
-            var index = options.index;
-            var asset = options.asset;
-    
-            var img = new Image();
-            img.crossOrigin = "anonymous";
-            $(img).one("load", function (){
-                var texture = new THREE.Texture( img ); // or canvas //
-                texture.name = name;
-                texture.sourceFile = url;
-                applyTexture( asset, texture, map, index );
-                $(img).remove();
-            });
-    
-            img.src = url;
-        }
-
     });
+
+
+/*
+    function textureMapLoader( options ){
+
+        var url   = options.url;
+        var map   = options.map;
+        var name  = options.name;
+        var index = options.index;
+        var asset = options.asset;
+
+        var img = new Image();
+        img.crossOrigin = "anonymous";
+        $(img).one("load", function (){
+            var texture = new THREE.Texture( img ); // or canvas //
+            texture.name = name;
+            texture.sourceFile = url;
+            applyTexture( asset, texture, map, index );
+            $(img).remove();
+        });
+
+        img.src = url;
+    }
+*/
 
 
 /*
