@@ -15,8 +15,9 @@
         var name = options.name;
         var object = options.obj;
 
-    //  return $getJSON(options);
-        return function $getJSON(options){
+        return $getJSON(options);
+
+        function $getJSON(options){
 
             var url = options.url;
             var key = options.key;
@@ -77,11 +78,7 @@
 
             debugMode && console.log("Animations:", "Getting from web", sk_idleURL);
 
-            $getAnimation(options).then(function(){
-                // do something //
-            }).catch(function(err) {
-                console.log(err);
-            });
+            $getAnimation(options);
 
         } else {
 
