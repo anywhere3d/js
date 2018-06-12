@@ -2,7 +2,7 @@
 
     var debugMode;
 
-//  ----------- DEPRECATED ------------  //
+    console.warn("DEPRECATED:", "'femaleLoader.js' is deprecated.");
 
 //    var scriptsFolder  = "/scripts/";
 //    var assetsFolder   = "/models/assets/";
