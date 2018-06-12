@@ -2,16 +2,19 @@
 
     var debugMode;
 
-//    var fmBodyAsset = assetsFolder + "HF_BodyLayer_ABK04_v02.js";
+    var skinnedFolder = "/skinned/";
+    var fmBodyUrl = skinnedFolder + "HF_BodyLayer_ABK04_v02.js";
+
+//    var fmBodyAsset = skinnedFolder + "HF_BodyLayer_ABK04_v02.js";
 
 //    var assetName = "fmBody";
 //    var assetKey = "aw3d.avatar.female.body";
-//    var assetUrl = assetsFolder + "HF_BodyLayer_ABK04_v02.js";
+//    var assetUrl = skinnedFolder + "HF_BodyLayer_ABK04_v02.js";
 
     $getOutfit({
         name: "fmBody",
         key : "fmBody",
-        url : assetsFolder + "HF_BodyLayer_ABK04_v02.js", 
+        url :  fmBodyUrl,
 
     }, function loadTextures( asset ){
 
@@ -108,73 +111,4 @@
         asset.material.materials[1].emissive.setHex(0x8d8d8d);
 
     });
-
-
-/*
-    function textureMapLoader( options ){
-
-        var url   = options.url;
-        var map   = options.map;
-        var name  = options.name;
-        var index = options.index;
-        var asset = options.asset;
-
-        var img = new Image();
-        img.crossOrigin = "anonymous";
-        $(img).one("load", function (){
-            var texture = new THREE.Texture( img ); // or canvas //
-            texture.name = name;
-            texture.sourceFile = url;
-            applyTexture( asset, texture, map, index );
-            $(img).remove();
-        });
-
-        img.src = url;
-    }
-*/
-
-
-/*
-    function $getFemaleBody(options, loadTextures){
-    
-        var url  = options.url;
-        var key  = options.key;
-        var name = options.name;
-
-        $.getJSON( url ).then(function(json){
-
-        //  Local Storage.
-        //  addToLocalStorageAvatars(name, json);
-            
-            if (!json) throw Error("json did not defined");
-            Avatars[ name ] = initOutfitAsset( json );
-            return Avatars[ name ];
-
-        }).then(function(asset){
-            loadTextures( asset )
-        }).fail(function(err){
-            console.error(err);
-        });
-
-        function addToLocalStorageAvatars(key, data){
-            var object = {};
-            object[key] = data;
-            console.log(object);
-            store.add("Avatars", object);
-        }
-
-    }
-
-*/
-
-
-
-
-
-
-
-
-
-
-
 
