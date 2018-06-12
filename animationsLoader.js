@@ -51,17 +51,25 @@
                 AW3D_Cache.setItem(url, data).then(function(result){
 
                     if (!result) {
-                        var err = "Error: No result returned:" + result;
-                        console.log(err);
+                        var err = [ 
+                            "AW3D Cache Error:", 
+                            "No result returned:", 
+                            result,
+                        ].join(" ");
+                        console.error(err);
                         throw Error(err);
 
                     } else if ( JSON.stringify(result) == "{}" ) {
-                        var err = "Error: empty object:" + JSON.stringify(result);
-                        console.log(err);
+                        var err = [ 
+                            "AW3D Cache Warning:", 
+                            "empty object returned:", 
+                            JSON.stringify(result),
+                        ].join(" ");
+                        console.warn(err);
                         throw Error(err);
 
                     } else {
-                        console.log("success:", result);
+                        console.log("AW3D Cache:", "success!");
                         object[ name ] = result;
                         if ( !!localPlayer && !!localPlayer.outfit ) {
                             localPlayer.outfit.AnimationsHandler.refresh();
