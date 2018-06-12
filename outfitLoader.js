@@ -1,8 +1,8 @@
 //  outfitLoader.js
 
+    var debugMode;
 
     var scriptsFolder  = "/scripts/";
-//  var assetsFolder = "/skinned/";  // deprecated //
     var skinnedFolder = "/skinned/";
     var texturesFolder = "/textures/";
 
@@ -67,7 +67,7 @@
                         throw Error(err);
 
                     } else {
-                        console.log("AW3D Cache:", "success.");
+                        console.log("AW3D Cache:", "success!");
                         Avatars[ name ] = initSkinnedAsset( result );
                         Avatars[ name ].geometry.sourceFile = url;
                         loadTextures( Avatars[ name ] );
