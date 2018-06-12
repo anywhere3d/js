@@ -3,6 +3,8 @@
     var debugMode;
 
     var skinnedFolder = "/skinned/";
+    var bonesUrl = skinnedFolder + "Bones_ABK04_v02.js";
+    var mannyUrl = skinnedFolder + "HF_MannySkeleton_ABK04_v01.js";
 
 //    var skeletonAsset = skinnedFolder + "HF_MannySkeleton_ABK04_v01.js";
 
@@ -14,7 +16,7 @@
         name: "bones",
         key : "bones",
         obj : Avatars,
-        url : skinnedFolder + "Bones_ABK04_v02.js", 
+        url : bonesUrl, 
     });
 
     function $getBones( options ){
@@ -97,7 +99,7 @@
 
             } else {
 
-                debugMode && console.log("Skeleton:", "Getting from AW3D Store");
+                debugMode && console.log("Skeleton:", "Getting from cache");
 
                 Avatars[ name ] = initSkinnedAsset( result );
                 Avatars[ name ].geometry.sourceFile = url;
@@ -154,7 +156,7 @@
 
         name: "skeleton",
         key : "skeleton",        
-        url : skinnedFolder + "HF_MannySkeleton_ABK04_v01.js", 
+        url : mannyUrl, 
 
     }, function loadTextures( asset ){
 
