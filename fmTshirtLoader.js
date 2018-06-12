@@ -3,7 +3,7 @@
     var debugMode;
 
     var skinnedFolder = "/skinned/";
-    var HFtshirtUrl = skinnedFolder + "HF_Tshirt_FBK05_v03.js";
+    var hfTshirtUrl = skinnedFolder + "HF_Tshirt_FBK05_v03.js";
 
 //    var fmTshirt1Asset   = skinnedFolder + "HF_Tshirt_FBK05_v01.js";
 //    var fmTshirt3Asset   = skinnedFolder + "HF_Tshirt_FBK05_v03.js";
@@ -81,7 +81,7 @@
     $getFemaleTshirt({
         name: "fmTshirtFront",
         key : "fmTshirtFront",
-        url : HFtshirtUrl, 
+        url : hfTshirtUrl, 
 
     }, function loadTextures(asset){
 
