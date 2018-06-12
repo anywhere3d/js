@@ -2,6 +2,9 @@
 
     var debugMode;
 
+    var skinnedFolder = "/skinned/";
+    var HFtshirtUrl = skinnedFolder + "HF_Tshirt_FBK05_v03.js";
+
 //    var fmTshirt1Asset   = assetsFolder + "HF_Tshirt_FBK05_v01.js";
 //    var fmTshirt3Asset   = assetsFolder + "HF_Tshirt_FBK05_v03.js";
 
@@ -11,7 +14,7 @@
         var key  = options.key;
         var name = options.name;
 
-        AW3Dstore.getItem(url).then(function( result ){ 
+        AW3D_Cache.getItem(url).then(function( result ){ 
 
             if ( !result || JSON.stringify(result) == "{}" ) {
 
@@ -21,7 +24,7 @@
 
             } else {
 
-                debugMode && console.log("FemaleTshirt:", "Getting from AW3D Store");
+                debugMode && console.log("FemaleTshirt:", "Getting from cache");
 
                 Avatars[ name ] = initSkinnedAsset( result );
                 Avatars[ name ].geometry.sourceFile = url;
@@ -42,7 +45,7 @@
 
             $.getJSON( url ).then(function(json){
 
-                AW3Dstore.setItem(url, json).then(function(result){
+                AW3D_Cache.setItem(url, json).then(function(result){
 
                     if (!result) {
                         var err = "Error: No result returned:" + result;
@@ -78,7 +81,7 @@
     $getFemaleTshirt({
         name: "fmTshirtFront",
         key : "fmTshirtFront",
-        url : assetsFolder + "HF_Tshirt_FBK05_v03.js", 
+        url : HFtshirtUrl, 
 
     }, function loadTextures(asset){
 
