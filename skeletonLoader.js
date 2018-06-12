@@ -24,7 +24,7 @@
         var name = options.name;
         var object = options.obj;
 
-        AW3Dstore.getItem(url).then(function(result){
+        AW3D_Cache.getItem(url).then(function(result){
 
         //  debugMode && console.log("result:", result);
 
@@ -36,7 +36,7 @@
 
             } else {
 
-                debugMode && console.log("Bones:", "Getting from AW3D Store");
+                debugMode && console.log("Bones:", "Getting from cache");
 
                 object[ name ] = result;
 
@@ -55,7 +55,7 @@
 
             return $.getJSON( url, function(data){
 
-                AW3Dstore.setItem(url, data).then(function(result){
+                AW3D_Cache.setItem(url, data).then(function(result){
 
                     if (!result) {
                         var err = "Error: No result returned:" + result;
@@ -87,7 +87,7 @@
         var key  = options.key;
         var name = options.name;
 
-        AW3Dstore.getItem(url).then(function( result ){ 
+        AW3D_Cache.getItem(url).then(function( result ){ 
 
             if ( !result || JSON.stringify(result) == "{}" ) {
 
@@ -117,7 +117,7 @@
 
             $.getJSON( url ).then(function(json){
 
-                AW3Dstore.setItem(url, json).then(function(result){
+                AW3D_Cache.setItem(url, json).then(function(result){
 
                     if (!result) {
                         var err = "Error: No result returned:" + result;
