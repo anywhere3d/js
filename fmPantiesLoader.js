@@ -2,16 +2,19 @@
 
     var debugMode;
 
-//    var fmPantiesAsset = assetsFolder + "HF_PantiesLayer_FBK05_v01.js";
+    var skinnedFolder = "/skinned/";
+    var fmPantiesUrl = skinnedFolder + "HF_PantiesLayer_FBK05_v01.js";
+
+//    var fmPantiesAsset = skinnedFolder + "HF_PantiesLayer_FBK05_v01.js";
 
 //    var assetName = "fmPanties";
 //    var assetKey  = "aw3d.outfit.female.panties";
-//    var assetUrl  = assetsFolder + "HF_PantiesLayer_FBK05_v01.js";
+//    var assetUrl  = skinnedFolder + "HF_PantiesLayer_FBK05_v01.js";
 
     $getOutfit({
         name: "fmPanties",
         key : "fmPanties",
-        url : assetsFolder + "HF_PantiesLayer_FBK05_v01.js", 
+        url : fmPantiesUrl, 
 
     }, function loadTextures(asset){
 
