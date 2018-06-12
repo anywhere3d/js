@@ -2,6 +2,8 @@
 
     var debugMode;
 
+//  ----------- DEPRECATED ------------  //
+
 //    var scriptsFolder  = "/scripts/";
 //    var assetsFolder   = "/models/assets/";
 //    var texturesFolder = "/models/textures/";
