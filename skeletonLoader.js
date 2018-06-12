@@ -32,13 +32,13 @@
 
             if ( !result || JSON.stringify(result) == "{}" ) {
 
-                debugMode && console.log("Bones:", "Getting from web");
+                debugMode && console.log("Bones:", "Getting from web.");
 
                 return $getJSON( options );
 
             } else {
 
-                debugMode && console.log("Bones:", "Getting from cache");
+                debugMode && console.log("Bones:", "Getting from cache.");
 
                 object[ name ] = result;
 
@@ -102,13 +102,13 @@
 
             if ( !result || JSON.stringify(result) == "{}" ) {
 
-                debugMode && console.log("Skeleton:", "Getting from web");
+                debugMode && console.log("Skeleton:", "Getting from web.");
                 
                 return $getJSON(options);
 
             } else {
 
-                debugMode && console.log("Skeleton:", "Getting from cache");
+                debugMode && console.log("Skeleton:", "Getting from cache.");
 
                 Avatars[ name ] = initSkinnedAsset( result );
                 Avatars[ name ].geometry.sourceFile = url;
