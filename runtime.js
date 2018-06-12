@@ -9,10 +9,8 @@
     groundHelper.visible = true;
     axisCustomHelper.visible = true;
 /*
-    if (debugMode) {       
-        controls = new THREE.EditorControls(camera);
-        camera.lookAt(controls.center);
-    }
+//  controls = new THREE.EditorControls(camera);
+//  camera.lookAt(controls.center);
 */
     animate();
 
