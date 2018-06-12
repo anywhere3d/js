@@ -4,6 +4,7 @@
 
     var skinnedFolder = "/skinned/";
     var hfBraUrl = skinnedFolder + "HF_BraLayer_FBK05_v01.js";
+
 //    var fmBraAsset  = skinnedFolder + "HF_BraLayer_FBK05_v01.js";
 
 //    var assetName = "fmBra";
