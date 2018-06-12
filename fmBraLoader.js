@@ -2,16 +2,18 @@
 
     var debugMode;
 
-//    var fmBraAsset  = assetsFolder + "HF_BraLayer_FBK05_v01.js";
+    var skinnedFolder = "/skinned/";
+    var hfBraUrl = skinnedFolder + "HF_BraLayer_FBK05_v01.js";
+//    var fmBraAsset  = skinnedFolder + "HF_BraLayer_FBK05_v01.js";
 
 //    var assetName = "fmBra";
 //    var assetKey  = "aw3d.outfit.female.bra";
-//    var assetUrl  = assetsFolder + "HF_BraLayer_FBK05_v01.js";
+//    var assetUrl  = skinnedFolder + "HF_BraLayer_FBK05_v01.js";
 
     $getOutfit({
         name: "fmBra",
         key : "fmBra",
-        url : assetsFolder + "HF_BraLayer_FBK05_v01.js", 
+        url : hfBraUrl, 
 
     }, function loadTextures(asset){
 
