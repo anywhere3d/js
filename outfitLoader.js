@@ -2,7 +2,7 @@
 
 
     var scriptsFolder  = "/scripts/";
-    var assetsFolder = "/skinned/";  // deprecated //
+//  var assetsFolder = "/skinned/";  // deprecated //
     var skinnedFolder = "/skinned/";
     var texturesFolder = "/textures/";
 
