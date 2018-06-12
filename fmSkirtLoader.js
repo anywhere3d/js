@@ -2,16 +2,19 @@
 
     var debugMode;
 
-//    var fmSkirtAsset = assetsFolder + "HF_Skirt_FBK05_v02.js";
+    var skinnedFolder = "/skinned/";
+    var fmSkirtUrl = skinnedFolder + "HF_Skirt_FBK05_v02.js";
+
+//    var fmSkirtAsset = skinnedFolder + "HF_Skirt_FBK05_v02.js";
 
 //    var assetName = "fmSkirt";
 //    var assetKey  = "aw3d.outfit.female.skirt";
-//    var assetUrl  = assetsFolder + "HF_Skirt_FBK05_v02.js";
+//    var assetUrl  = skinnedFolder + "HF_Skirt_FBK05_v02.js";
 
     $getOutfit({
         name: "fmSkirt",
         key : "fmSkirt",
-        url : assetsFolder + "HF_Skirt_FBK05_v02.js", 
+        url : fmSkirtUrl, 
 
     }, function loadTextures(asset){
 
