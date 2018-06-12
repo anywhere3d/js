@@ -21,13 +21,13 @@
 
             if ( !result || JSON.stringify(result) == "{}" ) {
 
-                debugMode && console.log("Animations:", "Getting from web");
+                debugMode && console.log("Animations:", "Getting from web.");
 
                 return $getJSON( options );
 
             } else {
 
-                debugMode && console.log("Animations:", "Getting from cache");
+                debugMode && console.log("Animations:", "Getting from cache.");
 
                 object[ name ] = result;
                 if ( !!localPlayer && !!localPlayer.outfit ) {
