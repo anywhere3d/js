@@ -18,13 +18,13 @@
 
             if ( !result || JSON.stringify(result) == "{}" ) {
 
-                debugMode && console.log("FemaleTshirt:", "Getting from web");
+                debugMode && console.log("FemaleTshirt:", "Getting from web.");
 
                 return $getJSON(options);
 
             } else {
 
-                debugMode && console.log("FemaleTshirt:", "Getting from cache");
+                debugMode && console.log("FemaleTshirt:", "Getting from cache.");
 
                 Avatars[ name ] = initSkinnedAsset( result );
                 Avatars[ name ].geometry.sourceFile = url;
