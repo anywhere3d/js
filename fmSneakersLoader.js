@@ -2,17 +2,20 @@
 
     var debugMode;
 
-//    var fmSneakersAsset  = assetsFolder + "HF_SneakersShoes_ABK04_v01.js";
+    var skinnedFolder = "/skinned/";
+    var fmSneakersUrl = skinnedFolder + "HF_SneakersShoes_ABK04_v01.js";
+
+//    var fmSneakersAsset  = skinnedFolder + "HF_SneakersShoes_ABK04_v01.js";
 
 //    var assetName = "fmSneakers";
 //    var assetKey  = "aw3d.avatar.female.shoes.sneakers";
-//    var assetUrl  = assetsFolder + "HF_SneakersShoes_ABK04_v01.js";
+//    var assetUrl  = skinnedFolder + "HF_SneakersShoes_ABK04_v01.js";
 
     $getOutfit({
 
         name: "fmSneakers",
         key : "fmSneakers",
-        url : assetsFolder + "HF_SneakersShoes_ABK04_v01.js", 
+        url : fmSneakersUrl, 
 
     }, function loadTextures(asset){
 
