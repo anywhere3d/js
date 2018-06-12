@@ -20,13 +20,13 @@
 
             if ( !result || JSON.stringify(result) == "{}" ) {
 
-                debugMode && console.log("Outfit:", "Getting from web");
+                debugMode && console.log("Outfit:", "Getting from web.");
 
                 return $getJSON(options);
 
             } else {
 
-                debugMode && console.log("Outfit:", "Getting from cache");
+                debugMode && console.log("Outfit:", "Getting from cache.");
 
                 Avatars[ name ] = initSkinnedAsset( result );
                 Avatars[ name ].geometry.sourceFile = url;
