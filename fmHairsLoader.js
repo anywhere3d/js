@@ -2,16 +2,19 @@
 
     var debugMode;
 
-//    var fmHairsAsset = assetsFolder + "HF_HairsMedium_FBK04_v02.js";
+    var skinnedFolder = "/skinned/";
+    var fmHairsUrl = skinnedFolder + "HF_HairsMedium_FBK04_v02.js";
+
+//    var fmHairsAsset = skinnedFolder + "HF_HairsMedium_FBK04_v02.js";
 
 //    var assetName = "fmHairs";
 //    var assetKey  = "aw3d.avatar.female.hairs";
-//    var assetUrl  = assetsFolder + "HF_HairsMedium_FBK04_v02.js";
+//    var assetUrl  = skinnedFolder + "HF_HairsMedium_FBK04_v02.js";
 
     $getOutfit({
         name: "fmHairs",
         key : "fmHairs",
-        url : assetsFolder + "HF_HairsMedium_FBK04_v02.js", 
+        url : fmHairsUrl, 
 
     }, function loadTextures( asset ){
 
