@@ -79,102 +79,102 @@
 
 
 //  Skeleton.
-    var sk_idleURL = animationsFolder + "basic_idle_animation_3sec.js";
-    var sk_walkURL = animationsFolder + "basic_walkcycle_animation_1sec_v1.js";
-    var sk_runURL  = animationsFolder + "basic_walkcycle_animation_1sec.js";
-    var sk_jumpURL = animationsFolder + "basic_jumping_animation_1.5sec.js";
+    var idleUrl = animationsFolder + "basic_idle_animation_3sec.js";
+    var walkUrl = animationsFolder + "basic_walkcycle_animation_1sec_v1.js";
+    var runUrl  = animationsFolder + "basic_walkcycle_animation_1sec.js";
+    var jumpUrl = animationsFolder + "basic_jumping_animation_1.5sec.js";
 
     $getAnimation({
-        url:sk_idleURL, 
+        url:idleUrl, 
         key:"idle", 
         name:"idle", 
         obj:Animations
     });
 
     $getAnimation({
-        url:sk_walkURL, 
+        url:walkUrl, 
         key:"walk", 
         name:"walk", 
         obj:Animations
     });
 
     $getAnimation({
-        url:sk_runURL, 
+        url:runUrl, 
         key:"run", 
         name:"run", 
         obj:Animations
     });
 
     $getAnimation({
-        url:sk_jumpURL, 
+        url:jumpUrl, 
         key:"jump", 
         name:"jump", 
         obj:Animations
     });
 
 //  Male.
-    var hm_idleURL = animationsFolder + "male_idle_animation_3sec.js";
-    var hm_walkURL = animationsFolder + "male_walkcycle_animation_1sec_v1.js";
-    var hm_runURL  = animationsFolder + "male_walkcycle_animation_1sec.js";
-    var hm_jumpURL = animationsFolder + "male_jumping_animation_2sec_v5.js";
+    var hmIdleUrl = animationsFolder + "male_idle_animation_3sec.js";
+    var hmWalkUrl = animationsFolder + "male_walkcycle_animation_1sec_v1.js";
+    var hmRunUrl  = animationsFolder + "male_walkcycle_animation_1sec.js";
+    var hmJumpUrl = animationsFolder + "male_jumping_animation_2sec_v5.js";
 
     $getAnimation({
-        url:hm_idleURL, 
+        url:hmIdleUrl, 
         key:"aw3d.animation.male.idle", 
         name:"idle", 
         obj:MaleAnimations
     });
 
     $getAnimation({
-        url:hm_walkURL, 
+        url:hmWalkUrl, 
         key:"aw3d.animation.male.walk", 
         name:"walk", 
         obj:MaleAnimations
     });
 
     $getAnimation({
-        url:hm_runURL, 
+        url:hmRunUrl, 
         key:"aw3d.animation.male.run", 
         name:"run", 
         obj:MaleAnimations
     });
 
     $getAnimation({
-        url:hm_jumpURL, 
+        url:hmJumpUrl, 
         key:"aw3d.animation.male.jump", 
         name:"jump", 
         obj:MaleAnimations
     });
 
 //  Female.
-    var hf_idleURL = animationsFolder + "female_idle_animation_3sec_v2.js";
-    var hf_walkURL = animationsFolder + "female_walkcycle_animation_1sec_v4.js";
-    var hf_runURL  = animationsFolder + "female_walkcycle_animation_1sec_v3.js";
-    var hf_jumpURL = animationsFolder + "female_jumping_animation_2sec_v8.js";
+    var hfIdleUrl = animationsFolder + "female_idle_animation_3sec_v2.js";
+    var hfWalkUrl = animationsFolder + "female_walkcycle_animation_1sec_v4.js";
+    var hfRunUrl  = animationsFolder + "female_walkcycle_animation_1sec_v3.js";
+    var hfJumpUrl = animationsFolder + "female_jumping_animation_2sec_v8.js";
 
     $getAnimation({
-        url:hf_idleURL, 
+        url:hfIdleUrl, 
         key:"aw3d.animation.female.idle", 
         name:"idle", 
         obj:FemaleAnimations
     });
 
     $getAnimation({
-        url:hf_walkURL, 
+        url:hfWalkUrl, 
         key:"aw3d.animation.female.walk", 
         name:"walk", 
         obj:FemaleAnimations
     });
 
     $getAnimation({
-        url:hf_runURL, 
+        url:hfRunUrl, 
         key:"aw3d.animation.female.run", 
         name:"run", 
         obj:FemaleAnimations
     });
 
     $getAnimation({
-        url:hf_jumpURL, 
+        url:hfJumpUrl, 
         key:"aw3d.animation.female.jump", 
         name:"jump", 
         obj:FemaleAnimations
