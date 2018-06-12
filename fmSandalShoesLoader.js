@@ -14,7 +14,7 @@
     $getOutfit({
         name: "fmSandal",
         key : "fmSandal",
-        url : fmSandalShoesUrl", 
+        url : fmSandalShoesUrl, 
 
     }, function loadTextures( asset ){
 
