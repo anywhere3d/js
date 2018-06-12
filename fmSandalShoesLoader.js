@@ -2,16 +2,19 @@
 
     var debugMode;
 
-//    var fmSandalAsset = assetsFolder + "HF_SandalShoes_ABK06_v02.js";
+    var skinnedFolder = "/skinned/";
+    var fmSandalShoesUrl = skinnedFolder + "HF_SandalShoes_ABK06_v02.js";
+
+//    var fmSandalAsset = skinnedFolder + "HF_SandalShoes_ABK06_v02.js";
 
 //    var assetName = "fmSandal";
 //    var assetKey  = "aw3d.outfit.female.shoes.sandal";
-//    var assetUrl  = assetsFolder + "HF_SandalShoes_ABK06_v02.js";
+//    var assetUrl  = skinnedFolder + "HF_SandalShoes_ABK06_v02.js";
 
     $getOutfit({
         name: "fmSandal",
         key : "fmSandal",
-        url : assetsFolder + "HF_SandalShoes_ABK06_v02.js", 
+        url : fmSandalShoesUrl", 
 
     }, function loadTextures( asset ){
 
