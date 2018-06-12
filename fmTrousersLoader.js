@@ -2,16 +2,19 @@
 
     var debugMode;
 
-//    var fmTrousersAsset  = assetsFolder + "HF_Trousers_FBK05_v02.js";
+    var skinnedFolder = "/skinned/";
+    var fmTrousersUrl = skinnedFolder + "HF_Trousers_FBK05_v02.js";
+
+//    var fmTrousersAsset  = skinnedFolder + "HF_Trousers_FBK05_v02.js";
 
 //    var assetName = "fmTrousers";
 //    var assetKey  = "aw3d.outfit.female.trousers";
-//    var assetUrl  = assetsFolder + "HF_Trousers_FBK05_v02.js";
+//    var assetUrl  = skinnedFolder + "HF_Trousers_FBK05_v02.js";
 
     $getOutfit({
         name: "fmTrousers",
         key : "fmTrousers",
-        url : assetsFolder + "HF_Trousers_FBK05_v02.js", 
+        url : fmTrousersUrl, 
 
     }, function loadTextures(asset){
 
