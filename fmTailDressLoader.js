@@ -2,16 +2,19 @@
 
     var debugMode;
 
-//    var fmTailDressAsset = assetsFolder + "HF_LongTailDress_FBK05_v03.js";
+    var skinnedFolder = "/skinned/";
+    var fmTailDressUrl = skinnedFolder + "HF_LongTailDress_FBK05_v03.js";
+
+//    var fmTailDressAsset = skinnedFolder + "HF_LongTailDress_FBK05_v03.js";
 
 //    var assetName = "fmTailDress";
 //    var assetKey  = "aw3d.outfit.female.taildress";
-//    var assetUrl  = assetsFolder + "HF_LongTailDress_FBK05_v03.js";
+//    var assetUrl  = skinnedFolder + "HF_LongTailDress_FBK05_v03.js";
 
     $getOutfit({
         name: "fmTailDress",
         key : "fmTailDress",
-        url : assetsFolder + "HF_LongTailDress_FBK05_v03.js", 
+        url : fmTailDressUrl, 
 
     }, function loadTextures( asset ){
 
