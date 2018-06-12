@@ -2,7 +2,7 @@
 
     var debugMode;
 
-//  ----------- DEPRECATED ------------  //
+    console.warn("DEPRECATED:", "'maleLoader.js' is deprecated.");
 
 //    var scriptsFolder  = "/scripts/";
 //    var assetsFolder   = "/models/assets/";
