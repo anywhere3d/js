@@ -5,8 +5,8 @@
     var skinnedFolder = "/skinned/";
     var HFtshirtUrl = skinnedFolder + "HF_Tshirt_FBK05_v03.js";
 
-//    var fmTshirt1Asset   = assetsFolder + "HF_Tshirt_FBK05_v01.js";
-//    var fmTshirt3Asset   = assetsFolder + "HF_Tshirt_FBK05_v03.js";
+//    var fmTshirt1Asset   = skinnedFolder + "HF_Tshirt_FBK05_v01.js";
+//    var fmTshirt3Asset   = skinnedFolder + "HF_Tshirt_FBK05_v03.js";
 
     function $getFemaleTshirt(options, loadTextures, loadFrontTexture){
     
