@@ -2,16 +2,19 @@
 
     var debugMode;
 
-//    var hmBodyAsset = assetsFolder + "HM_BodyLayer_ABK04_v02.js";
+    var skinnedFolder = "/skinned/";
+    var hmBodyUrl = skinnedFolder + "HM_BodyLayer_ABK04_v02.js";
+
+//    var hmBodyAsset = skinnedFolder + "HM_BodyLayer_ABK04_v02.js";
 
 //    var assetName = "hmBody";
 //    var assetKey = "aw3d.avatar.male.body";
-//    var assetUrl = assetsFolder + "HM_BodyLayer_ABK04_v02.js";
+//    var assetUrl = skinnedFolder + "HM_BodyLayer_ABK04_v02.js";
 
     $getOutfit({
         name: "hmBody",
         key : "hmBody",
-        url : assetsFolder + "HM_BodyLayer_ABK04_v02.js",
+        url : hmBodyUrl,
 
     }, function loadTextures( asset ){
 
