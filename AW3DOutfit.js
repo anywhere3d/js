@@ -440,14 +440,7 @@
     
             },
     
-            promise: function( fn ){
-                return new Promise(function(resolve, reject){
-                    if ( !fn ) resolve();
-                    if ( fn instanceof Function ) resolve( fn() );
-                    else resolve();
-                });
-            },
-    
+
             getDNA: function(){
                 var dna = {};
 
@@ -467,6 +460,16 @@
                 else 
                     return JSON.parse( dna );
             },
+
+
+            promise: function( fn ){
+                return new Promise(function(resolve, reject){
+                    if ( !fn ) resolve();
+                    if ( fn instanceof Function ) resolve( fn() );
+                    else resolve();
+                });
+            },
+    
 
             AnimationsHandler: [],
     
