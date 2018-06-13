@@ -448,10 +448,32 @@
                 });
             },
     
-            AnimationsHandler: []
+            getDNA: function(){
+                var dna = {};
+
+                player.outfit.outfits.forEach( function( name ){
+                    if ( player.outfit[ name ] ) {
+                        dna[ name ] = {};
+                        dna[ name ].name = name;
+                        dna[ name ].materials = player.outfit.getdata( name ).materials;
+                        dna[ name ].geometry  = player.outfit[ name ].geometry.sourceFile;
+                    }
+                });
+
+                dna = JSON.stringify( dna );
+
+                if ( dna === "{}" ) 
+                    return null;
+                else 
+                    return JSON.parse( dna );
+            },
+
+            AnimationsHandler: [],
     
         };
-    
+
+    //  oufit.AnimationsHandler.
+
         outfit.AnimationsHandler.reset = function(){
             this.length = 0; // reset array.
         };
@@ -521,3 +543,78 @@
         return outfit;
     
     };
+
+/*
+//  Outfit.DNA.
+
+//  Outfit.DNA is an object that contains the outfit data that needed to
+//  re-create the localPlayer.oufit anywhere. Is the player outfit data
+//  in transfered structure.
+
+//  var DNA = {};
+
+    AW3D.Outfit.getDNA = function(player){
+
+        var dna = {};
+
+        var player = player || localPlayer;
+
+    //  AW3D.Outfit.outfits.forEach( function( name ){});
+
+        player.outfit.outfits.forEach( function( name ){
+
+            if ( player.outfit[ name ] ) {
+                dna[ name ] = {};
+                dna[ name ].name = name;
+                dna[ name ].materials = player.outfit.getdata( name ).materials;
+                dna[ name ].geometry = player.outfit[ name ].geometry.sourceFile; // url.
+            }
+
+        });
+
+        return dna;
+    };
+*/
+
+/*
+//  Outfit.outfits.
+    if (!!player.outfit["body"]) {
+        dna.body = {};
+        dna.body.name = "body";
+        dna.body.geometry = player.outfit[ "body" ].geometry.sourceFile;
+        dna.body.material = player.outfit.getdata( "body" );
+    }
+    if (!!player.outfit["skeleton"]) {}
+    if (!!player.outfit["bodypaint"]) {}
+    if (!!player.outfit["makeup"]) {}
+    if (!!player.outfit["hairs"]) {}
+    if (!!player.outfit["bra"]) {}
+    if (!!player.outfit["panties"]) {}
+    if (!!player.outfit["boxers"]) {}
+    if (!!player.outfit["tshirt"]) {}
+    if (!!player.outfit["skirt"]) {}
+    if (!!player.outfit["trousers"]) {}
+    if (!!player.outfit["dress"]) {}
+    if (!!player.outfit["shoes"]) {}
+    if (!!player.outfit["penis"]) {}
+    if (!!player.outfit["vagina"]) {}
+*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
