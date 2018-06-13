@@ -1,10 +1,6 @@
 //  AW3D.Outift.js
 
-/*!
-* @author anywhere3d
-* http://anywhere3d.org
-* MIT License
-*/
+    var debugMode;
 
     var AW3D = { VERSION: '0.2.0' };
 
@@ -14,7 +10,7 @@
         holder.position.set( 0, 1, 0 ); // startPoint.
         holder.name = "PLAYER_HOLDER";
         return holder;
-    }
+    };
 
 //  Player Holder Helper.
     AW3D.PlayerHolderHelper = function (){
@@ -22,7 +18,7 @@
         helper.name = "PLAYER_HOLDER_HELPER";
         helper.visible = debugMode || false;
         return helper;
-    }
+    };
 
 //  Player Controller Direction pointer.
     AW3D.DirectionPointer = function (){
@@ -34,7 +30,7 @@
         pointer.name = "PLAYER_DIRECTION";
         pointer.visible = debugMode || false;
         return pointer;
-    }
+    };
 
 //  Player Sphere.
     AW3D.PlayerSphere = function (){
@@ -46,7 +42,7 @@
         sphere.name = "PLAYER_SPHERE";
         sphere.visible = debugMode || false;
         return sphere;
-    }
+    };
 
 //  Player pointer.
     AW3D.PlayerPointer = function (){
@@ -58,7 +54,108 @@
         pointer.name = "PLAYER_POINTER";
         pointer.visible = debugMode || false;
         return pointer;
-    }
+    };
+
+
+//  Create player from dna
+    AW3D.CreatePlayer = function( dna ){
+
+        var player = new Player();
+
+        player.holder = AW3D.PlayerHolder(); // IMPORTANT //
+        player.holderHelper = AW3D.PlayerHolderHelper();
+        scene.add( player.holder, player.holderHelper );
+
+        player.outfit = AW3D.Outfit( player ); // IMPORTANT //
+        debugMode && console.log( "player.outfit:", player.outfit );
+
+        player.controller = new MW.CharacterController( player.holder, player.radius );
+        player.controller.radius = player.radius || 1;  // VERY IMPORTANT //
+        player.controller.center.set(0, player.controller.radius, 0);
+        debugMode && console.log( "initial position:", player.controller.center );
+
+        player.controller.addEventListener("startIdling",  onStartIdling);
+        player.controller.addEventListener("startRunning", onStartRunning);
+        player.controller.addEventListener("startJumping", onStartJumping);
+        player.controller.addEventListener("endJumping",   onEndJumping);
+        player.controller.addEventListener("startSliding", onStartSliding);
+        player.controller.addEventListener("startFalling", onStartFalling);
+
+        function onStartIdling(){
+        //  debugMode && console.log( "player.controller:", "startIdling:" );
+        }
+
+        function onStartRunning(){
+        //  debugMode && console.log( "player.controller:", "startRunning:" );
+        }
+
+        function onStartJumping(){
+        //  debugMode && console.log( "player.controller:", "startJumping:" );
+            player.outfit.AnimationsHandler.weightOff("idle", "walk", "run");
+        }
+
+        function onEndJumping(){
+        //  debugMode && console.log( "player.controller:", "endJumping:" );
+            player.outfit.AnimationsHandler.weightOn("idle", "walk", "run");
+        }
+
+        function onStartSliding(){
+        //  debugMode && console.log( "localPlayer.controller:", "startSliding:" );
+        }
+
+        function onStartFalling(){
+        //  debugMode && console.log( "localPlayer.controller:", "startFalling:" );
+        }
+
+        player.controller.getdata = function( action ){
+
+            var data = {};
+        //  data.playerid = socket.id;
+            data.radius = this.radius;
+            data.isGrounded = this.isGrounded;
+            data.isOnSlope = this.isOnSlope;
+            data.isIdling  = this.isIdling;
+            data.isJumping = this.isJumping;
+            data.isRunning = this.isRunning;
+            data.isWalking = this.isWalking;
+            data.direction = this.direction;
+            data.movementSpeed = this.movementSpeed;
+            data.jumpStartTime = this.jumpStartTime;
+            data.position = this.center.toArray();
+            if (!!action) data.action = action;
+
+            return data;
+        };
+
+        player.controller.setdata = function( data ){
+
+            this.radius = data.radius;
+            this.isGrounded = data.isGrounded;
+            this.isOnSlope = data.isOnSlope;
+            this.isIdling  = data.isIdling;
+            this.isJumping = data.isJumping;
+            this.isRunning = data.isRunning;
+            this.isWalking = data.isWalking;
+            this.direction = data.direction;
+            this.movementSpeed = data.movementSpeed;
+            this.jumpStartTime = data.jumpStartTime;
+            this.center.fromArray( data.position );
+            if (!!data.action) this.action = data.action;
+
+        };
+
+    //  Dont add remote player.controller to world.
+    //  world.add( player.controller );
+
+        return player;
+    };
+
+
+
+
+
+
+
 
 
 
