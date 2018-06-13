@@ -30,7 +30,7 @@
 
                 Avatars[ name ] = initSkinnedAsset( result );
                 Avatars[ name ].geometry.sourceFile = url;
-                loadTextures( Avatars[ name ] );
+                if (!!loadTextures) loadTextures( Avatars[ name ] );
 
             }
 
