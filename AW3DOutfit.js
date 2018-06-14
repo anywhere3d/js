@@ -361,62 +361,35 @@
     
             getdata: function( name ){
 
+                if ( !name ) return;
+                if ( !this.outfits.includes( name ) ) return;
+
                 var data = {};
 
-                if ( !!name ) {
+                data[ name ] = {}
+                data[ name ].materials = [];
 
-                    data[ name ] = get_data( name );
+            //  Materials.
+
+                if ( !!this[ name ].material.materials ){
+
+                    this[ name ].material.materials.forEach( function(material, i){
+                        data[ name ].materials.push( toJSON(material) );
+                    });
 
                 } else {
 
-                    this.outfits.forEach( function( item, index ){
-                        if ( !!this[ item ] ){
-                            data[ item ] = get_data( item );
-                        }
-                    });
+                    var material = this[ name ].material;
+                    data[ name ].materials.push( toJSON(material) );
 
                 }
 
-                var data = JSON.stringify( data );
+                data[ name ].scale   = this[ name ].scale;
+                data[ name ].visible = this[ name ].visible;
 
-                if ( data === "{}" ) return null;
+                return data[ name ];
 
-                else return JSON.parse( data );
-
-
-                function get_data( name ){
-
-                    if ( !name ) return;
-
-                //  var data = {};
-
-                    data[ name ] = {}
-                    data[ name ].materials = [];
-
-                //  Materials.
-
-                    if ( !!this[ name ].material.materials ){
-
-                        this[ name ].material.materials.forEach( function(material, i){
-                            data[ name ].materials.push( _toJSON(material) );
-                        });
-
-                    } else {
-
-                        var material = this[ name ].material;
-                        data[ name ].materials.push( _toJSON(material) );
-
-                    }
-
-                    data[ name ].scale   = this[ name ].scale;
-                    data[ name ].visible = this[ name ].visible;
-
-                //  return data[ name ];
-
-                }
-
-
-                function _toJSON( material ){
+                function toJSON( material ){
                     var json = {};
                     
                     json.type = material.type;
@@ -465,11 +438,40 @@
                     json.options = options;
                     return json;
                 }
-    
             },
-    
+
+
+            toJSON: function(){
+
+                var data = {};
+
+                if ( arguments.length == 0 ) {
+
+                    this.outfits.forEach( function( name, index ){
+                        if ( !!this[ name ] ){
+                            data[ name ] = this.getdata( name );
+                        }
+                    });
+
+                } else {
+
+                    for (var i = 0; i < arguments.length; i++){
+                        var name = arguments[i];
+                        data[ name ] = this.getdata( name );
+                    }
+
+                }
+
+                var data = JSON.stringify( data );
+
+                if ( data === "{}" ) return null;
+
+                else return JSON.parse( data );
+
+            },
 
             getDNA: function(){
+
                 var dna = {};
 
                 player.outfit.outfits.forEach( function( name ){
