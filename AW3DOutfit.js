@@ -385,7 +385,7 @@
 
                 }
 
-                data[ name ].scale   = this[ name ].scale;
+                data[ name ].scale   = this[ name ].scale.toArray();
                 data[ name ].visible = this[ name ].visible;
 
                 return data[ name ];
@@ -473,16 +473,18 @@
 
             },
 
-            getDNA: function(){
+            toDNA: function(){
 
                 var dna = {};
 
                 player.outfit.outfits.forEach( function( name ){
-                    if ( player.outfit[ name ] ) {
+                    if ( !!player.outfit[ name ] ) {
                         dna[ name ] = {};
-                        dna[ name ].name = name;
-                        dna[ name ].materials = player.outfit.getdata( name ).materials;
+                        dna[ name ].name      = name;
+                        dna[ name ].visible   = player.outfit[ name ].visible;
+                        dna[ name ].scale     = player.outfit[ name ].scale.toArray();
                         dna[ name ].geometry  = player.outfit[ name ].geometry.sourceFile;
+                        dna[ name ].materials = player.outfit.getdata( name ).materials;
                     }
                 });
 
