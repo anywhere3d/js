@@ -520,7 +520,8 @@
 
                         ;(function( key ){
 
-                            debugMode && console.log("dna key:", key);
+                            debugMode && console.log("key:", key);
+                            debugMode && console.log("dna[key]:", dna[key]);
 
                         //  Copy dna item properties, to prevent overwritting.
                             var dnaOptions = {};
