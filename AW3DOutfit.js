@@ -521,9 +521,9 @@
 
                     if ( !!key ) {
 
-                        jsonPromises.push( function(){
+                        jsonPromises.push( 
 
-                            return $.getJSON( dna[ key ].geometry ).then(function(json){
+                            $.getJSON( dna[ key ].geometry ).then(function(json){
 
                                 debugMode && console.log("dna[" + key + "]:", dna[ key ].geometry);
 
@@ -624,7 +624,7 @@
 
                             })
 
-                        });
+                        );
 
                     }
 
