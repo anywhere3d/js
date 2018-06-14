@@ -362,6 +362,7 @@
             getdata: function( name ){
 
                 if ( !name ) return;
+                if ( !this[ name ] ) return;
                 if ( !this.outfits.includes( name ) ) return;
 
                 var data = {};
