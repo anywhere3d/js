@@ -479,10 +479,8 @@
  *  Outfit DNA is an object that contains the outfit data that needed to
  *  re-create the player oufit anywhere remotly. It is player outfit assets
  *  in transfered structure ( alike .toJSON() ).
-
- *  .toDNA(), 
- *  .fromDNA(dna):
- *    Usage:
+ *
+ *  .toDNA(); .fromDNA(dna); Usage:
  *      dna = localPlayer.outfit.toDNA();
  *      player = new Player();
  *      player.outfit = new AW3D.Outfit(player);
@@ -513,126 +511,131 @@
                     return JSON.parse( dna );
             },
 
+
             fromDNA: function(dna){
 
                 for (var key in dna) {
 
                     if ( !!key ) {
 
-                    //  Copy dna item properties, to prevent overwritting.
-                        var dnaOptions = {};
-                        dnaOptions.key = key;
-                        dnaOptions.obj = dna[ key ];
-                        dnaOptions.url = dna[ key ].geometry;
-                        debugMode && console.log("dnaOptions:", dnaOptions);
+                        (function( key ){
 
-                        $.getJSON( dnaOptions.url ).then(function(json){
+                        //  Copy dna item properties, to prevent overwritting.
+                            var dnaOptions = {};
+                            dnaOptions.key = key;
+                            dnaOptions.obj = dna[ key ];
+                            dnaOptions.url = dna[ key ].geometry;
+                            debugMode && console.log("dnaOptions:", dnaOptions);
 
-                            debugMode && console.log("url:", dnaOptions.url);
+                            $.getJSON( dnaOptions.url ).then(function(json){
 
-                            var loader = new THREE.JSONLoader();
-                            var geometry = loader.parse( json ).geometry;
-                            geometry.sourceFile = dnaOptions.url; // IMPORTANT //
-                            geometry.computeFaceNormals();
-                            geometry.computeVertexNormals();
-                            geometry.computeBoundingBox();
-                            geometry.computeBoundingSphere();
-                            geometry.name = json.name;
+                                debugMode && console.log("dnaOptions.url:", dnaOptions.url);
 
-                            var multimaterial = new THREE.MultiMaterial();
+                                var loader = new THREE.JSONLoader();
+                                var geometry = loader.parse( json ).geometry;
+                                geometry.sourceFile = dnaOptions.url; // IMPORTANT //
+                                geometry.computeFaceNormals();
+                                geometry.computeVertexNormals();
+                                geometry.computeBoundingBox();
+                                geometry.computeBoundingSphere();
+                                geometry.name = json.name;
 
-                            dnaOptions.obj.materials.forEach( function(material, i) {
+                                var multimaterial = new THREE.MultiMaterial();
 
-                                var options = material.options;
+                                dnaOptions.obj.materials.forEach( function(material, i) {
 
-                            //  debugMode && console.log("dna key:", key, "\nmaterial:", material, "\noptions:", options);
+                                    var options = material.options;
 
-                                var promises = [];
+                                //  debugMode && console.log("dna key:", key, "\nmaterial:", material, "\noptions:", options);
 
-                                if (!!material.map) promises.push( loadMapTexture( "map" ) );
-                                if (!!material.aoMap) promises.push( loadMapTexture( "aoMap" ) );
-                                if (!!material.envMap) promises.push( loadMapTexture( "envMap" ) );
-                                if (!!material.bumpMap) promises.push( loadMapTexture( "bumpMap" ) );
-                                if (!!material.alphaMap) promises.push( loadMapTexture( "alphaMap" ) );
-                                if (!!material.lightMap) promises.push( loadMapTexture( "lightMap" ) );
-                                if (!!material.normalMap) promises.push( loadMapTexture( "normalMap" ) );
-                                if (!!material.emissiveMap) promises.push( loadMapTexture( "emissiveMap" ) );
-                                if (!!material.specularMap) promises.push( loadMapTexture( "specularMap" ) );
-                                if (!!material.roughnessMap) promises.push( loadMapTexture( "roughnessMap" ) );
-                                if (!!material.metalnessMap) promises.push( loadMapTexture( "metalnessMap" ) );
-                                if (!!material.displacementMap) promises.push( loadMapTexture( "displacementMap" ) );
+                                    var promises = [];
 
-                                function loadMapTexture( name ){
-                                    return new Promise(function(resolve, reject){
-                                        var src = material[ name ];
-                                        debugMode && console.log("src:", src);
-                                        var img = new Image();
-                                        $(img).one("load", function(){
-                                            options[ name ] = new THREE.Texture( img );
-                                            options[ name ].sourceFile = src;
-                                            options[ name ].needsUpdate = true;
-                                            $(img).remove();
-                                            resolve( options[ name ] );
+                                    if (!!material.map) promises.push( loadMapTexture( "map" ) );
+                                    if (!!material.aoMap) promises.push( loadMapTexture( "aoMap" ) );
+                                    if (!!material.envMap) promises.push( loadMapTexture( "envMap" ) );
+                                    if (!!material.bumpMap) promises.push( loadMapTexture( "bumpMap" ) );
+                                    if (!!material.alphaMap) promises.push( loadMapTexture( "alphaMap" ) );
+                                    if (!!material.lightMap) promises.push( loadMapTexture( "lightMap" ) );
+                                    if (!!material.normalMap) promises.push( loadMapTexture( "normalMap" ) );
+                                    if (!!material.emissiveMap) promises.push( loadMapTexture( "emissiveMap" ) );
+                                    if (!!material.specularMap) promises.push( loadMapTexture( "specularMap" ) );
+                                    if (!!material.roughnessMap) promises.push( loadMapTexture( "roughnessMap" ) );
+                                    if (!!material.metalnessMap) promises.push( loadMapTexture( "metalnessMap" ) );
+                                    if (!!material.displacementMap) promises.push( loadMapTexture( "displacementMap" ) );
+
+                                    function loadMapTexture( name ){
+                                        return new Promise(function(resolve, reject){
+                                            var src = material[ name ];
+                                            debugMode && console.log("src:", src);
+                                            var img = new Image();
+                                            $(img).one("load", function(){
+                                                options[ name ] = new THREE.Texture( img );
+                                                options[ name ].sourceFile = src;
+                                                options[ name ].needsUpdate = true;
+                                                $(img).remove();
+                                                resolve( options[ name ] );
+                                            });
+                                            img.src = src;
                                         });
-                                        img.src = src;
+                                    }
+
+                                    Promise.all(promises).then(function(){
+
+                                        switch ( material.type ) {
+                                            case "MeshBasicMaterial":
+                                                multimaterial.materials.push( new THREE.MeshBasicMaterial( options ) );
+                                                break;
+                                            case "MeshDepthMaterial":
+                                                multimaterial.materials.push( new THREE.MeshDepthMaterial( options ) );
+                                                break;
+                                            case "MeshLambertMaterial":
+                                                multimaterial.materials.push( new THREE.MeshLambertMaterial( options ) ); 
+                                                break;
+                                            case "MeshNormalMaterial":
+                                                multimaterial.materials.push( new THREE.MeshNormalMaterial( options ) ); 
+                                                break;
+                                            case "MeshPhongMaterial":
+                                                multimaterial.materials.push( new THREE.MeshPhongMaterial( options ) ); 
+                                                break;
+                                            case "MeshPhysicalMaterial":
+                                                multimaterial.materials.push( new THREE.MeshPhysicalMaterial( options ) ); 
+                                                break;
+                                            case "MeshStandardMaterial":
+                                                multimaterial.materials.push( new THREE.MeshStandardMaterial( options ) ); 
+                                                break;
+                                            default:
+                                                multimaterial.materials.push( new THREE.MeshFaceMaterial( options )); 
+                                        }
+
+                                        for (var j = 0; j < multimaterial.materials.length; j++){
+                                            multimaterial.materials[ j ].needsUpdate = true;
+                                        }
+
+                                        debugMode && console.log( "multimaterial.materials:", multimaterial.materials );
+
+                                    }).catch(function(err){
+                                        console.error(err);
                                     });
-                                }
 
-                                Promise.all(promises).then(function(){
-
-                                    switch ( material.type ) {
-                                        case "MeshBasicMaterial":
-                                            multimaterial.materials.push( new THREE.MeshBasicMaterial( options ) );
-                                            break;
-                                        case "MeshDepthMaterial":
-                                            multimaterial.materials.push( new THREE.MeshDepthMaterial( options ) );
-                                            break;
-                                        case "MeshLambertMaterial":
-                                            multimaterial.materials.push( new THREE.MeshLambertMaterial( options ) ); 
-                                            break;
-                                        case "MeshNormalMaterial":
-                                            multimaterial.materials.push( new THREE.MeshNormalMaterial( options ) ); 
-                                            break;
-                                        case "MeshPhongMaterial":
-                                            multimaterial.materials.push( new THREE.MeshPhongMaterial( options ) ); 
-                                            break;
-                                        case "MeshPhysicalMaterial":
-                                            multimaterial.materials.push( new THREE.MeshPhysicalMaterial( options ) ); 
-                                            break;
-                                        case "MeshStandardMaterial":
-                                            multimaterial.materials.push( new THREE.MeshStandardMaterial( options ) ); 
-                                            break;
-                                        default:
-                                            multimaterial.materials.push( new THREE.MeshFaceMaterial( options )); 
-                                    }
-
-                                    for (var j = 0; j < multimaterial.materials.length; j++){
-                                        multimaterial.materials[ j ].needsUpdate = true;
-                                    }
-
-                                    debugMode && console.log( "multimaterial.materials:", multimaterial.materials );
-
-                                }).catch(function(err){
-                                    console.error(err);
                                 });
+
+                                return { geometry:geometry, material:multimaterial };
+
+                            }).then(function( results ){
+
+                                debugMode && console.log( "results:", results );
+
+                                player.outfit[ dnaOptions.key ] = new THREE.SkinnedMesh( results.geometry, results.material );
+                            //  var skinned = player.outfit[ dnaOptions.key ];
+                                player.outfit[ dnaOptions.key ].frustumCulled = false;
+                                player.outfit[ dnaOptions.key ].position.set( 0, 0, 0 );
+                                player.outfit[ dnaOptions.key ].rotation.set( 0, 0, 0 ); 
+                                player.outfit[ dnaOptions.key ].scale.fromArray( dnaOptions.obj.scale );
+                                player.outfit[ dnaOptions.key ].renderDepth = 1;
 
                             });
 
-                            return { geometry:geometry, material:multimaterial };
-
-                        }).then(function( results ){
-
-                            debugMode && console.log( "results:", results );
-
-                            player.outfit[ dnaOptions.key ] = new THREE.SkinnedMesh( results.geometry, results.material );
-                        //  var skinned = player.outfit[ dnaOptions.key ];
-                            player.outfit[ dnaOptions.key ].frustumCulled = false;
-                            player.outfit[ dnaOptions.key ].position.set( 0, 0, 0 );
-                            player.outfit[ dnaOptions.key ].rotation.set( 0, 0, 0 ); 
-                            player.outfit[ dnaOptions.key ].scale.fromArray( dnaOptions.obj.scale );
-                            player.outfit[ dnaOptions.key ].renderDepth = 1;
-
-                        });
+                        }();
 
                     }
 
@@ -640,6 +643,7 @@
 
             },
 
+        /*  End of DNA  */
 
             promise: function( fn ){
                 return new Promise(function(resolve, reject){
