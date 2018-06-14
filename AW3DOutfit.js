@@ -360,35 +360,60 @@
             },
     
             getdata: function( name ){
-                
-                if ( !name ) return;
-    
+
                 var data = {};
-    
-                data[ name ] = {}
-                data[ name ].materials = [];
-            
-            //  Materials.
-            
-                if ( !!this[ name ].material.materials ){
-    
-                    this[ name ].material.materials.forEach( function(material, i){
-                        data[ name ].materials.push( toJSON(material) );
-                    });
-    
+
+                if ( !!name ) {
+
+                    data[ name ] = get_data( name );
+
                 } else {
-    
-                    var material = this[ name ].material;
-                    data[ name ].materials.push( toJSON(material) );
-    
+                    this.outfits.forEach( function( name ){
+                        if ( !!this[ name ] ){
+                            data[ name ] = get_data( name );
+                        }
+                    });
                 }
 
-                data[ name ].scale   = this[ name ].scale;
-                data[ name ].visible = this[ name ].visible;
+                var data = JSON.stringify( data );
 
-                return data[ name ];
-            
-                function toJSON( material ){
+                if ( data === "{}" ) return null;
+
+                else return JSON.parse( data );
+
+
+                function get_data( name ){
+
+                    if ( !name ) return;
+
+                    var data = {};
+
+                    data[ name ] = {}
+                    data[ name ].materials = [];
+
+                //  Materials.
+
+                    if ( !!this[ name ].material.materials ){
+
+                        this[ name ].material.materials.forEach( function(material, i){
+                            data[ name ].materials.push( _toJSON(material) );
+                        });
+
+                    } else {
+
+                        var material = this[ name ].material;
+                        data[ name ].materials.push( _toJSON(material) );
+
+                    }
+
+                    data[ name ].scale   = this[ name ].scale;
+                    data[ name ].visible = this[ name ].visible;
+
+                    return data[ name ];
+                }
+
+
+                function _toJSON( material ){
                     var json = {};
                     
                     json.type = material.type;
