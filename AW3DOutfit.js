@@ -543,28 +543,28 @@
 
                                 switch ( material.type ) {
                                     case "MeshBasicMaterial":
-                                        multimaterial.push( new THREE.MeshBasicMaterial( options ) );
+                                        multimaterial.materials.push( new THREE.MeshBasicMaterial( options ) );
                                         break;
                                     case "MeshDepthMaterial":
-                                        multimaterial.push( new THREE.MeshDepthMaterial( options ) );
+                                        multimaterial.materials.push( new THREE.MeshDepthMaterial( options ) );
                                         break;
                                     case "MeshLambertMaterial":
-                                        multimaterial.push( new THREE.MeshLambertMaterial( options ) ); 
+                                        multimaterial.materials.push( new THREE.MeshLambertMaterial( options ) ); 
                                         break;
                                     case "MeshNormalMaterial":
-                                        multimaterial.push( new THREE.MeshNormalMaterial( options ) ); 
+                                        multimaterial.materials.push( new THREE.MeshNormalMaterial( options ) ); 
                                         break;
                                     case "MeshPhongMaterial":
-                                        multimaterial.push( new THREE.MeshPhongMaterial( options ) ); 
+                                        multimaterial.materials.push( new THREE.MeshPhongMaterial( options ) ); 
                                         break;
                                     case "MeshPhysicalMaterial":
-                                        multimaterial.push( new THREE.MeshPhysicalMaterial( options ) ); 
+                                        multimaterial.materials.push( new THREE.MeshPhysicalMaterial( options ) ); 
                                         break;
                                     case "MeshStandardMaterial":
-                                        multimaterial.push( new THREE.MeshStandardMaterial( options ) ); 
+                                        multimaterial.materials.push( new THREE.MeshStandardMaterial( options ) ); 
                                         break;
                                     default:
-                                        multimaterial.push( new THREE.MeshFaceMaterial( options )); 
+                                        multimaterial.materials.push( new THREE.MeshFaceMaterial( options )); 
                                 }
 
                             });
