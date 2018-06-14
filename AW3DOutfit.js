@@ -473,6 +473,21 @@
 
             },
 
+/*
+ *  Outfit DNA is an object that contains the outfit data that needed to
+ *  re-create the player oufit anywhere remotly. It is player outfit assets
+ *  in transfered structure ( alike .toJSON() ).
+
+ *  .toDNA(), 
+ *  .fromDNA(dna):
+ *    Usage:
+ *      dna = localPlayer.outfit.toDNA();
+ *      player = new Player();
+ *      player.outfit = new AW3D.Outfit(player);
+ *      player.outfit.fromDNA( dna );
+ *      player.outfit.add({body:player.outfit.body});
+ *      scene.add(player.outfit.direction);
+*/
             toDNA: function(){
 
                 var dna = {};
@@ -604,7 +619,6 @@
                 }
 
             },
-
 
 
             promise: function( fn ){
