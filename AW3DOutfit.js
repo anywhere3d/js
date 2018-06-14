@@ -532,14 +532,14 @@
                                 if (!!material.metalnessMap) loadMapTexture( material.metalnessMap );
                                 if (!!material.displacementMap) loadMapTexture( material.displacementMap );
 
-                                function loadMapTexture( map ){
-                                    var url = material[ map ];
+                                function loadMapTexture( url ){
+                                // var url = material[ map ];
                                     debugMode && console.log("url:", url);
                                     var img = new Image();
                                     $(img).one("load", function(){
                                         options[ map ] = new THREE.Texture( img );
-                                        options[ map ].sourceFile = material[ map ];
-                                    //  $(img).remove();
+                                        options[ map ].sourceFile = url;
+                                        $(img).remove();
                                     });
                                     img.src = url;
                                 }
