@@ -480,7 +480,7 @@
                 player.outfit.outfits.forEach( function( name ){
                     if ( !!player.outfit[ name ] ) {
                         dna[ name ] = {};
-                        dna[ name ].name      = name;
+                        dna[ name ].name = name;
                         dna[ name ].visible   = player.outfit[ name ].visible;
                         dna[ name ].scale     = player.outfit[ name ].scale.toArray();
                         dna[ name ].geometry  = player.outfit[ name ].geometry.sourceFile;
@@ -567,17 +567,14 @@
                                         multimaterial.push( new THREE.MeshFaceMaterial( options )); 
                                 }
 
-
-
-
-
-
                             });
 
-
-
-
-
+                            player.outfit[ key ] = new THREE.SkinnedMesh( geometry, multimaterial );
+                            player.outfit[ key ].frustumCulled = false;
+                            player.outfit[ key ].position.set( 0, 0, 0 );
+                            player.outfit[ key ].rotation.set( 0, 0, 0 ); 
+                            player.outfit[ key ].scale.fromArray( dna[ key ].scale );
+                            player.outfit[ key ].renderDepth = 1;
 
                         }).fail( function( xhr, status, err ) {
                             console.error( xhr, status, err );
