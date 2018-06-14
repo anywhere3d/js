@@ -539,6 +539,7 @@
                                     $(img).one("load", function(){
                                         options[ name ] = new THREE.Texture( img );
                                         options[ name ].sourceFile = url;
+                                        options[ name ].needsUpdate = true;
                                         $(img).remove();
                                     });
                                     img.src = url;
@@ -573,6 +574,10 @@
                             });
 
                             player.outfit[ key ] = new THREE.SkinnedMesh( geometry, multimaterial );
+                            for (var j = 0; j < multimaterial.materials.length; j++){
+                                multimaterial.materials[ j ].needsUpdate = true;
+                            }
+
                             player.outfit[ key ].frustumCulled = false;
                             player.outfit[ key ].position.set( 0, 0, 0 );
                             player.outfit[ key ].rotation.set( 0, 0, 0 ); 
