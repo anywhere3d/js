@@ -368,9 +368,9 @@
                     data[ name ] = get_data( name );
 
                 } else {
-                    this.outfits.forEach( function( name ){
-                        if ( !!this[ name ] ){
-                            data[ name ] = get_data( name );
+                    this.outfits.forEach( function( outfit ){
+                        if ( !!this[ outfit ] ){
+                            data[ name ] = get_data( outfit );
                         }
                     });
                 }
