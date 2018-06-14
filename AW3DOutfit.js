@@ -515,8 +515,9 @@
                             var multimaterial = new THREE.MultiMaterial();
 
                             dna[ key ].materials.forEach( function(material, i) {
-                                debugMode && console.log("dna key:", key, "material:", material);
                                 var options = material.options;
+
+                                debugMode && console.log("dna key:", key, "\nmaterial:", material, "\noptions:", options);
 
                                 if (!!material.map) loadMapTexture( material.map );
                                 if (!!material.aoMap) loadMapTexture( material.aoMap );
@@ -533,6 +534,7 @@
 
                                 function loadMapTexture( map ){
                                     var url = material[ map ];
+                                    debugMode && console.log("url:", url);
                                     var img = new Image();
                                     $(img).one("load", function(){
                                         options[ map ] = new THREE.Texture( img );
