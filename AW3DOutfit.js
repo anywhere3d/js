@@ -516,7 +516,7 @@
 
                 for (var key in dna) {
 
-                    if ( !!key ) {
+                    if ( key !== undefined ) {
 
                         ;(function( key ){
 
