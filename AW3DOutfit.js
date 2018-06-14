@@ -515,22 +515,25 @@
                             var multimaterial = new THREE.MultiMaterial();
 
                             dna[ key ].materials.forEach( function(material, i) {
+
                                 var options = material.options;
 
                                 debugMode && console.log("dna key:", key, "\nmaterial:", material, "\noptions:", options);
 
-                                if (!!material.map) loadMapTexture( "map" );
-                                if (!!material.aoMap) loadMapTexture( "aoMap" );
-                                if (!!material.envMap) loadMapTexture( "envMap" );
-                                if (!!material.bumpMap) loadMapTexture( "bumpMap" );
-                                if (!!material.alphaMap) loadMapTexture( "alphaMap" );
-                                if (!!material.lightMap) loadMapTexture( "lightMap" );
-                                if (!!material.normalMap) loadMapTexture( "normalMap" );
-                                if (!!material.emissiveMap) loadMapTexture( "emissiveMap" );
-                                if (!!material.specularMap) loadMapTexture( "specularMap" );
-                                if (!!material.roughnessMap) loadMapTexture( "roughnessMap" );
-                                if (!!material.metalnessMap) loadMapTexture( "metalnessMap" );
-                                if (!!material.displacementMap) loadMapTexture( "displacementMap" );
+                                var promises = [];
+
+                                if (!!material.map) promises.push( loadMapTexture( "map" ) );
+                                if (!!material.aoMap) promises.push( loadMapTexture( "aoMap" ) );
+                                if (!!material.envMap) promises.push( loadMapTexture( "envMap" ) );
+                                if (!!material.bumpMap) promises.push( loadMapTexture( "bumpMap" ) );
+                                if (!!material.alphaMap) promises.push( loadMapTexture( "alphaMap" ) );
+                                if (!!material.lightMap) promises.push( loadMapTexture( "lightMap" ) );
+                                if (!!material.normalMap) promises.push( loadMapTexture( "normalMap" ) );
+                                if (!!material.emissiveMap) promises.push( loadMapTexture( "emissiveMap" ) );
+                                if (!!material.specularMap) promises.push( loadMapTexture( "specularMap" ) );
+                                if (!!material.roughnessMap) promises.push( loadMapTexture( "roughnessMap" ) );
+                                if (!!material.metalnessMap) promises.push( loadMapTexture( "metalnessMap" ) );
+                                if (!!material.displacementMap) promises.push( loadMapTexture( "displacementMap" ) );
 
                                 function loadMapTexture( name ){
                                     return new Promise(function(resolve, reject){
@@ -548,31 +551,37 @@
                                     });
                                 }
 
-                                switch ( material.type ) {
-                                    case "MeshBasicMaterial":
-                                        multimaterial.materials.push( new THREE.MeshBasicMaterial( options ) );
-                                        break;
-                                    case "MeshDepthMaterial":
-                                        multimaterial.materials.push( new THREE.MeshDepthMaterial( options ) );
-                                        break;
-                                    case "MeshLambertMaterial":
-                                        multimaterial.materials.push( new THREE.MeshLambertMaterial( options ) ); 
-                                        break;
-                                    case "MeshNormalMaterial":
-                                        multimaterial.materials.push( new THREE.MeshNormalMaterial( options ) ); 
-                                        break;
-                                    case "MeshPhongMaterial":
-                                        multimaterial.materials.push( new THREE.MeshPhongMaterial( options ) ); 
-                                        break;
-                                    case "MeshPhysicalMaterial":
-                                        multimaterial.materials.push( new THREE.MeshPhysicalMaterial( options ) ); 
-                                        break;
-                                    case "MeshStandardMaterial":
-                                        multimaterial.materials.push( new THREE.MeshStandardMaterial( options ) ); 
-                                        break;
-                                    default:
-                                        multimaterial.materials.push( new THREE.MeshFaceMaterial( options )); 
-                                }
+                                Promise.all(promises).then(function(){
+
+                                    switch ( material.type ) {
+                                        case "MeshBasicMaterial":
+                                            multimaterial.materials.push( new THREE.MeshBasicMaterial( options ) );
+                                            break;
+                                        case "MeshDepthMaterial":
+                                            multimaterial.materials.push( new THREE.MeshDepthMaterial( options ) );
+                                            break;
+                                        case "MeshLambertMaterial":
+                                            multimaterial.materials.push( new THREE.MeshLambertMaterial( options ) ); 
+                                            break;
+                                        case "MeshNormalMaterial":
+                                            multimaterial.materials.push( new THREE.MeshNormalMaterial( options ) ); 
+                                            break;
+                                        case "MeshPhongMaterial":
+                                            multimaterial.materials.push( new THREE.MeshPhongMaterial( options ) ); 
+                                            break;
+                                        case "MeshPhysicalMaterial":
+                                            multimaterial.materials.push( new THREE.MeshPhysicalMaterial( options ) ); 
+                                            break;
+                                        case "MeshStandardMaterial":
+                                            multimaterial.materials.push( new THREE.MeshStandardMaterial( options ) ); 
+                                            break;
+                                        default:
+                                            multimaterial.materials.push( new THREE.MeshFaceMaterial( options )); 
+                                    }
+
+                                }).catch(function(err){
+                                    console.error(err);
+                                });
 
                             });
 
