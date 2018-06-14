@@ -496,6 +496,99 @@
                     return JSON.parse( dna );
             },
 
+            fromDNA: function(dna){
+
+                for (var key in dna) {
+
+                    if ( !!key ) {
+                        $.getJSON( dna[ key ].geometry ).then(function(json){
+
+                            var loader = new THREE.JSONLoader();
+                            var geometry = loader.parse( json ).geometry;
+                            geometry.sourceFile = dna[ key ].geometry; // IMPORTANT //
+                            geometry.computeFaceNormals();
+                            geometry.computeVertexNormals();
+                            geometry.computeBoundingBox();
+                            geometry.computeBoundingSphere();
+                            geometry.name = json.name;
+
+                            var multimaterial = new THREE.MultiMaterial();
+
+                            dna[ key ].materials.forEach( function(material, i) {
+                                var options = material.options;
+
+                                if (!!material.map) loadMapTexture( material.map );
+                                if (!!material.aoMap) loadMapTexture( material.aoMap );
+                                if (!!material.envMap) loadMapTexture( material.envMap );
+                                if (!!material.bumpMap) loadMapTexture( material.bumpMap );
+                                if (!!material.alphaMap) loadMapTexture( material.alphaMap );
+                                if (!!material.lightMap) loadMapTexture( material.lightMap );
+                                if (!!material.normalMap) loadMapTexture( material.normalMap );
+                                if (!!material.emissiveMap) loadMapTexture( material.emissiveMap );
+                                if (!!material.specularMap) loadMapTexture( material.specularMap );
+                                if (!!material.roughnessMap) loadMapTexture( material.roughnessMap );
+                                if (!!material.metalnessMap) loadMapTexture( material.metalnessMap );
+                                if (!!material.displacementMap) loadMapTexture( material.displacementMap );
+
+                                function loadMapTexture( map ){
+                                    var url = material[ map ];
+                                    var img = new Image();
+                                    $(img).one("load", function(){
+                                        options[ map ] = new THREE.Texture( img );
+                                        options[ map ].sourceFile = material[ map ];
+                                        $(this).remove();
+                                    });
+                                    img.src = url;
+                                }
+
+                                switch ( material.type ) {
+                                    case "MeshBasicMaterial":
+                                        multimaterial.push( new THREE.MeshBasicMaterial( options ) );
+                                        break;
+                                    case "MeshDepthMaterial":
+                                        multimaterial.push( new THREE.MeshDepthMaterial( options ) );
+                                        break;
+                                    case "MeshLambertMaterial":
+                                        multimaterial.push( new THREE.MeshLambertMaterial( options ) ); 
+                                        break;
+                                    case "MeshNormalMaterial":
+                                        multimaterial.push( new THREE.MeshNormalMaterial( options ) ); 
+                                        break;
+                                    case "MeshPhongMaterial":
+                                        multimaterial.push( new THREE.MeshPhongMaterial( options ) ); 
+                                        break;
+                                    case "MeshPhysicalMaterial":
+                                        multimaterial.push( new THREE.MeshPhysicalMaterial( options ) ); 
+                                        break;
+                                    case "MeshStandardMaterial":
+                                        multimaterial.push( new THREE.MeshStandardMaterial( options ) ); 
+                                        break;
+                                    default:
+                                        multimaterial.push( new THREE.MeshFaceMaterial( options )); 
+                                }
+
+
+
+
+
+
+                            });
+
+
+
+
+
+
+                        }).fail( function( xhr, status, err ) {
+                            console.error( xhr, status, err );
+                        });
+                    }
+
+                }
+
+            },
+
+
 
             promise: function( fn ){
                 return new Promise(function(resolve, reject){
