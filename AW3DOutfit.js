@@ -518,7 +518,7 @@
 
                     if ( !!key ) {
 
-                        (function( key ){
+                        ;(function( key ){
 
                         //  Copy dna item properties, to prevent overwritting.
                             var dnaOptions = {};
@@ -635,7 +635,7 @@
 
                             });
 
-                        }();
+                        })();
 
                     }
 
