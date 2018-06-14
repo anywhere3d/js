@@ -533,16 +533,19 @@
                                 if (!!material.displacementMap) loadMapTexture( "displacementMap" );
 
                                 function loadMapTexture( name ){
-                                    var url = material[ name ];
-                                    debugMode && console.log("url:", url);
-                                    var img = new Image();
-                                    $(img).one("load", function(){
-                                        options[ name ] = new THREE.Texture( img );
-                                        options[ name ].sourceFile = url;
-                                        options[ name ].needsUpdate = true;
-                                        $(img).remove();
+                                    return new Promise(function(resolve, reject){
+                                        var url = material[ name ];
+                                        debugMode && console.log("url:", url);
+                                        var img = new Image();
+                                        $(img).one("load", function(){
+                                            options[ name ] = new THREE.Texture( img );
+                                            options[ name ].sourceFile = url;
+                                            options[ name ].needsUpdate = true;
+                                            $(img).remove();
+                                            resolve( options[ name ] );
+                                        });
+                                        img.src = url;
                                     });
-                                    img.src = url;
                                 }
 
                                 switch ( material.type ) {
