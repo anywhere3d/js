@@ -448,8 +448,8 @@
                 if ( arguments.length == 0 ) {
 
                     this.outfits.forEach( function( name, index ){
-                        if ( !!this[ name ] ){
-                            data[ name ] = this.getdata( name );
+                        if ( !!player.outfit[ name ] ){
+                            data[ name ] = player.outfit.getdata( name );
                         }
                     });
 
@@ -457,7 +457,9 @@
 
                     for (var i = 0; i < arguments.length; i++){
                         var name = arguments[i];
-                        data[ name ] = this.getdata( name );
+                        if ( !!this[ name ] ) {
+                            data[ name ] = this.getdata( name );
+                        }
                     }
 
                 }
