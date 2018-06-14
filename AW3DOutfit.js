@@ -515,6 +515,7 @@
                             var multimaterial = new THREE.MultiMaterial();
 
                             dna[ key ].materials.forEach( function(material, i) {
+                                debugMode && console.log("dna key:", key, "material:", material);
                                 var options = material.options;
 
                                 if (!!material.map) loadMapTexture( material.map );
@@ -536,7 +537,7 @@
                                     $(img).one("load", function(){
                                         options[ map ] = new THREE.Texture( img );
                                         options[ map ].sourceFile = material[ map ];
-                                        $(this).remove();
+                                    //  $(img).remove();
                                     });
                                     img.src = url;
                                 }
