@@ -519,26 +519,26 @@
 
                                 debugMode && console.log("dna key:", key, "\nmaterial:", material, "\noptions:", options);
 
-                                if (!!material.map) loadMapTexture( material.map );
-                                if (!!material.aoMap) loadMapTexture( material.aoMap );
-                                if (!!material.envMap) loadMapTexture( material.envMap );
-                                if (!!material.bumpMap) loadMapTexture( material.bumpMap );
-                                if (!!material.alphaMap) loadMapTexture( material.alphaMap );
-                                if (!!material.lightMap) loadMapTexture( material.lightMap );
-                                if (!!material.normalMap) loadMapTexture( material.normalMap );
-                                if (!!material.emissiveMap) loadMapTexture( material.emissiveMap );
-                                if (!!material.specularMap) loadMapTexture( material.specularMap );
-                                if (!!material.roughnessMap) loadMapTexture( material.roughnessMap );
-                                if (!!material.metalnessMap) loadMapTexture( material.metalnessMap );
-                                if (!!material.displacementMap) loadMapTexture( material.displacementMap );
+                                if (!!material.map) loadMapTexture( "map" );
+                                if (!!material.aoMap) loadMapTexture( "aoMap" );
+                                if (!!material.envMap) loadMapTexture( "envMap" );
+                                if (!!material.bumpMap) loadMapTexture( "bumpMap" );
+                                if (!!material.alphaMap) loadMapTexture( "alphaMap" );
+                                if (!!material.lightMap) loadMapTexture( "lightMap" );
+                                if (!!material.normalMap) loadMapTexture( "normalMap" );
+                                if (!!material.emissiveMap) loadMapTexture( "emissiveMap" );
+                                if (!!material.specularMap) loadMapTexture( "specularMap" );
+                                if (!!material.roughnessMap) loadMapTexture( "roughnessMap" );
+                                if (!!material.metalnessMap) loadMapTexture( "metalnessMap" );
+                                if (!!material.displacementMap) loadMapTexture( "displacementMap" );
 
-                                function loadMapTexture( url ){
-                                // var url = material[ map ];
+                                function loadMapTexture( name ){
+                                    var url = material[ name ];
                                     debugMode && console.log("url:", url);
                                     var img = new Image();
                                     $(img).one("load", function(){
-                                        options[ map ] = new THREE.Texture( img );
-                                        options[ map ].sourceFile = url;
+                                        options[ name ] = new THREE.Texture( img );
+                                        options[ name ].sourceFile = url;
                                         $(img).remove();
                                     });
                                     img.src = url;
