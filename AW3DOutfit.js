@@ -1,4 +1,6 @@
-//  AW3D.Outift.js
+//  AW3D.js
+
+    var debugMode;
 
 /*!
 * @author anywhere3d
@@ -62,7 +64,7 @@
 
 
 
-//  AW3D Outfit.js
+//  AW3D.Outfit.js
 
 /*!
 * @author anywhere3d
@@ -516,7 +518,10 @@
                 for (var key in dna) {
 
                     if ( !!key ) {
+                        
                         $.getJSON( dna[ key ].geometry ).then(function(json){
+
+                            debugMode && console.log("dna[" + key + "]:", dna[ key ].geometry);
 
                             var loader = new THREE.JSONLoader();
                             var geometry = loader.parse( json ).geometry;
@@ -533,7 +538,7 @@
 
                                 var options = material.options;
 
-                                debugMode && console.log("dna key:", key, "\nmaterial:", material, "\noptions:", options);
+                            //  debugMode && console.log("dna key:", key, "\nmaterial:", material, "\noptions:", options);
 
                                 var promises = [];
 
@@ -593,6 +598,8 @@
                                         default:
                                             multimaterial.materials.push( new THREE.MeshFaceMaterial( options )); 
                                     }
+
+                                    debugMode && console.log( "multimaterial.materials:", multimaterial.materials );
 
                                 }).catch(function(err){
                                     console.error(err);
