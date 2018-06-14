@@ -368,11 +368,13 @@
                     data[ name ] = get_data( name );
 
                 } else {
-                    this.outfits.forEach( function( outfit ){
-                        if ( !!this[ outfit ] ){
-                            data[ name ] = get_data( outfit );
+
+                    this.outfits.forEach( function( item, index ){
+                        if ( !!this[ item ] ){
+                            data[ item ] = get_data( item );
                         }
                     });
+
                 }
 
                 var data = JSON.stringify( data );
@@ -386,7 +388,7 @@
 
                     if ( !name ) return;
 
-                    var data = {};
+                //  var data = {};
 
                     data[ name ] = {}
                     data[ name ].materials = [];
@@ -409,7 +411,8 @@
                     data[ name ].scale   = this[ name ].scale;
                     data[ name ].visible = this[ name ].visible;
 
-                    return data[ name ];
+                //  return data[ name ];
+
                 }
 
 
