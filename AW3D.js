@@ -421,6 +421,8 @@
                     options.skinning = material.skinning;
                     options.shininess = material.shininess;
                     options.transparent = material.transparent;
+                    options.roughness = material.roughness;
+                    options.metalness = material.metalness;
 
                     if (!!material.roughnessMap) options.roughness = material.roughness;
                     if (!!material.metalnessMap) options.metalness = material.metalness;
