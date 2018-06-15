@@ -514,13 +514,11 @@
 
             fromDNA: function(dna){
 
-                var dna = dna;
-
-                Object.keys(dna).forEach(function(key) {
+                for (var key in dna) {
 
                     try {
 
-                        (function( key ){
+                        (function( key, dna ){
 
                             debugMode && console.log("key:", key);
                             debugMode && console.log("dna[key]:", dna[key]);
@@ -644,7 +642,7 @@
 
                     } catch(err){;}
 
-                });
+                }
 
             },
 
