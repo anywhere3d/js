@@ -555,6 +555,7 @@
                                         var url = material[ name ];
                                         debugMode && console.log("url:", url);
                                         var img = new Image();
+                                        img.crossOrigin = "anonymous";
                                         $(img).one("load", function(){
                                             options[ name ] = new THREE.Texture( img );
                                             options[ name ].sourceFile = url;
