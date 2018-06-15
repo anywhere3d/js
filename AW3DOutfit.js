@@ -514,6 +514,8 @@
 
             fromDNA: function(dna){
 
+                var dna = dna;
+
                 Object.keys(dna).forEach(function(key) {
 
                     try {
