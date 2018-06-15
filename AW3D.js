@@ -478,7 +478,7 @@
 /*
  *  Outfit DNA is an object that contains the outfit data that needed to
  *  re-create the player oufit anywhere remotly. It is player outfit assets
- *  in transfered structure ( alike .toJSON() ).
+ *  in transfered structure ( aka like .toJSON() ).
  *
  *  .toDNA(); .fromDNA(dna); Usage:
  *      dna = localPlayer.outfit.toDNA();
