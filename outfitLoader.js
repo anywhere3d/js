@@ -28,8 +28,14 @@
 
                 debugMode && console.log("Outfit:", "Getting from cache.");
 
-                Avatars[ name ] = initSkinnedAsset( result );
-                Avatars[ name ].geometry.sourceFile = url;
+                result.sourceFile = url;                             //  IMPORTANT  //
+
+                Avatars[ name ] = initSkinnedAsset( result, url );
+
+                if ( !Avatars[ name ].geometry.sourceFile ) {
+                    Avatars[ name ].geometry.sourceFile = url;       //  IMPORTANT  //
+                }
+
                 if (!!loadTextures) loadTextures( Avatars[ name ] );
 
             }
@@ -46,9 +52,12 @@
 
             $.getJSON( url ).then(function(json){
 
+                json.sourceFile = url;  //  IMPORTANT  //
+
                 AW3D_Cache.setItem(url, json).then(function(result){
 
                     if (!result) {
+
                         var err = [ 
                             "AW3D Cache Error:", 
                             "No result returned:", 
@@ -58,6 +67,7 @@
                         throw Error(err);
 
                     } else if ( JSON.stringify(result) == "{}" ) {
+
                         var err = [ 
                             "AW3D Cache Warning:", 
                             "empty object returned:", 
@@ -67,10 +77,15 @@
                         throw Error(err);
 
                     } else {
+
                         console.log("AW3D Cache:", "success!");
-                        Avatars[ name ] = initSkinnedAsset( result );
-                        Avatars[ name ].geometry.sourceFile = url;
-                        loadTextures( Avatars[ name ] );
+
+                        Avatars[ name ] = initSkinnedAsset( result, url );
+                        if ( !Avatars[ name ].geometry.sourceFile ) {
+                            Avatars[ name ].geometry.sourceFile = url;       //  IMPORTANT  //
+                        }
+
+                        if (!!loadTextures) loadTextures( Avatars[ name ] );
                     }
 
                 }).catch(function(err) {
@@ -95,7 +110,7 @@
         var asset = options.asset;
 
         var img = new Image();
-        img.crossOrigin = "anonymous";
+        img.crossOrigin = "anonymous";   //  IMPORTANT  //
         $(img).one("load", function (){
             var texture = new THREE.Texture( img ); // or canvas //
             texture.name = name;
@@ -111,52 +126,84 @@
 
         if (!asset) {
             var name = name || "asset";
-            onError( name ); 
+            var msg = "Outfit <b>" + name + "</b> have not been defined!";
+            debugMode && console.error(msg);
+            try { bootboxErrorAlert( msg ); } catch(err){ alert(msg); }
             return;
         }
 
-        if ( !!asset.material.materials && ( index != null && !isNaN(index) ) ) {
+        if ( !asset.material.materials ) {
+            var msg = "Outfit material is not of type multimaterial.";
+            debugMode && console.error(msg);
+            try { bootboxErrorAlert( msg ); } catch(err){ alert(msg); }
+            return;
+        } 
+
+        if ( asset.material.materials.length == 0 ) {
+            var msg = "Outfit multimaterial does not have materials.";
+            debugMode && console.error(msg);
+            try { bootboxErrorAlert( msg ); } catch(err){ alert(msg); }
+            return;
+        }
+
+        if ( asset.material.materials.length > 0 ) {
+
+            if ( index == null || isNaN(index) ) index = 0;
 
             asset.material.materials[index][map] = texture;
             asset.material.materials[index][map].needsUpdate = true;
             asset.material.materials[index].needsUpdate = true;
 
-        } else {
-
-            asset.material[map] = texture;
-            asset.material[map].needsUpdate = true;
-            asset.material.needsUpdate = true;
-        }
-
-        function onError( name ){
-            var msg = "Outfit <b>" + name + "</b> have not been defined!";
-            debugMode && console.error(msg);
-            try { bootboxErrorAlert( msg ); } catch(err){ alert(msg); }
         }
     }
 
-    function initSkinnedAsset( json ){
+/*
+    if ( index != null && !isNaN(index) ) {
+        asset.material.materials[index][map] = texture;
+        asset.material.materials[index][map].needsUpdate = true;
+        asset.material.materials[index].needsUpdate = true;
+    } else {
+        asset.material.materials[0][map] = texture;
+        asset.material.materials[0][map].needsUpdate = true;
+        asset.material.materials[0].needsUpdate = true;
+    }
+*/
+
+
+    function initSkinnedAsset( json, url ){
 
         var loader = new THREE.JSONLoader();
         var object = loader.parse( json );
+
+    //  Material.
 
         object.materials.forEach( function ( material ) {
             material.skinning = true;     // IMPORTANT //
         }); 
 
-        var material;
-        if ( object.materials.length == 1 ) {
-            material = object.materials[0];
-            material.skinning = true;                                    // IMPORTANT //
-        } else if ( object.materials.length > 1 ) {
-            material = new THREE.MeshFaceMaterial(object.materials);
-            for (var i=0; i < material.materials.length; i++){
-                material.materials[i].skinning = true;                   // IMPORTANT //
+    //  Switching to multimaterials.
+
+    //  var multimaterial = new THREE.MeshFaceMaterial(); // <-- MultiMaterial. //
+
+        if ( object.materials.length > 0 ) {
+
+            var multimaterial = new THREE.MeshFaceMaterial( object.materials );  // <-- MultiMaterial.
+            for (var i = 0; i < multimaterial.materials.length; i++){
+                if ( !multimaterial.materials[i].skinning ) {
+                    multimaterial.materials[i].skinning = true;                   //  IMPORTANT  //
+                }
             }
+
         } else {
-            material = new THREE.MeshStandardMaterial({skinning:true});  // IMPORTANT //
+
+            var multimaterial = new THREE.MeshFaceMaterial( 
+                new THREE.MeshStandardMaterial({skinning:true}) );
         }
-    
+
+        if ( !multimaterial ) console.error("MultiMaterial did not defined:", multimaterial);
+
+    //  Geometry.
+
         var geometry = object.geometry;
         geometry.computeFaceNormals();
         geometry.computeVertexNormals();
@@ -164,38 +211,70 @@
         geometry.computeBoundingSphere();
         geometry.name = json.name;
 
-        var skinned = new THREE.SkinnedMesh( geometry, material );
-        skinned.frustumCulled = false;        // VERY IMPORTANT // 
+        if ( !!json.sourceFile ) {
+            geometry.sourceFile = json.sourceFile;  // IMPORTANT //
+        } else if ( !!url ) {
+            geometry.sourceFile = url;              // IMPORTANT //
+        }
+
+    //  Skinned mesh.
+
+        var skinned = new THREE.SkinnedMesh( geometry, multimaterial );
+
+        skinned.renderDepth = 1;
+        skinned.frustumCulled = false;              // IMPORTANT //
+        skinned.scale.set( 1, 1, 1 );
         skinned.position.set( 0, 0, 0 );
         skinned.rotation.set( 0, 0, 0 ); 
-        skinned.scale.set( 1, 1, 1 );
-        skinned.renderDepth = 1;
-    
+
         return skinned;
     }
 
-    function initMeshAsset( json ){
+/*
+        var material;
+        if ( object.materials.length == 1 ) {
+            material = object.materials[0];
+            material.skinning = true;                                    //  IMPORTANT  //
+        } else if ( object.materials.length > 1 ) {
+            material = new THREE.MeshFaceMaterial(object.materials);     // <-- MultiMaterial //
+            for (var i=0; i < material.materials.length; i++){
+                material.materials[i].skinning = true;                   //  IMPORTANT  //
+            }
+        } else {
+            material = new THREE.MeshStandardMaterial({skinning:true});  //  IMPORTANT  //
+        }
+*/
+
+    function initMeshAsset( json, url ){
 
         var loader = new THREE.JSONLoader();
         var object = loader.parse( json );
+
+    //  Material.
 
         object.materials.forEach( function ( material ) {
             material.skinning = false;    // IMPORTANT //
         }); 
 
-        var material;
-        if ( object.materials.length == 1 ) {
-            material = object.materials[0];
-            material.skinning = false;                                    // IMPORTANT //
-        } else if ( object.materials.length > 1 ) {
-            material = new THREE.MeshFaceMaterial(object.materials);
-            for (var i=0; i < material.materials.length; i++){
-                material.materials[i].skinning = false;                   // IMPORTANT //
+        if ( object.materials.length > 0 ) {
+
+            var multimaterial = new THREE.MeshFaceMaterial( object.materials );  // <-- MultiMaterial.
+            for (var i = 0; i < multimaterial.materials.length; i++){
+                if ( !multimaterial.materials[i].skinning ) {
+                    multimaterial.materials[i].skinning = true;                   //  IMPORTANT  //
+                }
             }
+
         } else {
-            material = new THREE.MeshStandardMaterial({skinning:false});  // IMPORTANT //
+
+            var multimaterial = new THREE.MeshFaceMaterial( 
+                new THREE.MeshStandardMaterial({skinning:true}) );
         }
-    
+
+        if ( !multimaterial ) console.error("MultiMaterial did not defined:", multimaterial);
+
+    //  Geometry.
+
         var geometry = object.geometry;
         geometry.computeFaceNormals();
         geometry.computeVertexNormals();
@@ -203,15 +282,39 @@
         geometry.computeBoundingSphere();
         geometry.name = json.name;
 
-        var mesh = new THREE.Mesh( geometry, material );
-        mesh.frustumCulled = false;      // IMPORTANT // 
+        if ( !!json.sourceFile ) {
+            geometry.sourceFile = json.sourceFile;  // IMPORTANT //
+        } else if ( !!url ) {
+            geometry.sourceFile = url;              // IMPORTANT //
+        }
+
+    //  Mesh.
+
+        var mesh = new THREE.Mesh( geometry, multimaterial );
+
+        mesh.renderDepth = 1;
+        mesh.frustumCulled = false;                 // IMPORTANT //
+        mesh.scale.set( 1, 1, 1 );
         mesh.position.set( 0, 0, 0 );
         mesh.rotation.set( 0, 0, 0 ); 
-        mesh.scale.set( 1, 1, 1 );
-        mesh.renderDepth = 1;
-    
+
         return mesh;
     }
+
+/*
+    var material;
+    if ( object.materials.length == 1 ) {
+        material = object.materials[0];
+        material.skinning = false;                                    // IMPORTANT //
+    } else if ( object.materials.length > 1 ) {
+        material = new THREE.MeshFaceMaterial(object.materials);
+        for (var i=0; i < material.materials.length; i++){
+            material.materials[i].skinning = false;                   // IMPORTANT //
+        }
+    } else {
+        material = new THREE.MeshStandardMaterial({skinning:false});  // IMPORTANT //
+    }
+*/
 
     function imgurQualityUrl(options){
 
@@ -314,8 +417,6 @@
         if ( !localStorage[key] ) return;
         return JSON.parse( localStorage[key] );
     }
-
-
 
 
 
