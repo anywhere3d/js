@@ -146,7 +146,7 @@
         asset.material.materials[ index ].bumpScale = 0.05;
         asset.material.materials[ index ].displacementBias = 0;
         asset.material.materials[ index ].displacementScale = 0;
-        asset.material.materials[ index ].color.setHex(0x000000); // 0x177694
+        asset.material.materials[ index ].color.setHex(0x000000);
         asset.material.materials[ index ].emissive.setHex(0x010614);
 
 
