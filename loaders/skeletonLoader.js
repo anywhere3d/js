@@ -1,8 +1,9 @@
 //  skeletonLoader.js
 
     var debugMode;
-
+    
     var skinnedFolder = "/skinned/";
+    var componentsFolder = "/components/";
     var mannyUrl = skinnedFolder + "HF_MannySkeleton_ABK04_v01.js";
 
 //    var skeletonAsset = skinnedFolder + "HF_MannySkeleton_ABK04_v01.js";
@@ -11,7 +12,7 @@
 //    var assetName = "skeleton";
 //    var assetUrl = skinnedFolder + "HF_MannySkeleton_ABK04_v01.js";
 
-    function $getSkeleton( options, loadTextures, addPlayer){
+    function $getSkeleton( options, loadTextures, addPlayer ){
 
         var url  = options.url;
         var key  = options.key;
@@ -39,6 +40,7 @@
 
                 if (!!loadTextures) loadTextures( Avatars[ name ] );
                 if (!!addPlayer) addPlayer( name );
+
             }
 
         }).catch(function(err) {
@@ -160,15 +162,54 @@
 
     }, function addPlayer( name ){
 
+    //  Add player.
+
         var frontAngle = Math.PI - cameraControls.getFrontAngle(); // face front.
         localPlayer.controller.direction = frontAngle;
+
         if ( store.has("/user/outfits/json/current") ){
-            localPlayer.outfit.fromJSON( store.get("/user/outfits/json/current") ); // all included.
+
+            var json = store.get("/user/outfits/json/current");
+            localPlayer.outfit.fromJSON( json );
+        
+        //  Initialize skintone buttons.
+            if ( json.gender == "male" ){
+                var maleSkintoneButtonsComponent = componentsFolder + "male-skintone-buttons.html";
+                $(skintoneButtonsSelector).load(maleSkintoneButtonsComponent, function(resoponse, status, xhr){
+                    if (status == "error") console.error( status, xhr.status, xhr.statusText );
+                }); 
+            }
+
+            if ( json.gender == "female" ){
+                var femaleSkintoneButtonsComponent = componentsFolder + "female-skintone-buttons.html";
+                $(skintoneButtonsSelector).load(femaleSkintoneButtonsComponent, function(resoponse, status, xhr){
+                    if (status == "error") console.error( status, xhr.status, xhr.statusText );
+                });
+            }
+
         } else {
+
             localPlayer.outfit.add( {"body": Avatars[ name ]} );   //  Used for clone asset from external resource.
+
         }
+
+        localPlayer.outfit.AnimationsHandler.refresh();         //  "player.oufit.add()" include ".refresh()".
+        scene.add(localPlayer.outfit.direction);
+        localPlayer.outfit.update();
+
+
+
+    });
+
+/*
+    function addPlayer( name ){
+
+        var frontAngle = Math.PI - cameraControls.getFrontAngle(); // face front.
+        localPlayer.controller.direction = frontAngle;
+        localPlayer.outfit.add( {"body": Avatars[ name ]} );   //  Used for clone asset from external resource.
         localPlayer.outfit.AnimationsHandler.refresh();        //  "player.oufit.add()" include ".refresh()".
         scene.add(localPlayer.outfit.direction);
         localPlayer.outfit.update();
 
-    });
+    }
+*/
