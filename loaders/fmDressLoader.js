@@ -53,8 +53,9 @@
             var texture = new THREE.Texture( img ); // or canvas //
             texture.name = name;
             texture.sourceFile = url;
-            applyTexture( asset, texture, "map" );
-            applyTexture( asset, texture, "bumpMap" );
+            applyTexture( asset, texture, "map", index );
+            applyTexture( asset, texture, "bumpMap", index );
+            applyTexture( asset, texture, "emissiveMap", index );
             $(img).remove();
         });
 
@@ -66,5 +67,6 @@
         asset.material.materials[ index ].displacementScale = 0;
         asset.material.materials[ index ].transparent = true;
         asset.material.materials[ index ].color.setHex(0xffffff);
+        asset.material.materials[ index ].emissive.setHex(0x7d7979);
 
     });
