@@ -62,7 +62,7 @@
     localPlayer.holderHelper = AW3D.PlayerHolderHelper();
     scene.add( localPlayer.holder, localPlayer.holderHelper );
 
-    localPlayer.directionPointer = AW3D.DirectionPointer();
+//  localPlayer.directionPointer = AW3D.DirectionPointer();
     localPlayer.sphere = AW3D.PlayerSphere();
     localPlayer.holder.add( localPlayer.sphere ); 
 
