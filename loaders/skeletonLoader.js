@@ -173,15 +173,17 @@
             localPlayer.outfit.fromJSON( json );
         
         //  Initialize skintone buttons.
+            var skintoneButtonsSelector = "#skintone-buttons";
+            var maleSkintoneButtonsComponent = componentsFolder + "male-skintone-buttons.html";
+            var femaleSkintoneButtonsComponent = componentsFolder + "female-skintone-buttons.html";
+
             if ( json.gender == "male" ){
-                var maleSkintoneButtonsComponent = componentsFolder + "male-skintone-buttons.html";
                 $(skintoneButtonsSelector).load(maleSkintoneButtonsComponent, function(resoponse, status, xhr){
                     if (status == "error") console.error( status, xhr.status, xhr.statusText );
                 }); 
             }
 
             if ( json.gender == "female" ){
-                var femaleSkintoneButtonsComponent = componentsFolder + "female-skintone-buttons.html";
                 $(skintoneButtonsSelector).load(femaleSkintoneButtonsComponent, function(resoponse, status, xhr){
                     if (status == "error") console.error( status, xhr.status, xhr.statusText );
                 });
@@ -193,7 +195,7 @@
 
         }
 
-        localPlayer.outfit.AnimationsHandler.refresh();         //  "player.oufit.add()" include ".refresh()".
+        localPlayer.outfit.AnimationsHandler.refresh();            //  "player.oufit.add()" include ".refresh()".
         scene.add(localPlayer.outfit.direction);
         localPlayer.outfit.update();
 
