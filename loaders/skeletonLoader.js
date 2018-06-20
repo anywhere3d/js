@@ -162,7 +162,11 @@
 
         var frontAngle = Math.PI - cameraControls.getFrontAngle(); // face front.
         localPlayer.controller.direction = frontAngle;
-        localPlayer.outfit.add( {"body": Avatars[ name ]} );   //  Used for clone asset from external resource.
+        if ( store.has("/user/outfits/json/current") ){
+            localPlayer.outfit.fromJSON( store.get("/user/outfits/json/current") ); // all included.
+        } else {
+            localPlayer.outfit.add( {"body": Avatars[ name ]} );   //  Used for clone asset from external resource.
+        }
         localPlayer.outfit.AnimationsHandler.refresh();        //  "player.oufit.add()" include ".refresh()".
         scene.add(localPlayer.outfit.direction);
         localPlayer.outfit.update();
