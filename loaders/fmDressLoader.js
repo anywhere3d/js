@@ -25,9 +25,9 @@
             throw Error( error );
         }
 
-    //  Female hairs map options.
+    //  Female dress map options.
         var mapOptions = {
-            id   : "Gl5NqHY",
+            id   : "L0QPW24",
             ext  : "png",
             name : "HF_Dress",
             asset: asset,
@@ -38,6 +38,7 @@
     //  Set imgur url.
         mapOptions.url = imgurQualityUrl( mapOptions );
     //  var mapOptions.url = "https://i.imgur.com/Gl5NqHY.png";
+    //  var mapOptions.url = "https://i.imgur.com/L0QPW24.png";
 
     //  Load texture.
         var url   = mapOptions.url;
