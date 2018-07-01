@@ -775,10 +775,17 @@
                 if ( typeof(dna) == "string" ) {
 
                     if ( validator.isBase64( dna ) ) {
+
                         var json = JSON.parse( decode( dna ) );
+                        this.fromJSON(json);
+                        
                     } else if ( validator.isJSON( dna ) ) {
+
                         var json = JSON.parse( dna );
+                        this.fromJSON(json);
+
                     } else {
+
                         var err = "Error. DNA is not valid.";
                         console.error( err );
                         throw Error( err );
@@ -792,7 +799,7 @@
                     return;
                 }
                 
-                this.fromJSON(json);
+            //  this.fromJSON(json);
 
                 function decode( string ) {
                     if ( !!window.RawDeflate ) {
@@ -888,6 +895,7 @@
         return outfit;
     
     };
+
 
 
 //  AW3D AnimationHandler.js
