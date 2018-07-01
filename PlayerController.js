@@ -44,6 +44,15 @@
             }
         };
 
+    //  Create player outfit from dna data.
+        this.fromDNA = function( dna ){
+            var frontAngle = Math.PI - cameraControls.getFrontAngle(); // face front.
+            this.controller.direction = frontAngle;
+            this.outfit.fromDNA( dna );
+            scene.add(this.outfit.direction);
+            this.outfit.update();
+        };
+
     };
 
 //  PlayerHolder is a THREE.Object3D. 
@@ -72,6 +81,21 @@
     localPlayer.outfit = AW3D.Outfit( localPlayer ); // IMPORTANT //
     debugMode && console.log( "localPlayer.outfit:", localPlayer.outfit );
 
+
+
+
+
+
+/*
+//  localPlayerFromDNA.js
+    function localPlayerFromDNA( dna ){
+        var frontAngle = Math.PI - cameraControls.getFrontAngle(); // face front.
+        localPlayer.controller.direction = frontAngle;
+        localPlayer.outfit.fromDNA( dna );
+        scene.add(localPlayer.outfit.direction);
+        localPlayer.outfit.update();
+    }
+*/
 
 
 
@@ -308,5 +332,3 @@
     function onStartFalling(){
     //  debugMode && console.log( "localPlayer.controller:", "startFalling:" );
     }
-
-
