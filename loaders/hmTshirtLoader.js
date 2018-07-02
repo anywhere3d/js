@@ -17,7 +17,7 @@
         var key  = options.key;
         var name = options.name;
 
-        AW3D_Cache.getItem(url).then(function( result ){ 
+        CacheStorage.getItem(url).then(function( result ){ 
 
             if ( !result || JSON.stringify(result) == "{}" ) {
 
@@ -48,7 +48,7 @@
 
             $.getJSON( url ).then(function(json){
 
-                AW3D_Cache.setItem(url, json).then(function(result){
+                CacheStorage.setItem(url, json).then(function(result){
 
                     if (!result) {
                         var err = [ 
