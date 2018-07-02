@@ -15,7 +15,7 @@
         var name = options.name;
         var object = options.obj;
 
-        AW3D_Cache.getItem(url).then(function(result){
+        CacheStorage.getItem(url).then(function(result){
 
         //  debugMode && console.log("result:", result);
 
@@ -48,7 +48,7 @@
 
             return $.getJSON( url, function(data){
 
-                AW3D_Cache.setItem(url, data).then(function(result){
+                CacheStorage.setItem(url, data).then(function(result){
 
                     if (!result) {
                         var err = [ 
