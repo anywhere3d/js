@@ -45,6 +45,20 @@
 
         }).catch(function(err) {
             console.error(err);
+
+        //  Restore from skeleton.
+            localPlayer.outfit.add( {"body": Avatars[ name ]} );       //  Used for clone asset from external resource.
+            localPlayer.outfit.AnimationsHandler.refresh();            //  "player.oufit.add()" include ".refresh()".
+            scene.add(localPlayer.outfit.direction);
+            localPlayer.outfit.update();
+        //  Destroy local storage current outfit damaged data.
+            store.remove("/user/settings/outfit/json/current");
+        //  Alert user to resave his outfit.
+            var msg = ["An Error occurred:",
+            "Some data may be damaged.",
+            "Please re-save your outfit."].join(" ");
+            bootboxErrorAlert( msg );
+
         });
 
         function $getJSON(options){
@@ -167,9 +181,12 @@
         var frontAngle = Math.PI - cameraControls.getFrontAngle(); // face front.
         localPlayer.controller.direction = frontAngle;
 
-        if ( store.has("/user/outfits/json/current") ){
+    //  userSettings.outfit: "/user/settings/outfit/json/current".
+    //  if (!!userSettings && store.has(userSettings.outfit) ){
+        if ( store.has("/user/settings/outfit/json/current") ){
 
-            var json = store.get("/user/outfits/json/current");
+            var json = store.get("/user/settings/outfit/json/current");
+        //  var json = userSettings.getValue( "outfit" );
             localPlayer.outfit.fromJSON( json );
         
         //  Initialize skintone buttons.
@@ -198,8 +215,6 @@
         localPlayer.outfit.AnimationsHandler.refresh();            //  "player.oufit.add()" include ".refresh()".
         scene.add(localPlayer.outfit.direction);
         localPlayer.outfit.update();
-
-
 
     });
 

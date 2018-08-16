@@ -10,81 +10,23 @@
 
     function $getAnimation( options ){
 
+    //  version: 1.0
         var url = options.url;
         var key = options.key;
         var name = options.name;
         var object = options.obj;
 
-        CacheStorage.getItem(url).then(function(result){
+        return $.getJSON( url, function( json ){
 
-        //  debugMode && console.log("result:", result);
+            object[ name ] = json;
 
-            if ( !result || JSON.stringify(result) == "{}" ) {
-
-                debugMode && console.log("Animations:", "Getting from web.");
-
-                return $getJSON( options );
-
-            } else {
-
-                debugMode && console.log("Animations:", "Getting from cache.");
-
-                object[ name ] = result;
-                if ( !!localPlayer && !!localPlayer.outfit ) {
-                    localPlayer.outfit.AnimationsHandler.refresh();
-                }
+            if ( !!localPlayer && !!localPlayer.outfit ) {
+                localPlayer.outfit.AnimationsHandler.refresh();
             }
 
-        }).catch(function(err) {
-            console.error(err);
         });
 
-        function $getJSON(options){
-
-            var url = options.url;
-            var key = options.key;
-            var name = options.name;
-            var object = options.obj;
-
-            return $.getJSON( url, function(data){
-
-                CacheStorage.setItem(url, data).then(function(result){
-
-                    if (!result) {
-                        var err = [ 
-                            "AW3D Cache Error:", 
-                            "No result returned:", 
-                            result,
-                        ].join(" ");
-                        console.error(err);
-                        throw Error(err);
-
-                    } else if ( JSON.stringify(result) == "{}" ) {
-                        var err = [ 
-                            "AW3D Cache Warning:", 
-                            "empty object returned:", 
-                            JSON.stringify(result),
-                        ].join(" ");
-                        console.warn(err);
-                        throw Error(err);
-
-                    } else {
-                        console.log("AW3D Cache:", "success!");
-                        object[ name ] = result;
-                        if ( !!localPlayer && !!localPlayer.outfit ) {
-                            localPlayer.outfit.AnimationsHandler.refresh();
-                        }
-                    }
-                    
-                }).catch(function(err) {
-                    console.log(err);
-                    throw Error(err);
-                });
-
-            });
-        }
     }
-
 
 //  Skeleton.
     var idleUrl = animationsFolder + "basic_idle_animation_3sec.js";
@@ -187,3 +129,88 @@
         name:"jump", 
         obj:FemaleAnimations
     });
+
+
+// --------------------------------------- DEPRECATED --------------------------------------- //
+/*
+    function $getAnimation( options ){
+    
+    //  version: 0.9
+        console.warn( "DEPRECATED: This version of $getAnimation() is deprecated." );
+        return;
+
+        var url = options.url;
+        var key = options.key;
+        var name = options.name;
+        var object = options.obj;
+
+        CacheStorage.getItem(url).then(function(result){
+
+        //  debugMode && console.log("result:", result);
+
+            if ( !result || JSON.stringify(result) == "{}" ) {
+
+                debugMode && console.log("Animations:", "Getting from web.");
+
+                return $getJSON( options );
+
+            } else {
+
+                debugMode && console.log("Animations:", "Getting from cache.");
+
+                object[ name ] = result;
+                if ( !!localPlayer && !!localPlayer.outfit ) {
+                    localPlayer.outfit.AnimationsHandler.refresh();
+                }
+            }
+
+        }).catch(function(err) {
+            console.error(err);
+        });
+
+        function $getJSON(options){
+
+            var url = options.url;
+            var key = options.key;
+            var name = options.name;
+            var object = options.obj;
+
+            return $.getJSON( url, function(data){
+
+                CacheStorage.setItem(url, data).then(function(result){
+
+                    if (!result) {
+                        var err = [ 
+                            "AW3D Cache Error:", 
+                            "No result returned:", 
+                            result,
+                        ].join(" ");
+                        console.error(err);
+                        throw Error(err);
+
+                    } else if ( JSON.stringify(result) == "{}" ) {
+                        var err = [ 
+                            "AW3D Cache Warning:", 
+                            "empty object returned:", 
+                            JSON.stringify(result),
+                        ].join(" ");
+                        console.warn(err);
+                        throw Error(err);
+
+                    } else {
+                        console.log("AW3D Cache:", "success!");
+                        object[ name ] = result;
+                        if ( !!localPlayer && !!localPlayer.outfit ) {
+                            localPlayer.outfit.AnimationsHandler.refresh();
+                        }
+                    }
+                    
+                }).catch(function(err) {
+                    console.log(err);
+                    throw Error(err);
+                });
+
+            });
+        }
+    }
+*/
