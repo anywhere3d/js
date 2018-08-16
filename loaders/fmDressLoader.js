@@ -25,7 +25,7 @@
             throw Error( error );
         }
 
-    //  Female dress map options.
+    //  Female hairs map options.
         var mapOptions = {
             id   : "L0QPW24",
             ext  : "png",
