@@ -1,4 +1,4 @@
-//  bonesLoader.js
+//  bonesLoader.js (localforage)
 
     var debugMode;
 
@@ -84,3 +84,77 @@
             });
         }
     }
+
+/*
+
+//  bonesLoader.js (zargodb)
+
+//  var bonesUrl = skinnedFolder + "Bones_ABK04_v02.js";
+
+    db.open(function(err, database){
+        if (err) console.error( "db.error:", err );
+    }).then( function(){
+
+        var bonesUrl = skinnedFolder + "Bones_ABK04_v02.js";
+        var collection = db.collection("bones");
+        console.log( "collection:", collection );
+
+        $getBones({
+            name: "bones",
+            obj : Avatars,
+            url : bonesUrl,
+            col : collection, 
+        });
+
+        function $getBones( options ){
+    
+            var url  = options.url;
+            var name = options.name;
+            var object = options.obj;
+            var collection = options.col;
+    
+            collection.findOne({url:url}, function( err ){
+                if (err) { throw err; }
+            }).then( function( result ){
+        
+                if ( !!result ) {
+    
+                    debugMode && console.log("%s: Getting from %s:", url, collection.name);
+                    debugMode && console.log( "result:", result );
+                    object[ name ] = result.bones;
+    
+                } else {
+    
+                    debugMode && console.log("%s: Getting from web.", url);
+        
+                    $.getJSON( url, function( data ){
+                        console.log( url, data );
+                    }).then( function( data ){
+    
+                        data._id = generateSalt(13);
+                        data.url = url;    // IMPORTANT //
+                        data.name = name;  // IMPORTANT //
+                        
+                        collection.insert(data, function(err){
+                            if (err) { throw err; }
+                        }).then( function(){
+                            debugMode && console.log("%s: saved in %s", url, collection.name);
+                        }).then( function(){
+                            $getBones( options );
+                        }).catch( function(err){
+                            console.error(err);
+                        });
+    
+                    });
+        
+                }
+        
+            }).catch( function(err){
+                console.error(err);
+            });
+    
+        }
+
+    });
+
+*/

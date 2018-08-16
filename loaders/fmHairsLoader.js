@@ -60,6 +60,7 @@
         img.src = url;
 
     //  Material settings.
+        asset.material.materials[ index ].side = 2;
         asset.material.materials[ index ].bumpScale = 0.05;
         asset.material.materials[ index ].displacementBias = 0;
         asset.material.materials[ index ].displacementScale = 0;
@@ -91,5 +92,4 @@
         img.src = url;
         }
 */
-
 

@@ -47,7 +47,7 @@
         }
 
 
-    //  Male hairs map options.
+    //  Male boxers map options.
         var mapOptions = {
             id   : "aG9Sd8q",
             ext  : "png",
@@ -91,7 +91,6 @@
         asset.material.materials[ index ].color.setHex(0xffffff);
 
     });
-
 
 
 
