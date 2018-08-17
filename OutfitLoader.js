@@ -197,15 +197,18 @@
 
     //  Material.
 
-        object.materials.forEach( function ( material ) {
-            material.skinning = true;     // IMPORTANT //
-        }); 
+        if ( !!object.materials ) {
+
+            object.materials.forEach( function ( material ) {
+                material.skinning = true;     // IMPORTANT //
+            }); 
+        }
 
     //  Switching to multimaterials.
 
     //  var multimaterial = new THREE.MeshFaceMaterial(); // <-- MultiMaterial. //
 
-        if ( object.materials.length > 0 ) {
+        if ( !!object.materials && object.materials.length > 0 ) {
 
             var multimaterial = new THREE.MeshFaceMaterial( object.materials );  // <-- MultiMaterial.
             for (var i = 0; i < multimaterial.materials.length; i++){
@@ -216,8 +219,9 @@
 
         } else {
 
-            var multimaterial = new THREE.MeshFaceMaterial( 
-                new THREE.MeshStandardMaterial({skinning:true}) );
+            var multimaterial = new THREE.MeshFaceMaterial([
+                new THREE.MeshStandardMaterial({skinning:true})
+            ]);
         }
 
         if ( !multimaterial ) console.error("MultiMaterial did not defined:", multimaterial);
@@ -272,23 +276,22 @@
 
     //  Material.
 
-        object.materials.forEach( function ( material ) {
-            material.skinning = false;    // IMPORTANT //
-        }); 
+    //  Switching to multimaterials.
 
-        if ( object.materials.length > 0 ) {
+        if ( !!object.materials && object.materials.length > 0 ) {
 
             var multimaterial = new THREE.MeshFaceMaterial( object.materials );  // <-- MultiMaterial.
             for (var i = 0; i < multimaterial.materials.length; i++){
-                if ( !multimaterial.materials[i].skinning ) {
-                    multimaterial.materials[i].skinning = true;                   //  IMPORTANT  //
+                if ( multimaterial.materials[i].skinning ) {
+                    multimaterial.materials[i].skinning = false;                   //  IMPORTANT  //
                 }
             }
 
         } else {
 
-            var multimaterial = new THREE.MeshFaceMaterial( 
-                new THREE.MeshStandardMaterial({skinning:true}) );
+            var multimaterial = new THREE.MeshFaceMaterial([ 
+                new THREE.MeshStandardMaterial({skinning:false}) 
+            ]);
         }
 
         if ( !multimaterial ) console.error("MultiMaterial did not defined:", multimaterial);
